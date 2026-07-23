@@ -1,0 +1,213 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 4rem;
+  background: rgba(253, 251, 247, 0.85); /* glassmorphic cream */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logoImg {
+  height: 46px;
+  width: 46px;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: white;
+  transition: var(--transition);
+}
+
+.brand:hover .logoImg {
+  transform: rotate(10deg) scale(1.05);
+}
+
+.brandName {
+  font-family: var(--heading);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-h);
+  letter-spacing: -0.5px;
+}
+
+.logoAccent {
+  color: var(--accent);
+}
+
+.links {
+  display: flex;
+  gap: 36px;
+}
+
+.links a {
+  text-decoration: none;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  transition: var(--transition-fast);
+  position: relative;
+  padding: 4px 0;
+}
+
+.links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent);
+  transition: var(--transition);
+}
+
+.links a:hover {
+  color: var(--accent);
+}
+
+.links a:hover::after {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.cartLink {
+  position: relative;
+  text-decoration: none;
+  color: var(--text-h);
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  transition: var(--transition-fast);
+}
+
+.cartLink:hover {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  color: var(--accent-hover);
+}
+
+.cartIcon {
+  font-size: 15px;
+}
+
+.cartText {
+  @media (max-width: 600px) {
+    display: none;
+  }
+}
+
+.badge {
+  background: var(--accent);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.userName {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.adminLink {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: rgba(191, 110, 70, 0.08);
+  transition: var(--transition-fast);
+}
+
+.adminLink:hover {
+  background: rgba(191, 110, 70, 0.15);
+  color: var(--accent-hover);
+}
+
+.logoutBtn {
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.logoutBtn:hover {
+  background: var(--error);
+  color: white;
+  border-color: var(--error);
+}
+
+.loginBtn {
+  padding: 10px 24px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.loginBtn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .nav {
+    padding: 1rem 1.5rem;
+  }
+  .links {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .links {
+    display: none;
+  }
+}

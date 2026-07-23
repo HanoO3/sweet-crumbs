@@ -1,0 +1,134 @@
+.page {
+  min-height: 80vh;
+  background: var(--bg);
+  padding: 5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  color: var(--accent);
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: var(--heading);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--text-h);
+  margin-bottom: 24px;
+  font-weight: 700;
+}
+
+.text {
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+  width: 100%;
+  max-width: 500px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+}
+
+.form input,
+.form textarea {
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  background-color: var(--bg-secondary);
+  transition: var(--transition);
+}
+
+.form input:focus,
+.form textarea:focus {
+  border-color: var(--accent);
+  background-color: var(--card-bg);
+  box-shadow: 0 0 0 4px rgba(191, 110, 70, 0.1);
+}
+
+.form button {
+  padding: 16px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(191, 110, 70, 0.2);
+  font-size: 15px;
+}
+
+.form button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(191, 110, 70, 0.3);
+}
+
+.info {
+  margin-top: 4rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  color: var(--text-h);
+  font-size: 15px;
+  font-weight: 600;
+  width: 100%;
+}
+
+.info p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 3rem 1.25rem;
+  }
+  .info {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .info p {
+    width: 100%;
+    justify-content: center;
+  }
+}

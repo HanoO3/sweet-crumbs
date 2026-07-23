@@ -1,0 +1,68 @@
+.title {
+  font-family: var(--heading);
+  font-size: clamp(28px, 4vw, 36px);
+  color: var(--text-h);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: var(--text);
+  font-size: 15px;
+  margin-bottom: 36px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-fast);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(191, 110, 70, 0.15);
+}
+
+.label {
+  font-size: 12px;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.revenueCard {
+  background: var(--text-h);
+  border-color: var(--text-h);
+}
+
+.revenueCard:hover {
+  border-color: var(--text-h);
+}
+
+.revenueCard .label {
+  color: #B5A8A0;
+}
+
+.revenueCard .value {
+  color: var(--accent);
+}
