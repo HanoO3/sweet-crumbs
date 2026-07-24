@@ -21,13 +21,24 @@ export default function ProductDetails() {
         setProduct(res.data);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((err) => {
+        console.error('Failed to fetch product details:', err);
+        setLoading(false);
+      });
   }, [id]);
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
+  };
+
+  const getImageUrl = (img) => {
+    if (!img) return '';
+    if (img.startsWith('http://') || img.startsWith('https://')) {
+      return img;
+    }
+    return `http://localhost:5000${img}`;
   };
 
   if (loading) return <div className={styles.page}><p className={styles.status}>Preheating detail display...</p></div>;
@@ -41,7 +52,7 @@ export default function ProductDetails() {
 
       <div className={styles.grid}>
         <img
-          src={`http://localhost:5000${product.image}`}
+          src={getImageUrl(product.image)}
           alt={product.name}
           className={styles.image}
         />

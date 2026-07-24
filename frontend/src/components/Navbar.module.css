@@ -6,10 +6,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 4rem;
-  background: rgba(253, 251, 247, 0.85); /* glassmorphic cream */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  background: rgba(255, 253, 254, 0.88); /* glassmorphic sweet cream */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1.5px dashed var(--border);
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
 }
@@ -21,18 +21,13 @@
   text-decoration: none;
 }
 
-.logoImg {
-  height: 46px;
-  width: 46px;
-  object-fit: contain;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: white;
+.logoSvg {
   transition: var(--transition);
+  filter: drop-shadow(0 2px 4px rgba(255, 127, 180, 0.15));
 }
 
-.brand:hover .logoImg {
-  transform: rotate(10deg) scale(1.05);
+.brand:hover .logoSvg {
+  transform: rotate(20deg) scale(1.08);
 }
 
 .brandName {
@@ -44,7 +39,7 @@
 }
 
 .logoAccent {
-  color: var(--accent);
+  color: var(--cyan);
 }
 
 .links {
@@ -56,7 +51,7 @@
   text-decoration: none;
   color: var(--text);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   transition: var(--transition-fast);
   position: relative;
   padding: 4px 0;
@@ -68,13 +63,14 @@
   bottom: 0;
   left: 0;
   width: 0;
-  height: 2px;
-  background-color: var(--accent);
+  height: 3px;
+  background-color: var(--cyan);
+  border-radius: 2px;
   transition: var(--transition);
 }
 
 .links a:hover {
-  color: var(--accent);
+  color: var(--cyan);
 }
 
 .links a:hover::after {
@@ -91,13 +87,13 @@
   position: relative;
   text-decoration: none;
   color: var(--text-h);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: 8px 18px;
+  border-radius: 24px;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   transition: var(--transition-fast);
@@ -107,6 +103,7 @@
   background: var(--accent-light);
   border-color: var(--accent);
   color: var(--accent-hover);
+  transform: scale(1.02);
 }
 
 .cartIcon {
@@ -142,23 +139,23 @@
 }
 
 .userName {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-h);
 }
 
 .adminLink {
-  color: var(--accent);
+  color: var(--cyan);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
   padding: 6px 12px;
-  border-radius: 6px;
-  background: rgba(191, 110, 70, 0.08);
+  border-radius: 8px;
+  background: var(--cyan-light);
   transition: var(--transition-fast);
 }
 
 .adminLink:hover {
-  background: rgba(191, 110, 70, 0.15);
-  color: var(--accent-hover);
+  background: rgba(0, 200, 215, 0.15);
+  color: var(--cyan-hover);
 }
 
 .logoutBtn {
@@ -166,9 +163,9 @@
   background: transparent;
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 20px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition-fast);
 }
@@ -184,17 +181,18 @@
   background: var(--accent);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 24px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   transition: var(--transition-fast);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(255, 127, 180, 0.2);
 }
 
 .loginBtn:hover {
   background: var(--accent-hover);
   transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(255, 127, 180, 0.3);
 }
 
 @media (max-width: 768px) {

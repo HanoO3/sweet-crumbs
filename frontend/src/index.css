@@ -1,23 +1,34 @@
 :root {
-  /* Color Palette */
-  --bg: #FDFBF7; /* Warm creamy background */
-  --bg-secondary: #F6F1EA; /* Slightly darker cream for sections */
-  --text: #5A4E46; /* Muted espresso/cocoa brown for body */
-  --text-h: #231B17; /* Rich dark chocolate for headings */
-  --accent: #BF6E46; /* Warm artisanal terracotta */
-  --accent-hover: #A55630; /* Darker terracotta for hover state */
-  --accent-light: #F5D6C6; /* Creamy peach blush */
-  --border: #F0E6DC; /* Soft border color */
+  /* Cheerful Candy & Pastry Color Palette */
+  --bg: #FFFDFE; /* Soft creamy vanilla milk */
+  --bg-secondary: #FFF2F6; /* Creamy bubblegum pink-cream */
+  --text: #604A41; /* Mild chocolate milk brown for body */
+  --text-h: #2C1810; /* Deep cocoa fudge brown for headings */
+  
+  --accent: #FF7FB4; /* Cheerful bubblegum pink */
+  --accent-hover: #E05B91; /* Rich strawberry pink */
+  --accent-light: #FFE5F0; /* Soft baby pink frosting */
+  
+  --cyan: #00C8D7; /* Cool vibrant frosting cyan */
+  --cyan-hover: #00ABB8; /* Deeper turquoise cyan */
+  --cyan-light: #E1F8FA; /* Soft ice pastel cyan */
+  
+  --yellow: #FFF3C4; /* Warm custard yellow */
+  --yellow-light: #FFFBF0; /* Light cream highlights */
+  
+  --border: #FFE4EF; /* Soft pink-cream borders */
   --card-bg: #FFFFFF; /* Crisp card backgrounds */
-  --success: #4E6551; /* Soft sage green for success/stock */
-  --error: #B84A39; /* Rust red for errors */
-  --shadow-sm: 0 2px 8px rgba(35, 27, 23, 0.04);
-  --shadow-md: 0 8px 24px rgba(35, 27, 23, 0.06);
-  --shadow-lg: 0 16px 40px rgba(35, 27, 23, 0.08);
+  
+  --success: #4E6551; /* Soft sage green */
+  --error: #B84A39; /* Rust red */
+  
+  --shadow-sm: 0 4px 12px rgba(44, 24, 16, 0.03);
+  --shadow-md: 0 10px 30px rgba(44, 24, 16, 0.06);
+  --shadow-lg: 0 20px 48px rgba(44, 24, 16, 0.08);
 
   /* Typography */
   --sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --heading: 'Playfair Display', Georgia, serif;
+  --heading: 'Fredoka', 'Playfair Display', Georgia, serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* Transitions */
@@ -96,22 +107,22 @@ input, textarea, select {
   color: var(--text-h);
   background-color: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 16px;
+  border-radius: 12px;
+  padding: 12px 18px;
   width: 100%;
   transition: var(--transition);
   outline: none;
 }
 
 input:focus, textarea:focus, select:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(191, 110, 70, 0.1);
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 4px rgba(0, 200, 215, 0.1);
 }
 
 label {
   display: block;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-h);
   margin-bottom: 6px;
   text-transform: uppercase;
@@ -121,10 +132,10 @@ label {
 /* Buttons */
 button, .btn {
   font-family: var(--sans);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 30px;
   padding: 12px 28px;
   border: none;
   cursor: pointer;
@@ -138,12 +149,25 @@ button, .btn {
 .btn-primary {
   background-color: var(--accent);
   color: white;
+  box-shadow: 0 4px 14px rgba(255, 127, 180, 0.25);
 }
 
 .btn-primary:hover {
   background-color: var(--accent-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 127, 180, 0.35);
+}
+
+.btn-cyan {
+  background-color: var(--cyan);
+  color: white;
+  box-shadow: 0 4px 14px rgba(0, 200, 215, 0.25);
+}
+
+.btn-cyan:hover {
+  background-color: var(--cyan-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 200, 215, 0.35);
 }
 
 .btn-secondary {
@@ -153,8 +177,8 @@ button, .btn {
 }
 
 .btn-secondary:hover {
-  background-color: var(--border);
-  color: var(--text-h);
+  background-color: var(--accent-light);
+  color: var(--accent-hover);
 }
 
 /* Page Containers */

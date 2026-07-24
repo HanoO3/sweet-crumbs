@@ -3,6 +3,7 @@
   min-height: 100vh;
 }
 
+/* 1. Hero Section */
 .hero {
   padding: 5rem 4rem;
   background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg) 100%);
@@ -28,24 +29,24 @@
 .eyebrow {
   display: inline-block;
   color: var(--accent);
-  font-size: 13px;
-  letter-spacing: 2.5px;
+  font-size: 14px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   font-weight: 700;
 }
 
 .heroTitle {
   font-family: var(--heading);
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
   color: var(--text-h);
-  line-height: 1.15;
+  line-height: 1.1;
   margin-bottom: 1.5rem;
   font-weight: 700;
 }
 
 .heroTitle span {
-  color: var(--accent);
+  color: var(--cyan);
   position: relative;
   display: inline-block;
 }
@@ -53,11 +54,11 @@
 .heroTitle span::after {
   content: '';
   position: absolute;
-  bottom: 6px;
+  bottom: 8px;
   left: 0;
   width: 100%;
   height: 8px;
-  background-color: var(--accent-light);
+  background-color: var(--cyan-light);
   z-index: -1;
   border-radius: 4px;
 }
@@ -78,20 +79,20 @@
 .heroBtn {
   display: inline-block;
   padding: 16px 36px;
-  background: var(--accent);
+  background: var(--cyan);
   color: white;
   text-decoration: none;
   border-radius: 30px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 15px;
   transition: var(--transition);
-  box-shadow: 0 4px 14px rgba(191, 110, 70, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 200, 215, 0.25);
 }
 
 .heroBtn:hover {
-  background: var(--accent-hover);
+  background: var(--cyan-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(191, 110, 70, 0.35);
+  box-shadow: 0 6px 20px rgba(0, 200, 215, 0.35);
 }
 
 .heroSecBtn {
@@ -102,7 +103,7 @@
   border: 2px solid var(--border);
   text-decoration: none;
   border-radius: 30px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 15px;
   transition: var(--transition);
 }
@@ -124,7 +125,7 @@
   position: absolute;
   width: 105%;
   height: 105%;
-  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; /* organic blob shape */
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   background: var(--accent-light);
   z-index: 1;
   top: -10px;
@@ -140,17 +141,153 @@
 
 .heroImg {
   width: 100%;
-  max-width: 440px;
-  height: 440px;
+  max-width: 420px;
+  height: 420px;
   object-fit: cover;
-  border-radius: 50% 50% 20px 20px; /* high-end architectural dome crop */
+  border-radius: 50%;
   box-shadow: var(--shadow-lg);
   z-index: 2;
   position: relative;
-  border: 4px solid white;
+  border: 6px solid white;
 }
 
-/* Featured Section */
+/* 2. Pastry Corner Donuts Banner (Image 1 Style) */
+.donutsBanner {
+  background-color: #FFBBD9; /* Bright candy pink */
+  padding: 4rem 2rem;
+  text-align: center;
+  overflow: hidden;
+  border-top: 2px dashed white;
+  border-bottom: 2px dashed white;
+  position: relative;
+}
+
+.donutsRow {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.bannerDonut {
+  transition: var(--transition);
+}
+
+.bannerDonut:hover {
+  transform: scale(1.15) rotate(15deg);
+}
+
+.bannerTitle {
+  font-family: var(--heading);
+  font-size: 40px;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(44, 24, 16, 0.15);
+  margin: 1rem 0 0.5rem;
+  letter-spacing: 1px;
+}
+
+.bannerSubtitle {
+  color: var(--text-h);
+  font-family: var(--heading);
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 3. About Us Split Layout (Image 1 Style) */
+.aboutSplit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 480px;
+}
+
+.aboutLeft {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 3rem;
+  text-align: center;
+}
+
+.aboutLeftContent {
+  max-width: 440px;
+}
+
+.aboutLogo {
+  margin-bottom: 1.5rem;
+}
+
+.aboutLeftTitle {
+  font-family: var(--heading);
+  font-size: 32px;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.aboutLeftDesc {
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.aboutLeftSub {
+  color: var(--text-h);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.aboutRight {
+  background-color: var(--cyan); /* Bright Cyan */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 3rem;
+  text-align: center;
+  position: relative;
+}
+
+.aboutRightContent {
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aboutRightTitle {
+  font-family: var(--heading);
+  font-size: 38px;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.aboutRightSubtitle {
+  font-size: 16px;
+  color: var(--cyan-light);
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.aboutStrawberryImgContainer {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 6px solid white;
+  box-shadow: var(--shadow-md);
+  background-color: white;
+}
+
+.aboutStrawberryImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 4. Sweet Classics Featured Menu */
 .featured {
   max-width: 1200px;
   margin: 0 auto;
@@ -161,32 +298,33 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 3.5rem;
+  margin-bottom: 4rem;
   text-align: center;
-}
-
-.sectionEyebrow {
-  color: var(--accent);
-  font-size: 13px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: 700;
-  margin-bottom: 8px;
 }
 
 .sectionTitle {
   font-family: var(--heading);
-  font-size: 36px;
+  font-size: 38px;
   color: var(--text-h);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.sectionSubtitle {
+  color: var(--accent);
+  font-size: 15px;
   font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .titleDivider {
   width: 60px;
-  height: 3px;
+  height: 4px;
   background-color: var(--accent);
   border-radius: 2px;
+  margin-top: 14px;
 }
 
 .status {
@@ -207,7 +345,7 @@
   width: 40px;
   height: 40px;
   border: 3px solid var(--border);
-  border-top-color: var(--accent);
+  border-top-color: var(--cyan);
   border-radius: 50%;
   animation: spin 1s infinite linear;
 }
@@ -218,14 +356,14 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 30px;
 }
 
 .card {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 20px;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
@@ -235,12 +373,12 @@
 
 .card:hover {
   box-shadow: var(--shadow-md);
-  border-color: rgba(191, 110, 70, 0.15);
+  border-color: var(--accent-light);
 }
 
 .cardImgContainer {
   width: 100%;
-  height: 220px;
+  height: 240px;
   overflow: hidden;
   position: relative;
   background-color: var(--bg-secondary);
@@ -258,22 +396,17 @@
   transform: scale(1.06);
 }
 
-.stockBadge {
+.soldOutBadge {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: var(--accent);
+  background: var(--text);
   color: white;
   font-size: 11px;
   font-weight: 700;
   padding: 4px 10px;
   border-radius: 12px;
-  box-shadow: var(--shadow-sm);
   z-index: 5;
-}
-
-.outOfStockBadge {
-  background: var(--text);
 }
 
 .cardBody {
@@ -287,7 +420,7 @@
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--cyan);
   margin-bottom: 6px;
   letter-spacing: 0.5px;
 }
@@ -297,9 +430,9 @@
   font-family: var(--heading);
   color: var(--text-h);
   font-weight: 700;
-  font-size: 19px;
+  font-size: 20px;
   text-decoration: none;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   line-height: 1.3;
 }
 
@@ -321,13 +454,13 @@
 }
 
 .addBtn {
-  padding: 8px 16px;
+  padding: 8px 18px;
   background: var(--bg-secondary);
   color: var(--text-h);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 20px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition-fast);
 }
@@ -345,58 +478,14 @@
 }
 
 .soldOutBtn {
-  padding: 8px 16px;
+  padding: 8px 18px;
   background: var(--border);
   color: var(--text);
   border: none;
-  border-radius: 8px;
+  border-radius: 20px;
   font-size: 13px;
-  font-weight: 600;
-  cursor: not-allowed;
-}
-
-/* Promise Section */
-.promise {
-  background-color: var(--bg-secondary);
-  border-top: 1px solid var(--border);
-  padding: 5rem 2rem;
-}
-
-.promiseGrid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 40px;
-  text-align: center;
-}
-
-.promiseCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.5rem;
-}
-
-.promiseIcon {
-  font-size: 40px;
-  margin-bottom: 16px;
-}
-
-.promiseCard h3 {
-  font-family: var(--heading);
-  color: var(--text-h);
-  font-size: 20px;
   font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.promiseCard p {
-  color: var(--text);
-  font-size: 14px;
-  line-height: 1.6;
-  max-width: 280px;
-  margin: 0;
+  cursor: not-allowed;
 }
 
 /* Responsive adjustments */
@@ -420,5 +509,8 @@
   .heroImg {
     max-width: 320px;
     height: 320px;
+  }
+  .aboutSplit {
+    grid-template-columns: 1fr;
   }
 }

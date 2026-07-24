@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
-import logo from '../assets/logo.png';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
@@ -17,7 +16,19 @@ export default function Navbar() {
   return (
     <nav className={styles.nav}>
       <Link to="/" className={styles.brand}>
-        <img src={logo} alt="Sweet Crumbs Logo" className={styles.logoImg} />
+        <svg className={styles.logoSvg} viewBox="0 0 54 54" width="46" height="46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Pink Donut Glaze */}
+          <circle cx="27" cy="27" r="22" fill="var(--accent)" />
+          <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
+          {/* Glaze Details/Shade */}
+          <path d="M12 25C13 32 18 37 27 37C36 37 41 32 42 25" stroke="var(--accent-hover)" strokeWidth="2" strokeLinecap="round" />
+          {/* Cute Sprinkles */}
+          <rect x="18" y="15" width="5" height="2" rx="1" transform="rotate(30 18 15)" fill="var(--cyan)" />
+          <rect x="32" y="13" width="5" height="2" rx="1" transform="rotate(-45 32 13)" fill="var(--yellow)" />
+          <rect x="38" y="22" width="5" height="2" rx="1" transform="rotate(15 38 22)" fill="var(--cyan)" />
+          <rect x="22" y="36" width="5" height="2" rx="1" transform="rotate(-60 22 36)" fill="var(--yellow)" />
+          <rect x="14" y="27" width="5" height="2" rx="1" transform="rotate(80 14 27)" fill="var(--cyan)" />
+        </svg>
         <span className={styles.brandName}>
           Sweet<span className={styles.logoAccent}>Crumbs</span>
         </span>

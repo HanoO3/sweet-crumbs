@@ -32,7 +32,10 @@ export default function Dashboard() {
         });
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((err) => {
+        console.error('Failed to fetch dashboard stats:', err);
+        setLoading(false);
+      });
   }, []);
 
   if (loading) return <p>Loading dashboard...</p>;

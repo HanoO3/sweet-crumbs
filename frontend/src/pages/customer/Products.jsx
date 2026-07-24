@@ -5,6 +5,14 @@ import API from '../../api/axios';
 import { useCart } from '../../context/CartContext';
 import styles from './Products.module.css';
 
+const pastelColors = [
+  '#FFE5F0', // bubblegum pink
+  '#E1F8FA', // frosting cyan
+  '#FFF3C4', // custard yellow
+  '#E3FBE9', // pistachio green
+  '#F0E5FF', // lavender cream
+];
+
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -31,7 +39,10 @@ export default function Products() {
         setProducts(res.data);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((err) => {
+        console.error('Failed to fetch products:', err);
+        setLoading(false);
+      });
   }, [activeCategory, searchTerm]);
 
   const handleCategoryClick = (catId) => {
@@ -46,6 +57,14 @@ export default function Products() {
     if (e.target.value) next.set('search', e.target.value);
     else next.delete('search');
     setSearchParams(next);
+  };
+
+  const getImageUrl = (img) => {
+    if (!img) return '';
+    if (img.startsWith('http://') || img.startsWith('https://')) {
+      return img;
+    }
+    return `http://localhost:5000${img}`;
   };
 
   const handleAddToCart = (p) => {
@@ -68,9 +87,9 @@ export default function Products() {
     <div className={styles.page}>
       <div className={styles.banner}>
         <div className={styles.bannerContent}>
-          <span className={styles.eyebrow}>Ovens are hot, cookies are fresh</span>
-          <h1 className={styles.title}>The Artisanal Menu</h1>
-          <p className={styles.subtitle}>Explore our freshly baked cupcakes, multi-tiered cakes, golden pastries, and traditional sweets.</p>
+          <span className={styles.eyebrow}>Sprinkles on top, ovens are hot</span>
+          <h1 className={styles.title}>The Pastel Menu</h1>
+          <p className={styles.subtitle}>Explore our colorful glazed donuts, cupcakes, sundaes, specialty celebration cakes, and cookies.</p>
         </div>
       </div>
 
@@ -90,19 +109,23 @@ export default function Products() {
           <div className={styles.categoryBar}>
             <button
               className={`${styles.catBtn} ${!activeCategory ? styles.catActive : ''}`}
+              style={{ backgroundColor: !activeCategory ? 'var(--cyan)' : '#FFF2F6' }}
               onClick={() => handleCategoryClick('')}
             >
               All Delicacies
             </button>
-            {categories.map((cat) => (
+            {categories.map((cat, idx) => (
               <button
                 key={cat._id}
                 className={`${styles.catBtn} ${activeCategory === cat._id ? styles.catActive : ''}`}
+                style={{
+                  backgroundColor: activeCategory === cat._id ? 'var(--cyan)' : pastelColors[idx % pastelColors.length]
+                }}
                 onClick={() => handleCategoryClick(cat._id)}
               >
                 {cat.image && (
                   <img
-                    src={`http://localhost:5000${cat.image}`}
+                    src={getImageUrl(cat.image)}
                     alt={cat.name}
                     className={styles.catThumb}
                   />
@@ -116,13 +139,13 @@ export default function Products() {
         {loading ? (
           <div className={styles.loadingContainer}>
             <div className={styles.spinner}></div>
-            <p className={styles.status}>Preheating our kitchen display...</p>
+            <p className={styles.status}>Mixing the batter...</p>
           </div>
         ) : (
           <>
             {products.length === 0 && (
               <div className={styles.noResults}>
-                <span className={styles.noResultsIcon}>🍪</span>
+                <span className={styles.noResultsIcon}>🧁</span>
                 <h3>No treats found</h3>
                 <p>We couldn't find anything matching your search. Try adjusting your filters or category.</p>
               </div>
@@ -144,7 +167,7 @@ export default function Products() {
                     <div className={styles.cardImgContainer}>
                       <Link to={`/products/${p._id}`}>
                         <img
-                          src={`http://localhost:5000${p.image}`}
+                          src={getImageUrl(p.image)}
                           alt={p.name}
                           className={styles.cardImg}
                         />

@@ -8,6 +8,14 @@ export default function Cart() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  const getImageUrl = (img) => {
+    if (!img) return '';
+    if (img.startsWith('http://') || img.startsWith('https://')) {
+      return img;
+    }
+    return `http://localhost:5000${img}`;
+  };
+
   const handleCheckout = () => {
     if (!user) {
       navigate('/login?redirect=/checkout');
@@ -37,7 +45,7 @@ export default function Cart() {
           {cartItems.map((item) => (
             <div key={item._id} className={styles.item}>
               <img
-                src={`http://localhost:5000${item.image}`}
+                src={getImageUrl(item.image)}
                 alt={item.name}
                 className={styles.itemImg}
               />

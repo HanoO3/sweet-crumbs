@@ -96,6 +96,14 @@ export default function ManageProducts() {
     }
   };
 
+  const getImageUrl = (img) => {
+    if (!img) return '';
+    if (img.startsWith('http://') || img.startsWith('https://')) {
+      return img;
+    }
+    return `http://localhost:5000${img}`;
+  };
+
   return (
     <div>
       <h1 className={styles.title}>Manage Products</h1>
@@ -197,7 +205,7 @@ export default function ManageProducts() {
             <tr key={p._id}>
               <td>
                 <img
-                  src={`http://localhost:5000${p.image}`}
+                  src={getImageUrl(p.image)}
                   alt={p.name}
                   className={styles.thumb}
                 />

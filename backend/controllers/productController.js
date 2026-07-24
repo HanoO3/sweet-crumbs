@@ -38,7 +38,7 @@ const createProduct = async (req, res) => {
       category,
       stock,
       isFeatured: isFeatured || false,
-      image: req.file ? `/uploads/${req.file.filename}` : '',
+      image: req.file ? req.file.path : '',
     });
 
     res.status(201).json(product);
@@ -62,7 +62,7 @@ const updateProduct = async (req, res) => {
     product.category = category || product.category;
     product.stock = stock !== undefined ? stock : product.stock;
     product.isFeatured = isFeatured !== undefined ? isFeatured : product.isFeatured;
-    if (req.file) product.image = `/uploads/${req.file.filename}`;
+    if (req.file) product.image = req.file.path;
 
     const updated = await product.save();
     res.json(updated);

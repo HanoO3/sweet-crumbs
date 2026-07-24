@@ -68,6 +68,24 @@
   overflow-x: auto;
 }
 
+.homeLink {
+  display: block;
+  color: #B5A8A0;
+  text-decoration: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: var(--transition-fast);
+}
+
+.homeLink:hover {
+  color: var(--accent);
+}
+
 @media (max-width: 768px) {
   .layout {
     flex-direction: column;
