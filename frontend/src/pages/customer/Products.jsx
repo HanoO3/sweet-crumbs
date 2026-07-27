@@ -26,40 +26,24 @@ export default function Products() {
   const searchTerm = searchParams.get('search') || '';
 
   useEffect(() => {
-    let isMounted = true;
-    const fetchCategories = async () => {
-      try {
-        const res = await API.get('/categories');
-        if (isMounted) setCategories(res.data || []);
-      } catch (err) {
-        console.error('Failed to load categories:', err);
-      }
-    };
-    fetchCategories();
-    return () => { isMounted = false; };
+    API.get('/categories').then((res) => setCategories(res.data));
   }, []);
 
   useEffect(() => {
-    let isMounted = true;
-    const fetchProducts = async () => {
-      setLoading(true);
-      try {
-        const params = {};
-        if (activeCategory) params.category = activeCategory;
-        if (searchTerm) params.search = searchTerm;
+    setLoading(true);
+    const params = {};
+    if (activeCategory) params.category = activeCategory;
+    if (searchTerm) params.search = searchTerm;
 
-        const res = await API.get('/products', { params });
-        if (isMounted) setProducts(res.data || []);
-      } catch (err) {
+    API.get('/products', { params })
+      .then((res) => {
+        setProducts(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
         console.error('Failed to fetch products:', err);
-        if (isMounted) setProducts([]);
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    };
-
-    fetchProducts();
-    return () => { isMounted = false; };
+        setLoading(false);
+      });
   }, [activeCategory, searchTerm]);
 
   const handleCategoryClick = (catId) => {

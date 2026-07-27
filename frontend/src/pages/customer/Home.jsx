@@ -14,23 +14,15 @@ export default function Home() {
   const [addedIds, setAddedIds] = useState(new Set());
 
   useEffect(() => {
-    let isMounted = true;
-    const fetchFeatured = async () => {
-      setLoading(true);
-      try {
-        const res = await API.get('/products');
-        if (isMounted && res.data) {
-          setFeatured(res.data.filter((p) => p.isFeatured).slice(0, 6));
-        }
-      } catch (err) {
+    API.get('/products')
+      .then((res) => {
+        setFeatured(res.data.filter((p) => p.isFeatured).slice(0, 6));
+        setLoading(false);
+      })
+      .catch((err) => {
         console.error('Failed to fetch featured products:', err);
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    };
-
-    fetchFeatured();
-    return () => { isMounted = false; };
+        setLoading(false);
+      });
   }, []);
 
   const handleAddToCart = (product) => {

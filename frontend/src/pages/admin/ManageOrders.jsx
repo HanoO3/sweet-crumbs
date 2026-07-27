@@ -7,20 +7,12 @@ const STATUSES = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
 export default function ManageOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
-  const fetchOrders = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const res = await API.get('/orders');
-      setOrders(res.data || []);
-    } catch (err) {
-      console.error('Failed to fetch orders:', err);
-      setError(err.response?.data?.message || 'Could not load orders');
-    } finally {
+  const fetchOrders = () => {
+    API.get('/orders').then((res) => {
+      setOrders(res.data);
       setLoading(false);
-    }
+    }).catch(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -28,24 +20,17 @@ export default function ManageOrders() {
   }, []);
 
   const handleStatusChange = async (id, status) => {
-    try {
-      await API.put(`/orders/${id}/status`, { status });
-      fetchOrders();
-    } catch (err) {
-      console.error('Failed to update status:', err);
-      alert(err.response?.data?.message || 'Could not update order status');
-    }
+    await API.put(`/orders/${id}/status`, { status });
+    fetchOrders();
   };
 
-  if (loading) return <div className={styles.loading}>Loading orders...</div>;
+  if (loading) return <p>Loading orders...</p>;
 
   return (
     <div>
       <h1 className={styles.title}>Manage Orders</h1>
 
-      {error && <div className={styles.error}>{error}</div>}
-
-      {orders.length === 0 && !error && <p className={styles.empty}>No orders found.</p>}
+      {orders.length === 0 && <p className={styles.empty}>No orders yet.</p>}
 
       <div className={styles.list}>
         {orders.map((order) => (
@@ -67,10 +52,10 @@ export default function ManageOrders() {
             </div>
 
             <div className={styles.items}>
-              {(order.items || []).map((item, i) => (
+              {order.items.map((item, i) => (
                 <div key={i} className={styles.item}>
                   <span>{item.name} × {item.quantity}</span>
-                  <span>Rs. {(item.price || 0) * (item.quantity || 1)}</span>
+                  <span>Rs. {item.price * item.quantity}</span>
                 </div>
               ))}
             </div>

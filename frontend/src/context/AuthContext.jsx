@@ -4,31 +4,17 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    try {
-      const saved = localStorage.getItem('userInfo');
-      return saved ? JSON.parse(saved) : null;
-    } catch (err) {
-      console.error('Failed to parse saved user from localStorage:', err);
-      localStorage.removeItem('userInfo');
-      return null;
-    }
+    const saved = localStorage.getItem('userInfo');
+    return saved ? JSON.parse(saved) : null;
   });
 
   const login = (userData) => {
-    try {
-      localStorage.setItem('userInfo', JSON.stringify(userData));
-      setUser(userData);
-    } catch (err) {
-      console.error('Failed to save user to localStorage:', err);
-    }
+    localStorage.setItem('userInfo', JSON.stringify(userData));
+    setUser(userData);
   };
 
   const logout = () => {
-    try {
-      localStorage.removeItem('userInfo');
-    } catch (err) {
-      console.error('Failed to clear user from localStorage:', err);
-    }
+    localStorage.removeItem('userInfo');
     setUser(null);
   };
 

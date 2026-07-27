@@ -11,53 +11,39 @@ export default function Dashboard() {
     pending: 0,
   });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   useEffect(() => {
-    let isMounted = true;
-    const fetchStats = async () => {
-      setLoading(true);
-      setError('');
-      try {
-        const [productsRes, categoriesRes, ordersRes] = await Promise.all([
-          API.get('/products'),
-          API.get('/categories'),
-          API.get('/orders'),
-        ]);
-
-        const orders = ordersRes.data || [];
-        const revenue = orders.reduce((sum, o) => sum + (o.totalPrice || 0), 0);
+    Promise.all([
+      API.get('/products'),
+      API.get('/categories'),
+      API.get('/orders'),
+    ])
+      .then(([productsRes, categoriesRes, ordersRes]) => {
+        const orders = ordersRes.data;
+        const revenue = orders.reduce((sum, o) => sum + o.totalPrice, 0);
         const pending = orders.filter((o) => o.status === 'Pending').length;
 
-        if (isMounted) {
-          setStats({
-            products: (productsRes.data || []).length,
-            categories: (categoriesRes.data || []).length,
-            orders: orders.length,
-            revenue,
-            pending,
-          });
-        }
-      } catch (err) {
+        setStats({
+          products: productsRes.data.length,
+          categories: categoriesRes.data.length,
+          orders: orders.length,
+          revenue,
+          pending,
+        });
+        setLoading(false);
+      })
+      .catch((err) => {
         console.error('Failed to fetch dashboard stats:', err);
-        if (isMounted) setError('Could not load store analytics');
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    };
-
-    fetchStats();
-    return () => { isMounted = false; };
+        setLoading(false);
+      });
   }, []);
 
-  if (loading) return <div className={styles.loading}>Loading dashboard metrics...</div>;
+  if (loading) return <p>Loading dashboard...</p>;
 
   return (
     <div>
       <h1 className={styles.title}>Dashboard</h1>
-      <p className={styles.subtitle}>Here's what's happening in your bakery store.</p>
-
-      {error && <div className={styles.error}>{error}</div>}
+      <p className={styles.subtitle}>Here's what's happening in your store.</p>
 
       <div className={styles.grid}>
         <div className={styles.card}>
