@@ -21,33 +21,34 @@ export default function Checkout() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handlePlaceOrder = async (e) => {
+  const handlePlaceOrder = (e) => {
     e.preventDefault();
     setError('');
     setPlacing(true);
 
-    try {
-      const items = cartItems.map((item) => ({
-        product: item._id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-      }));
+    const items = cartItems.map((item) => ({
+      product: item._id,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+    }));
 
-      await API.post('/orders', {
-        items,
-        shippingAddress: form,
-        totalPrice: cartTotal,
-        paymentMethod: 'Cash on Delivery',
+    API.post('/orders', {
+      items,
+      shippingAddress: form,
+      totalPrice: cartTotal,
+      paymentMethod: 'Cash on Delivery',
+    })
+      .then(() => {
+        clearCart();
+        navigate('/order-success');
+      })
+      .catch((err) => {
+        setError(err.response?.data?.message || 'Could not place order');
+      })
+      .finally(() => {
+        setPlacing(false);
       });
-
-      clearCart();
-      navigate('/order-success');
-    } catch (err) {
-      setError(err.response?.data?.message || 'Could not place order');
-    } finally {
-      setPlacing(false);
-    }
   };
 
   if (cartItems.length === 0) {

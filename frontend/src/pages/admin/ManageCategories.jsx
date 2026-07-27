@@ -16,21 +16,23 @@ export default function ManageCategories() {
     fetchCategories();
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
-    try {
-      if (editingId) {
-        await API.put(`/categories/${editingId}`, { name });
-      } else {
-        await API.post('/categories', { name });
-      }
-      setName('');
-      setEditingId(null);
-      fetchCategories();
-    } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong');
-    }
+
+    const req = editingId
+      ? API.put(`/categories/${editingId}`, { name })
+      : API.post('/categories', { name });
+
+    req
+      .then(() => {
+        setName('');
+        setEditingId(null);
+        fetchCategories();
+      })
+      .catch((err) => {
+        setError(err.response?.data?.message || 'Something went wrong');
+      });
   };
 
   const handleEdit = (cat) => {
@@ -43,14 +45,11 @@ export default function ManageCategories() {
     setName('');
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
     if (!window.confirm('Delete this category?')) return;
-    try {
-      await API.delete(`/categories/${id}`);
-      fetchCategories();
-    } catch (err) {
-      alert(err.response?.data?.message || 'Could not delete');
-    }
+    API.delete(`/categories/${id}`)
+      .then(() => fetchCategories())
+      .catch((err) => alert(err.response?.data?.message || 'Could not delete'));
   };
 
   return (

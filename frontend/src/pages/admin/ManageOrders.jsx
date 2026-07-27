@@ -19,9 +19,8 @@ export default function ManageOrders() {
     fetchOrders();
   }, []);
 
-  const handleStatusChange = async (id, status) => {
-    await API.put(`/orders/${id}/status`, { status });
-    fetchOrders();
+  const handleStatusChange = (id, status) => {
+    API.put(`/orders/${id}/status`, { status }).then(() => fetchOrders());
   };
 
   if (loading) return <p>Loading orders...</p>;

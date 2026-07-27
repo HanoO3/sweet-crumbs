@@ -16,20 +16,23 @@ export default function Login() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    try {
-      const res = await API.post('/users/login', form);
-      login(res.data);
-      const redirect = searchParams.get('redirect');
-      navigate(redirect || '/');
-    } catch (err) {
-      setError(err.response?.data?.message || 'Invalid email or password');
-    } finally {
-      setLoading(false);
-    }
+
+    API.post('/users/login', form)
+      .then((res) => {
+        login(res.data);
+        const redirect = searchParams.get('redirect');
+        navigate(redirect || '/');
+      })
+      .catch((err) => {
+        setError(err.response?.data?.message || 'Invalid email or password');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (

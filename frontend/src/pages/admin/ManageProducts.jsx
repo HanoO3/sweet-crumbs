@@ -35,7 +35,7 @@ export default function ManageProducts() {
     setForm({ ...form, [name]: type === 'checkbox' ? checked : value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
     setSaving(true);
@@ -44,28 +44,23 @@ export default function ManageProducts() {
     Object.entries(form).forEach(([key, value]) => data.append(key, value));
     if (imageFile) data.append('image', imageFile);
 
-    try {
-      if (editingId) {
-        await API.put(`/products/${editingId}`, data, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-      } else {
-        if (!imageFile) {
-          setError('Please select an image');
-          setSaving(false);
-          return;
-        }
-        await API.post('/products', data, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-      }
-      resetForm();
-      fetchProducts();
-    } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong');
-    } finally {
-      setSaving(false);
-    }
+    const req = editingId
+      ? API.put(`/products/${editingId}`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+      : !imageFile
+        ? Promise.reject(new Error('Please select an image'))
+        : API.post('/products', data, { headers: { 'Content-Type': 'multipart/form-data' } });
+
+    req
+      .then(() => {
+        resetForm();
+        fetchProducts();
+      })
+      .catch((err) => {
+        setError(err.response?.data?.message || err.message || 'Something went wrong');
+      })
+      .finally(() => {
+        setSaving(false);
+      });
   };
 
   const resetForm = () => {
@@ -87,14 +82,11 @@ export default function ManageProducts() {
     setImageFile(null);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
     if (!window.confirm('Delete this product?')) return;
-    try {
-      await API.delete(`/products/${id}`);
-      fetchProducts();
-    } catch (err) {
-      alert(err.response?.data?.message || 'Could not delete');
-    }
+    API.delete(`/products/${id}`)
+      .then(() => fetchProducts())
+      .catch((err) => alert(err.response?.data?.message || 'Could not delete'));
   };
 
   return (

@@ -15,19 +15,22 @@ export default function Register() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    try {
-      const res = await API.post('/users/register', form);
-      login(res.data);
-      navigate('/');
-    } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong');
-    } finally {
-      setLoading(false);
-    }
+
+    API.post('/users/register', form)
+      .then((res) => {
+        login(res.data);
+        navigate('/');
+      })
+      .catch((err) => {
+        setError(err.response?.data?.message || 'Something went wrong');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
