@@ -4,12 +4,23 @@ const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState(() => {
-    const saved = localStorage.getItem('cartItems');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('cartItems');
+      const parsed = saved ? JSON.parse(saved) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (err) {
+      console.error('Failed to parse cartItems from localStorage:', err);
+      localStorage.removeItem('cartItems');
+      return [];
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    try {
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    } catch (err) {
+      console.error('Failed to save cartItems to localStorage:', err);
+    }
   }, [cartItems]);
 
   const addToCart = (product, quantity = 1) => {
@@ -42,11 +53,11 @@ export function CartProvider({ children }) {
   const clearCart = () => setCartItems([]);
 
   const cartTotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => sum + (item.price || 0) * (item.quantity || 1),
     0
   );
 
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const cartCount = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
   return (
     <CartContext.Provider

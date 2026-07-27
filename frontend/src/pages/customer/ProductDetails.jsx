@@ -16,19 +16,26 @@ export default function ProductDetails() {
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    API.get(`/products/${id}`)
-      .then((res) => {
-        setProduct(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
+    let isMounted = true;
+    const fetchProduct = async () => {
+      setLoading(true);
+      try {
+        const res = await API.get(`/products/${id}`);
+        if (isMounted) setProduct(res.data);
+      } catch (err) {
         console.error('Failed to fetch product details:', err);
-        setLoading(false);
-      });
+        if (isMounted) setProduct(null);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+
+    fetchProduct();
+    return () => { isMounted = false; };
   }, [id]);
 
   const handleAddToCart = () => {
+    if (!product) return;
     addToCart(product, quantity);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
