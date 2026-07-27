@@ -1,134 +1,258 @@
 .page {
-  min-height: 80vh;
+  padding: 4rem 0 6rem 0;
+  min-height: 85vh;
   background: var(--bg);
-  padding: 5rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.content {
-  max-width: 680px;
+.container {
+  max-width: 1100px;
   margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.header {
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  max-width: 680px;
+  margin: 0 auto 3.5rem auto;
 }
 
 .eyebrow {
   display: inline-block;
-  color: var(--accent);
   font-size: 13px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 800;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 6px 16px;
+  border-radius: 20px;
   margin-bottom: 12px;
 }
 
 .title {
-  font-family: var(--heading);
-  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
   color: var(--text-h);
-  margin-bottom: 24px;
-  font-weight: 700;
+  margin-bottom: 10px;
 }
 
-.text {
+.subtitle {
+  font-size: 16px;
   color: var(--text);
-  font-size: 17px;
-  line-height: 1.8;
-  margin-bottom: 20px;
-  text-align: justify;
+  line-height: 1.6;
+}
+
+/* About Page Specifics */
+.storyGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+.storyCard, .storyCardAlt {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  background: white;
+  padding: 2.5rem;
+  border-radius: 28px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.storyImgWrapper {
+  border-radius: 20px;
+  overflow: hidden;
+  height: 280px;
+}
+
+.storyImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.storyContent h3 {
+  font-size: 24px;
+  margin-bottom: 1rem;
+}
+
+.storyContent p {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.statBox {
+  background: white;
+  border-radius: 24px;
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.statBox h2 {
+  font-size: 2.8rem;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.statBox p {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 0;
+}
+
+.ctaBox {
+  background: linear-gradient(135deg, #FFE5F0 0%, #FFF3C4 100%);
+  border-radius: 28px;
+  padding: 3.5rem;
+  text-align: center;
+  border: 1.5px dashed var(--border);
+}
+
+.ctaBox h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.ctaBtn {
+  display: inline-block;
+  background: var(--accent);
+  color: white;
+  padding: 14px 32px;
+  border-radius: 30px;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 16px;
+  box-shadow: 0 6px 18px rgba(255, 127, 180, 0.35);
+  transition: var(--transition);
+}
+
+.ctaBtn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+/* Contact Page Specifics */
+.contactLayout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.formCard {
+  background: white;
+  border-radius: 24px;
+  padding: 2.5rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.formTitle {
+  font-size: 22px;
+  margin-bottom: 1.5rem;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 32px;
-  width: 100%;
-  max-width: 500px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: var(--shadow-sm);
-  text-align: left;
+  gap: 1.25rem;
 }
 
-.form input,
-.form textarea {
-  padding: 14px 16px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 14px;
-  font-family: inherit;
-  outline: none;
-  background-color: var(--bg-secondary);
-  transition: var(--transition);
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
 }
 
-.form input:focus,
-.form textarea:focus {
-  border-color: var(--accent);
-  background-color: var(--card-bg);
-  box-shadow: 0 0 0 4px rgba(191, 110, 70, 0.1);
-}
-
-.form button {
-  padding: 16px;
+.sendBtn {
   background: var(--accent);
   color: white;
-  border: none;
-  border-radius: 10px;
+  padding: 14px;
+  border-radius: 24px;
+  font-size: 16px;
   font-weight: 700;
+  border: none;
   cursor: pointer;
+  box-shadow: 0 6px 18px rgba(255, 127, 180, 0.3);
   transition: var(--transition);
-  box-shadow: 0 4px 12px rgba(191, 110, 70, 0.2);
-  font-size: 15px;
 }
 
-.form button:hover {
+.sendBtn:hover {
   background: var(--accent-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(191, 110, 70, 0.3);
 }
 
-.info {
-  margin-top: 4rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  color: var(--text-h);
-  font-size: 15px;
-  font-weight: 600;
-  width: 100%;
-}
-
-.info p {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: var(--bg-secondary);
+.infoCard {
+  background: white;
+  border-radius: 24px;
+  padding: 2rem;
   border: 1px solid var(--border);
-  border-radius: 30px;
+  box-shadow: var(--shadow-sm);
 }
 
-@media (max-width: 768px) {
-  .page {
-    padding: 3rem 1.25rem;
+.infoCard h3 {
+  font-size: 20px;
+  margin-bottom: 1.5rem;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.infoItem {
+  display: flex;
+  gap: 14px;
+  font-size: 14px;
+}
+
+.infoIcon {
+  font-size: 22px;
+}
+
+.infoItem strong {
+  display: block;
+  color: var(--text-h);
+  margin-bottom: 2px;
+}
+
+.infoItem p {
+  color: var(--text);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.successState {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.successIcon {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 868px) {
+  .storyCard, .storyCardAlt {
+    grid-template-columns: 1fr;
   }
-  .info {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
+  .contactLayout {
+    grid-template-columns: 1fr;
   }
-  .info p {
-    width: 100%;
-    justify-content: center;
+  .statsRow {
+    grid-template-columns: 1fr;
   }
 }

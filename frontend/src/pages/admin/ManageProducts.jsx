@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import API from '../../api/axios';
+import { getImageUrl, handleImageError } from '../../utils/imageUtils';
 import styles from './ManageProducts.module.css';
 
 const emptyForm = {
@@ -94,14 +95,6 @@ export default function ManageProducts() {
     } catch (err) {
       alert(err.response?.data?.message || 'Could not delete');
     }
-  };
-
-  const getImageUrl = (img) => {
-    if (!img) return '';
-    if (img.startsWith('http://') || img.startsWith('https://')) {
-      return img;
-    }
-    return `http://localhost:5000${img}`;
   };
 
   return (
@@ -208,6 +201,7 @@ export default function ManageProducts() {
                   src={getImageUrl(p.image)}
                   alt={p.name}
                   className={styles.thumb}
+                  onError={(e) => handleImageError(e)}
                 />
               </td>
               <td>{p.name}</td>

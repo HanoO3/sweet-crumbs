@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import API from '../../api/axios';
 import { useCart } from '../../context/CartContext';
 import styles from './Checkout.module.css';
@@ -51,71 +51,111 @@ export default function Checkout() {
   };
 
   if (cartItems.length === 0) {
-    return <p className={styles.status}>Your cart is empty.</p>;
+    return (
+      <div className={styles.emptyContainer}>
+        <div className={styles.emptyBox}>
+          <span>🧁</span>
+          <h2>Your cart is empty</h2>
+          <p>Please add some bakery items to your cart before checking out.</p>
+          <Link to="/products" className={styles.shopBtn}>
+            Return to Menu
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.title}>Checkout</h1>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Checkout</h1>
+        <p className={styles.subtitle}>Complete your delivery details to confirm your order.</p>
 
-      <div className={styles.layout}>
-        <form className={styles.form} onSubmit={handlePlaceOrder}>
-          <h2>Shipping Details</h2>
+        <div className={styles.layout}>
+          <form className={styles.formCard} onSubmit={handlePlaceOrder}>
+            <h2 className={styles.sectionHeading}>📦 Shipping & Delivery Address</h2>
 
-          {error && <p className={styles.error}>{error}</p>}
+            {error && <div className={styles.errorBanner}>{error}</div>}
 
-          <label>Full Name</label>
-          <input
-            name="fullName"
-            value={form.fullName}
-            onChange={handleChange}
-            required
-          />
-
-          <label>Address</label>
-          <input
-            name="address"
-            value={form.address}
-            onChange={handleChange}
-            required
-          />
-
-          <label>City</label>
-          <input
-            name="city"
-            value={form.city}
-            onChange={handleChange}
-            required
-          />
-
-          <label>Phone</label>
-          <input
-            name="phone"
-            value={form.phone}
-            onChange={handleChange}
-            required
-          />
-
-          <div className={styles.paymentNote}>
-            Payment method: <strong>Cash on Delivery</strong>
-          </div>
-
-          <button className={styles.placeBtn} type="submit" disabled={placing}>
-            {placing ? 'Placing order...' : `Place Order — Rs. ${cartTotal}`}
-          </button>
-        </form>
-
-        <div className={styles.summary}>
-          <h2>Order Summary</h2>
-          {cartItems.map((item) => (
-            <div key={item._id} className={styles.summaryItem}>
-              <span>{item.name} × {item.quantity}</span>
-              <span>Rs. {item.price * item.quantity}</span>
+            <div className={styles.inputGroup}>
+              <label>Full Name</label>
+              <input
+                name="fullName"
+                placeholder="e.g. Ayesha Malik"
+                value={form.fullName}
+                onChange={handleChange}
+                required
+              />
             </div>
-          ))}
-          <div className={styles.summaryTotal}>
-            <span>Total</span>
-            <span>Rs. {cartTotal}</span>
+
+            <div className={styles.inputGroup}>
+              <label>Delivery Address</label>
+              <input
+                name="address"
+                placeholder="House / Apartment number, Street name"
+                value={form.address}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className={styles.rowTwo}>
+              <div className={styles.inputGroup}>
+                <label>City</label>
+                <input
+                  name="city"
+                  placeholder="e.g. Lahore, Karachi"
+                  value={form.city}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label>Mobile Phone</label>
+                <input
+                  name="phone"
+                  placeholder="0300-1234567"
+                  value={form.phone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className={styles.paymentBox}>
+              <div className={styles.paymentHeader}>
+                <span>💵 Payment Method</span>
+                <span className={styles.codBadge}>Cash on Delivery</span>
+              </div>
+              <p className={styles.paymentDesc}>
+                Pay conveniently with cash when your fresh bakery box arrives at your doorstep.
+              </p>
+            </div>
+
+            <button className={styles.placeBtn} type="submit" disabled={placing}>
+              {placing ? 'Baking & Confirming Order...' : `Confirm & Place Order — Rs. ${cartTotal}`}
+            </button>
+          </form>
+
+          <div className={styles.summaryCard}>
+            <h2 className={styles.sectionHeading}>🛒 Order Items</h2>
+            <div className={styles.itemsList}>
+              {cartItems.map((item) => (
+                <div key={item._id} className={styles.summaryItem}>
+                  <div className={styles.itemMeta}>
+                    <span className={styles.itemName}>{item.name}</span>
+                    <span className={styles.itemQty}>Qty: {item.quantity}</span>
+                  </div>
+                  <span className={styles.itemPrice}>Rs. {item.price * item.quantity}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className={styles.summaryTotal}>
+              <span>Grand Total</span>
+              <span>Rs. {cartTotal}</span>
+            </div>
           </div>
         </div>
       </div>

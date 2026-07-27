@@ -1,5 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import MobileCartBar from './components/MobileCartBar';
 import AdminRoute from './components/AdminRoute';
 import AdminLayout from './components/AdminLayout';
 
@@ -40,6 +42,8 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
               </Routes>
+              <MobileCartBar />
+              <Footer />
             </>
           }
         />

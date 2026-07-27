@@ -1,0 +1,201 @@
+.footer {
+  background: var(--text-h);
+  color: #E2D3CC;
+  padding: 4.5rem 0 2rem 0;
+  border-top: 4px solid var(--accent);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr 1fr 1.2fr;
+  gap: 3rem;
+  margin-bottom: 3.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  margin-bottom: 1rem;
+}
+
+.brandName {
+  font-family: var(--heading);
+  font-size: 26px;
+  font-weight: 700;
+  color: #FFF;
+}
+
+.brandAccent {
+  color: var(--accent);
+}
+
+.brandDesc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #BCAAA4;
+  margin-bottom: 1.5rem;
+}
+
+.socials {
+  display: flex;
+  gap: 12px;
+}
+
+.socials a {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.socials a:hover {
+  background: var(--accent);
+  transform: translateY(-3px);
+}
+
+.colTitle {
+  font-family: var(--heading);
+  font-size: 18px;
+  color: #FFF;
+  margin-bottom: 1.25rem;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.list a {
+  color: #BCAAA4;
+  text-decoration: none;
+  font-size: 14px;
+  transition: var(--transition-fast);
+}
+
+.list a:hover {
+  color: var(--cyan);
+  padding-left: 4px;
+}
+
+.hoursText {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #BCAAA4;
+  margin-bottom: 1.25rem;
+}
+
+.hoursText strong {
+  color: #FFF;
+}
+
+.contactInfo p {
+  font-size: 13px;
+  color: #BCAAA4;
+  margin-bottom: 6px;
+}
+
+.newsletterDesc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #BCAAA4;
+  margin-bottom: 1rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form input {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 12px;
+}
+
+.form input::placeholder {
+  color: #9E8E87;
+}
+
+.form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 127, 180, 0.2);
+}
+
+.subBtn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.subBtn:hover {
+  background: var(--accent-hover);
+}
+
+.subscribedMsg {
+  background: rgba(0, 200, 215, 0.15);
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.bottomBar {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #8D7B74;
+}
+
+.loveTag {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .bottomBar {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
