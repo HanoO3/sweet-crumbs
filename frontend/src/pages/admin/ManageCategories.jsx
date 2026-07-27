@@ -46,59 +46,91 @@ export default function ManageCategories() {
   };
 
   const handleDelete = (id) => {
-    if (!window.confirm('Delete this category?')) return;
+    if (!window.confirm('Delete this category? Products in this category will be uncategorized.')) return;
     API.delete(`/categories/${id}`)
       .then(() => fetchCategories())
       .catch((err) => alert(err.response?.data?.message || 'Could not delete'));
   };
 
   return (
-    <div>
-      <h1 className={styles.title}>Manage Categories</h1>
+    <div className={styles.container}>
+      <div className={styles.layout}>
+        {/* Form Card */}
+        <div className={styles.formCard}>
+          <h3>{editingId ? '✏️ Edit Category' : '🏷️ Create New Category'}</h3>
+          <p className={styles.formSubtitle}>
+            Categories help customers filter pastries and desserts on the menu.
+          </p>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Category name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-        <button type="submit">{editingId ? 'Update' : 'Add'} Category</button>
-        {editingId && (
-          <button type="button" className={styles.cancelBtn} onClick={handleCancel}>
-            Cancel
-          </button>
-        )}
-      </form>
+          {error && <div className={styles.errorBox}>{error}</div>}
 
-      {error && <p className={styles.error}>{error}</p>}
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <div className={styles.inputGroup}>
+              <label>Category Name</label>
+              <input
+                type="text"
+                placeholder="e.g. Fluffy Cupcakes, Donut Rings"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
 
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Slug</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categories.map((cat) => (
-            <tr key={cat._id}>
-              <td>{cat.name}</td>
-              <td>{cat.slug}</td>
-              <td>
-                <button className={styles.editBtn} onClick={() => handleEdit(cat)}>
-                  Edit
+            <div className={styles.formActions}>
+              <button type="submit" className={styles.submitBtn}>
+                {editingId ? 'Update Category' : 'Add Category'}
+              </button>
+              {editingId && (
+                <button type="button" className={styles.cancelBtn} onClick={handleCancel}>
+                  Cancel
                 </button>
-                <button className={styles.deleteBtn} onClick={() => handleDelete(cat._id)}>
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              )}
+            </div>
+          </form>
+        </div>
+
+        {/* Table Card */}
+        <div className={styles.tableCard}>
+          <div className={styles.tableHeader}>
+            <h3>All Categories ({categories.length})</h3>
+            <p>Active product groupings for store navigation.</p>
+          </div>
+
+          <div className={styles.tableResponsive}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Category Name</th>
+                  <th>URL Slug</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {categories.map((cat) => (
+                  <tr key={cat._id}>
+                    <td>
+                      <strong className={styles.catTitle}>{cat.name}</strong>
+                    </td>
+                    <td>
+                      <code className={styles.slugTag}>/{cat.slug}</code>
+                    </td>
+                    <td>
+                      <div className={styles.actionsGroup}>
+                        <button className={styles.editBtn} onClick={() => handleEdit(cat)}>
+                          Edit
+                        </button>
+                        <button className={styles.deleteBtn} onClick={() => handleDelete(cat._id)}>
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
