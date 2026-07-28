@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import API from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';
 import styles from './Auth.module.css';
 
 export default function Register() {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
@@ -26,7 +28,7 @@ export default function Register() {
         navigate('/');
       })
       .catch((err) => {
-        setError(err.response?.data?.message || 'Something went wrong');
+        setError(err.response?.data?.message || 'Failed to create account. Email might be registered already.');
       })
       .finally(() => {
         setLoading(false);
@@ -35,50 +37,132 @@ export default function Register() {
 
   return (
     <div className={styles.page}>
-      <form className={styles.card} onSubmit={handleSubmit}>
-        <h1 className={styles.title}>Create Account</h1>
+      <motion.div
+        className={styles.authWrapper}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {/* Left Side: Brand Visual */}
+        <div className={styles.brandSide}>
+          <div className={styles.brandBadge}>
+            <svg viewBox="0 0 54 54" width="46" height="46" fill="none">
+              <circle cx="27" cy="27" r="22" fill="var(--accent)" />
+              <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
+              <rect x="18" y="15" width="5" height="2" rx="1" transform="rotate(30 18 15)" fill="var(--cyan)" />
+              <rect x="32" y="13" width="5" height="2" rx="1" transform="rotate(-45 32 13)" fill="var(--yellow)" />
+            </svg>
+            <h2>Sweet Crumbs</h2>
+          </div>
 
-        {error && <p className={styles.error}>{error}</p>}
+          <h2 className={styles.brandHeadline}>
+            Join Our Bakery<br /><span>Dessert Club!</span>
+          </h2>
+          <p className={styles.brandSub}>
+            Create your account today to save your favorite treats, get instant order updates, and unlock member rewards!
+          </p>
 
-        <label className={styles.label}>Full Name</label>
-        <input
-          className={styles.input}
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
+          <div className={styles.perksList}>
+            <div className={styles.perkItem}>
+              <span>🎁</span> Special welcome discount on your first order
+            </div>
+            <div className={styles.perkItem}>
+              <span>⚡</span> Fast 1-click checkout with saved addresses
+            </div>
+            <div className={styles.perkItem}>
+              <span>⭐</span> Rate & review your favorite bakeries & treats
+            </div>
+          </div>
+        </div>
 
-        <label className={styles.label}>Email</label>
-        <input
-          className={styles.input}
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
+        {/* Right Side: Form Card */}
+        <form className={styles.formCard} onSubmit={handleSubmit}>
+          <div className={styles.formHeader}>
+            <h1>Create Account</h1>
+            <p>Join thousands of dessert lovers in town.</p>
+          </div>
 
-        <label className={styles.label}>Password</label>
-        <input
-          className={styles.input}
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-          minLength={6}
-          required
-        />
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className={styles.errorBanner}
+            >
+              ⚠️ {error}
+            </motion.div>
+          )}
 
-        <button className={styles.submitBtn} type="submit" disabled={loading}>
-          {loading ? 'Creating account...' : 'Create Account'}
-        </button>
+          <div className={styles.formGroup}>
+            <label>Full Name</label>
+            <div className={styles.inputWrapper}>
+              <span className={styles.inputIcon}>👤</span>
+              <input
+                type="text"
+                name="name"
+                placeholder="e.g. Sana Riaz"
+                value={form.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
 
-        <p className={styles.switchText}>
-          Already have an account? <Link to="/login">Login</Link>
-        </p>
-      </form>
+          <div className={styles.formGroup}>
+            <label>Email Address</label>
+            <div className={styles.inputWrapper}>
+              <span className={styles.inputIcon}>✉️</span>
+              <input
+                type="email"
+                name="email"
+                placeholder="sana@example.com"
+                value={form.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label>Password</label>
+            <div className={styles.inputWrapper}>
+              <span className={styles.inputIcon}>🔒</span>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                placeholder="At least 6 characters..."
+                value={form.password}
+                onChange={handleChange}
+                minLength={6}
+                required
+              />
+              <button
+                type="button"
+                className={styles.eyeBtn}
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? '👁️' : '🙈'}
+              </button>
+            </div>
+          </div>
+
+          <button className={styles.submitBtn} type="submit" disabled={loading}>
+            {loading ? (
+              <span className={styles.btnLoading}>
+                <span className={styles.miniSpinner}></span> Creating Account...
+              </span>
+            ) : (
+              'Create My Account →'
+            )}
+          </button>
+
+          <div className={styles.switchBox}>
+            <span>Already have an account?</span>
+            <Link to="/login" className={styles.switchLink}>
+              Sign In
+            </Link>
+          </div>
+        </form>
+      </motion.div>
     </div>
   );
 }
