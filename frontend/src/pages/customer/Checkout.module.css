@@ -204,6 +204,37 @@
   margin-top: 1rem;
 }
 
+.phoneInputWrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: white;
+}
+
+.phoneInputWrapper:focus-within {
+  border-color: var(--accent);
+}
+
+.countryCode {
+  padding: 12px 14px;
+  background: var(--bg-secondary);
+  color: var(--text-h);
+  font-weight: 700;
+  font-size: 14px;
+  border-right: 1px solid var(--border);
+}
+
+.phoneInput {
+  border: none !important;
+  border-radius: 0 !important;
+  flex: 1;
+  padding: 12px 14px;
+  font-size: 14px;
+  outline: none;
+}
+
 @media (max-width: 868px) {
   .layout {
     grid-template-columns: 1fr;

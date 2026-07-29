@@ -80,7 +80,7 @@ export default function Navbar() {
 
           {/* Mobile Hamburger Button */}
           <button
-            className={styles.hamburgerBtn}
+            className={`${styles.hamburgerBtn} ${mobileOpen ? styles.hideHamburger : ''}`}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle navigation menu"
           >
@@ -125,19 +125,26 @@ export default function Navbar() {
           <Link to="/cart" onClick={() => setMobileOpen(false)}>
             <span className={styles.drawerIcon}>🛒</span> Shopping Cart ({cartCount})
           </Link>
+
+          {user && user.role === 'admin' && (
+            <Link to="/admin" onClick={() => setMobileOpen(false)} className={styles.drawerAdminLink}>
+              <span className={styles.drawerIcon}>⚙️</span> Admin Dashboard
+            </Link>
+          )}
+
+          {user && (
+            <button onClick={handleLogout} className={styles.drawerLogoutNavLink}>
+              <span className={styles.drawerIcon}>🚪</span> Logout ({user.name.split(' ')[0]})
+            </button>
+          )}
         </div>
 
         <div className={styles.drawerFooter}>
           {user ? (
             <div className={styles.drawerUserBox}>
-              <p className={styles.drawerUserGreeting}>Signed in as <strong>{user.name}</strong></p>
-              {user.role === 'admin' && (
-                <Link to="/admin" className={styles.drawerAdminBtn} onClick={() => setMobileOpen(false)}>
-                  ⚙️ Admin Dashboard
-                </Link>
-              )}
+              <p className={styles.drawerUserGreeting}>Signed in as <strong>{user.name}</strong> ({user.role})</p>
               <button onClick={handleLogout} className={styles.drawerLogoutBtn}>
-                Logout
+                🚪 Account Logout
               </button>
             </div>
           ) : (

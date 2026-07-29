@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import API from '../../api/axios';
+import { useToast } from '../../context/ToastContext';
 import { getImageUrl, handleImageError } from '../../utils/imageUtils';
 import styles from './ManageProducts.module.css';
 
@@ -13,6 +14,7 @@ const emptyForm = {
 };
 
 export default function ManageProducts() {
+  const { showToast } = useToast();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [form, setForm] = useState(emptyForm);
@@ -50,11 +52,12 @@ export default function ManageProducts() {
     setError('');
     setSaving(true);
 
+    const isEdit = !!editingId;
     const data = new FormData();
     Object.entries(form).forEach(([key, value]) => data.append(key, value));
     if (imageFile) data.append('image', imageFile);
 
-    const req = editingId
+    const req = isEdit
       ? API.put(`/products/${editingId}`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
       : !imageFile
         ? Promise.reject(new Error('Please select a product image'))
@@ -62,11 +65,14 @@ export default function ManageProducts() {
 
     req
       .then(() => {
+        showToast(isEdit ? 'Product updated successfully! ✏️' : 'Product added successfully! 🧁', 'success');
         resetForm();
         fetchProducts();
       })
       .catch((err) => {
-        setError(err.response?.data?.message || err.message || 'Something went wrong');
+        const msg = err.response?.data?.message || err.message || 'Something went wrong';
+        setError(msg);
+        showToast(msg, 'error');
       })
       .finally(() => {
         setSaving(false);
@@ -98,8 +104,14 @@ export default function ManageProducts() {
   const handleDelete = (id) => {
     if (!window.confirm('Are you sure you want to delete this delicacy?')) return;
     API.delete(`/products/${id}`)
-      .then(() => fetchProducts())
-      .catch((err) => alert(err.response?.data?.message || 'Could not delete'));
+      .then(() => {
+        showToast('Product deleted successfully! 🗑️', 'info');
+        fetchProducts();
+      })
+      .catch((err) => {
+        const msg = err.response?.data?.message || 'Could not delete product';
+        showToast(msg, 'error');
+      });
   };
 
   const filteredProducts = products.filter((p) =>

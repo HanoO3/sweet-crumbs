@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import API from '../../api/axios';
+import { useToast } from '../../context/ToastContext';
 import styles from './ManageOrders.module.css';
 
 const STATUSES = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
 
 export default function ManageOrders() {
+  const { showToast } = useToast();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('All');
@@ -21,7 +23,14 @@ export default function ManageOrders() {
   }, []);
 
   const handleStatusChange = (id, status) => {
-    API.put(`/orders/${id}/status`, { status }).then(() => fetchOrders());
+    API.put(`/orders/${id}/status`, { status })
+      .then(() => {
+        showToast(`Order status updated to "${status}"! 📦`, 'success');
+        fetchOrders();
+      })
+      .catch((err) => {
+        showToast(err.response?.data?.message || 'Could not update status', 'error');
+      });
   };
 
   const filteredOrders = orders.filter((o) => {

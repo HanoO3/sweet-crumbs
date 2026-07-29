@@ -199,6 +199,47 @@
   margin: 0;
 }
 
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbarLogoutBtn {
+  background: #FFF0F5;
+  border: 1px solid var(--accent);
+  color: var(--accent-hover);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.topbarLogoutBtn:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.sidebarLogoutBtn {
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFB3D1;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.sidebarLogoutBtn:hover {
+  background: var(--accent);
+  color: white;
+}
+
 .statusPill {
   display: flex;
   align-items: center;

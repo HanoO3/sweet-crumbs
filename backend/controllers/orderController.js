@@ -9,6 +9,10 @@ const createOrder = async (req, res) => {
       return res.status(400).json({ message: 'No order items' });
     }
 
+    if (!/^\+92\d{10}$/.test(shippingAddress?.phone || '')) {
+      return res.status(400).json({ message: 'Phone number must be in the format +92XXXXXXXXXX' });
+    }
+
     for (const item of items) {
       const product = await Product.findById(item.product);
       if (!product) {

@@ -18,7 +18,15 @@ export default function Checkout() {
   const [error, setError] = useState('');
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === 'phone') {
+      const digitsOnly = value.replace(/\D/g, '').slice(0, 10);
+      setForm({ ...form, phone: digitsOnly });
+      return;
+    }
+
+    setForm({ ...form, [name]: value });
   };
 
   const handlePlaceOrder = (e) => {
@@ -35,7 +43,7 @@ export default function Checkout() {
 
     API.post('/orders', {
       items,
-      shippingAddress: form,
+      shippingAddress: { ...form, phone: `+92${form.phone}` },
       totalPrice: cartTotal,
       paymentMethod: 'Cash on Delivery',
     })
@@ -114,13 +122,20 @@ export default function Checkout() {
 
               <div className={styles.inputGroup}>
                 <label>Mobile Phone</label>
-                <input
-                  name="phone"
-                  placeholder="0300-1234567"
-                  value={form.phone}
-                  onChange={handleChange}
-                  required
-                />
+                <div className={styles.phoneInputWrapper}>
+                  <span className={styles.countryCode}>+92</span>
+                  <input
+                    name="phone"
+                    type="tel"
+                    inputMode="numeric"
+                    maxLength={10}
+                    placeholder="3001234567"
+                    value={form.phone}
+                    onChange={handleChange}
+                    className={styles.phoneInput}
+                    required
+                  />
+                </div>
               </div>
             </div>
 

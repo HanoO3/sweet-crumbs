@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import API from '../../api/axios';
+import { useToast } from '../../context/ToastContext';
 import styles from './ManageCategories.module.css';
 
 export default function ManageCategories() {
+  const { showToast } = useToast();
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState('');
   const [editingId, setEditingId] = useState(null);
@@ -20,18 +22,22 @@ export default function ManageCategories() {
     e.preventDefault();
     setError('');
 
-    const req = editingId
+    const isEdit = !!editingId;
+    const req = isEdit
       ? API.put(`/categories/${editingId}`, { name })
       : API.post('/categories', { name });
 
     req
       .then(() => {
+        showToast(isEdit ? 'Category updated successfully! 🏷️' : 'Category created successfully! 🏷️', 'success');
         setName('');
         setEditingId(null);
         fetchCategories();
       })
       .catch((err) => {
-        setError(err.response?.data?.message || 'Something went wrong');
+        const msg = err.response?.data?.message || 'Something went wrong';
+        setError(msg);
+        showToast(msg, 'error');
       });
   };
 
@@ -48,8 +54,14 @@ export default function ManageCategories() {
   const handleDelete = (id) => {
     if (!window.confirm('Delete this category? Products in this category will be uncategorized.')) return;
     API.delete(`/categories/${id}`)
-      .then(() => fetchCategories())
-      .catch((err) => alert(err.response?.data?.message || 'Could not delete'));
+      .then(() => {
+        showToast('Category deleted successfully! 🗑️', 'info');
+        fetchCategories();
+      })
+      .catch((err) => {
+        const msg = err.response?.data?.message || 'Could not delete category';
+        showToast(msg, 'error');
+      });
   };
 
   return (

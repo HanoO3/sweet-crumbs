@@ -1,12 +1,19 @@
 import { useState } from 'react';
-import { NavLink, Outlet, Link, useLocation } from 'react-router-dom';
+import { NavLink, Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import styles from './AdminLayout.module.css';
 
 export default function AdminLayout() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const location = useLocation();
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    setMobileSidebarOpen(false);
+    navigate('/');
+  };
 
   const getPageTitle = () => {
     if (location.pathname === '/admin/products') return 'Product Management';
@@ -92,6 +99,9 @@ export default function AdminLayout() {
             <span className={styles.userName}>{user?.name || 'Administrator'}</span>
             <span className={styles.userRole}>Store Owner</span>
           </div>
+          <button onClick={handleLogout} className={styles.sidebarLogoutBtn} title="Logout">
+            🚪 Logout
+          </button>
         </div>
       </aside>
 
@@ -114,6 +124,9 @@ export default function AdminLayout() {
             <div className={styles.statusPill}>
               <span className={styles.statusDot}></span> Live Kitchen Server Active
             </div>
+            <button onClick={handleLogout} className={styles.topbarLogoutBtn}>
+              🚪 Logout
+            </button>
           </div>
         </header>
 
