@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -21,6 +23,26 @@ app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/uploads', express.static('uploads'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
+
+const frontendDistPath = path.join(__dirname, '..', 'frontend', 'dist');
+const frontendRootPath = path.join(__dirname, '..', 'frontend');
+
+if (fs.existsSync(frontendDistPath)) {
+  app.use(express.static(frontendDistPath));
+}
+
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+    return next();
+  }
+
+  const indexPath = path.join(frontendDistPath, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    return res.sendFile(indexPath);
+  }
+
+  return res.sendFile(path.join(frontendRootPath, 'index.html'));
+});
 
 // Global Error Handler
 app.use((err, req, res, next) => {
