@@ -15,6 +15,7 @@ import Login from './pages/customer/Login';
 import Register from './pages/customer/Register';
 import About from './pages/customer/About';
 import Contact from './pages/customer/Contact';
+import NotFound from './pages/customer/NotFound';
 
 import Dashboard from './pages/admin/Dashboard';
 import ManageProducts from './pages/admin/ManageProducts';
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
               <MobileCartBar />
               <Footer />

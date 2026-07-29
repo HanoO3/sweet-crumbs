@@ -20,9 +20,14 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
+
+// Catch unmatched /api and /uploads requests with a proper 404 JSON response
+app.all(['/api/*', '/uploads/*'], (req, res) => {
+  res.status(404).json({ message: 'Requested API endpoint or upload resource not found' });
+});
 
 const frontendDistPath = path.join(__dirname, '..', 'frontend', 'dist');
 const frontendRootPath = path.join(__dirname, '..', 'frontend');
@@ -31,11 +36,7 @@ if (fs.existsSync(frontendDistPath)) {
   app.use(express.static(frontendDistPath));
 }
 
-app.get('*', (req, res, next) => {
-  if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
-    return next();
-  }
-
+app.get('*', (req, res) => {
   const indexPath = path.join(frontendDistPath, 'index.html');
   if (fs.existsSync(indexPath)) {
     return res.sendFile(indexPath);
