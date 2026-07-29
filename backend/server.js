@@ -14,6 +14,50 @@ app.use(cors());
 app.use(express.json());
 
 
+const MONGODB_URI =
+  process.env.MONGODB_URI ||
+  'mongodb+srv://nasirhana3_db_user:K0wfXlQgZBMSXNDh@sweet-crumbs-cluster.kp0s8fx.mongodb.net/sweetcrumbs?retryWrites=true&w=majority';
+
+let isConnected = false;
+
+const seedDefaultAdmin = async () => {
+  try {
+    const User = require('./models/User');
+    const adminExists = await User.findOne({ email: 'hana@test.com' });
+    if (!adminExists) {
+      await User.create({
+        name: 'Hana Admin',
+        email: 'hana@test.com',
+        password: 'password123',
+        role: 'admin',
+      });
+      console.log('Default admin user (hana@test.com) seeded.');
+    }
+  } catch (err) {
+    console.error('Error seeding default admin:', err.message);
+  }
+};
+
+const connectDB = async () => {
+  if (isConnected && mongoose.connection.readyState === 1) {
+    return;
+  }
+  try {
+    const db = await mongoose.connect(MONGODB_URI);
+    isConnected = db.connections[0].readyState === 1;
+    console.log('MongoDB connected successfully');
+    await seedDefaultAdmin();
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+  }
+};
+
+// Middleware to ensure DB connection is ready before processing API requests
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
+
 app.get('/', (req, res) => {
   res.send('Sweet Crumbs API is running...');
 });
@@ -58,11 +102,6 @@ app.use((err, req, res, next) => {
     stack: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
 });
-
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log('MongoDB connected successfully'))
-  .catch((err) => console.error('MongoDB connection error:', err));
 
 const PORT = process.env.PORT || 5000;
 
