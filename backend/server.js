@@ -51,7 +51,7 @@ app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
 
 // Catch unmatched /api and /uploads requests with a proper 404 JSON response
-app.all(['/api/*', '/uploads/*'], (req, res) => {
+app.all(['/api/{*path}', '/uploads/{*path}'], (req, res) => {
   res.status(404).json({ message: 'Requested API endpoint or upload resource not found' });
 });
 
@@ -62,7 +62,7 @@ if (fs.existsSync(frontendDistPath)) {
   app.use(express.static(frontendDistPath));
 }
 
-app.get('*', (req, res) => {
+app.use((req, res) => {
   if (/\.(js|css|png|jpg|jpeg|gif|ico|svg|json|woff2?|map)$/i.test(req.path)) {
     return res.status(404).send('Asset not found');
   }
