@@ -26,6 +26,20 @@ function App() {
     <>
       <Routes>
         <Route
+          path="/admin/*"
+          element={
+            <AdminRoute>
+              <AdminLayout />
+            </AdminRoute>
+          }
+        >
+          <Route index element={<Dashboard />} />
+          <Route path="products" element={<ManageProducts />} />
+          <Route path="categories" element={<ManageCategories />} />
+          <Route path="orders" element={<ManageOrders />} />
+        </Route>
+
+        <Route
           path="/*"
           element={
             <>
@@ -47,20 +61,6 @@ function App() {
             </>
           }
         />
-
-        <Route
-          path="/admin"
-          element={
-            <AdminRoute>
-              <AdminLayout />
-            </AdminRoute>
-          }
-        >
-          <Route index element={<Dashboard />} />
-          <Route path="products" element={<ManageProducts />} />
-          <Route path="categories" element={<ManageCategories />} />
-          <Route path="orders" element={<ManageOrders />} />
-        </Route>
       </Routes>
     </>
   );
