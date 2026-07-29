@@ -35,16 +35,32 @@ export default function Products() {
     if (activeCategory) params.category = activeCategory;
     if (searchTerm) params.search = searchTerm;
 
+    let isMounted = true;
     API.get('/products', { params })
       .then((res) => {
-        setProducts(res.data);
-        setLoading(false);
+        if (isMounted) {
+          setProducts(res.data);
+          setLoading(false);
+        }
       })
       .catch((err) => {
         console.error('Failed to fetch products:', err);
-        setLoading(false);
+        if (isMounted) setLoading(false);
       });
+
+    return () => {
+      isMounted = false;
+    };
   }, [activeCategory, searchTerm]);
+
+  const displayProducts = products.filter((p) => {
+    if (!searchTerm || !searchTerm.trim()) return true;
+    const query = searchTerm.trim().toLowerCase();
+    const nameMatch = p.name?.toLowerCase().includes(query);
+    const descMatch = p.description?.toLowerCase().includes(query);
+    const catMatch = p.category?.name?.toLowerCase().includes(query);
+    return nameMatch || descMatch || catMatch;
+  });
 
   const handleCategoryClick = (catId) => {
     const next = new URLSearchParams(searchParams);
@@ -152,11 +168,15 @@ export default function Products() {
           </div>
         ) : (
           <>
-            {products.length === 0 && (
+            {displayProducts.length === 0 && (
               <div className={styles.noResults}>
                 <span className={styles.noResultsIcon}>🧁</span>
                 <h3>No delicacies found</h3>
-                <p>We couldn't find anything matching your search. Try resetting your search filter.</p>
+                <p>
+                  {searchTerm
+                    ? `We couldn't find anything matching "${searchTerm}". Try another search keyword or clear filters.`
+                    : 'We couldn\'t find anything matching your search. Try resetting your search filter.'}
+                </p>
                 <button className={styles.resetBtn} onClick={() => setSearchParams({})}>
                   Show All Items
                 </button>
@@ -165,7 +185,7 @@ export default function Products() {
 
             <motion.div layout className={styles.grid}>
               <AnimatePresence mode="popLayout">
-                {products.map((p, idx) => (
+                {displayProducts.map((p, idx) => (
                   <motion.div
                     layout
                     initial={{ opacity: 0, scale: 0.9 }}

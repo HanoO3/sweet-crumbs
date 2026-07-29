@@ -114,9 +114,15 @@ export default function ManageProducts() {
       });
   };
 
-  const filteredProducts = products.filter((p) =>
-    p.name.toLowerCase().includes(searchFilter.toLowerCase())
-  );
+  const filteredProducts = products.filter((p) => {
+    if (!searchFilter || !searchFilter.trim()) return true;
+    const q = searchFilter.trim().toLowerCase();
+    return (
+      p.name?.toLowerCase().includes(q) ||
+      p.description?.toLowerCase().includes(q) ||
+      p.category?.name?.toLowerCase().includes(q)
+    );
+  });
 
   return (
     <div className={styles.container}>

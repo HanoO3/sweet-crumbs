@@ -6,7 +6,13 @@ const getProducts = async (req, res) => {
     let filter = {};
 
     if (category) filter.category = category;
-    if (search) filter.name = { $regex: search, $options: 'i' };
+    if (search && search.trim()) {
+      const sanitized = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      filter.$or = [
+        { name: { $regex: sanitized, $options: 'i' } },
+        { description: { $regex: sanitized, $options: 'i' } },
+      ];
+    }
 
     const products = await Product.find(filter).populate('category', 'name slug');
     res.json(products);
