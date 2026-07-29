@@ -37,6 +37,10 @@ if (fs.existsSync(frontendDistPath)) {
 }
 
 app.get('*', (req, res) => {
+  if (/\.(js|css|png|jpg|jpeg|gif|ico|svg|json|woff2?|map)$/i.test(req.path)) {
+    return res.status(404).send('Asset not found');
+  }
+
   const indexPath = path.join(frontendDistPath, 'index.html');
   if (fs.existsSync(indexPath)) {
     return res.sendFile(indexPath);

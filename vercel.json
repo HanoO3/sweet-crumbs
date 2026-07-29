@@ -26,6 +26,10 @@
       "handle": "filesystem"
     },
     {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg|json|woff2?|map))",
+      "status": 404
+    },
+    {
       "src": "/(.*)",
       "dest": "frontend/index.html"
     }
