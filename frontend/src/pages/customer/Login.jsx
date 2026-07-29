@@ -30,7 +30,17 @@ export default function Login() {
         navigate(redirect || '/');
       })
       .catch((err) => {
-        setError(err.response?.data?.message || 'Invalid email or password. Please try again.');
+        if (err.response?.data?.message) {
+          setError(err.response.data.message);
+        } else if (err.response?.status === 401) {
+          setError('Invalid email or password. Please try again.');
+        } else if (err.response?.status >= 500) {
+          setError('Server error occurred. Please try again in a few moments.');
+        } else if (!err.response) {
+          setError('Network error. Unable to connect to server.');
+        } else {
+          setError('Invalid email or password. Please try again.');
+        }
       })
       .finally(() => {
         setLoading(false);
