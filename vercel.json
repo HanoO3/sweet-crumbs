@@ -9,7 +9,7 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "frontend/dist"
       }
     }
   ],
@@ -24,10 +24,6 @@
     },
     {
       "handle": "filesystem"
-    },
-    {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg|json|woff2?|map))",
-      "status": 404
     },
     {
       "src": "/(.*)",
