@@ -1,15 +1,13 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'sweetcrumbs_super_secret_key_2026';
-
 const protect = async (req, res, next) => {
   let token;
 
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
-      token = req.headers.authorization.split(' ')[1];
-      const decoded = jwt.verify(token, JWT_SECRET);
+      const secret = process.env.JWT_SECRET || 'sweetcrumbs_super_secret_key_2026';
+      const decoded = jwt.verify(token, secret);
       req.user = await User.findById(decoded.id).select('-password');
       return next();
     } catch (error) {

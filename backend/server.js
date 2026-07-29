@@ -10,51 +10,33 @@ dotenv.config();
 const app = express();
 
 
-app.use(cors());
-app.use(express.json());
-
-
 const MONGODB_URI =
   process.env.MONGODB_URI ||
   'mongodb+srv://nasirhana3_db_user:K0wfXlQgZBMSXNDh@sweet-crumbs-cluster.kp0s8fx.mongodb.net/sweetcrumbs?retryWrites=true&w=majority';
 
-let isConnected = false;
-
-const seedDefaultAdmin = async () => {
-  try {
-    const User = require('./models/User');
-    const adminExists = await User.findOne({ email: 'hana@test.com' });
-    if (!adminExists) {
-      await User.create({
-        name: 'Hana Admin',
-        email: 'hana@test.com',
-        password: 'password123',
-        role: 'admin',
-      });
-      console.log('Default admin user (hana@test.com) seeded.');
-    }
-  } catch (err) {
-    console.error('Error seeding default admin:', err.message);
-  }
-};
-
 const connectDB = async () => {
-  if (isConnected && mongoose.connection.readyState === 1) {
-    return;
-  }
+  if (mongoose.connection.readyState >= 1) return;
   try {
-    const db = await mongoose.connect(MONGODB_URI);
-    isConnected = db.connections[0].readyState === 1;
+    await mongoose.connect(MONGODB_URI);
     console.log('MongoDB connected successfully');
-    await seedDefaultAdmin();
   } catch (err) {
     console.error('MongoDB connection error:', err);
+    throw err;
   }
 };
 
-// Middleware to ensure DB connection is ready before processing API requests
+app.use(cors());
+app.use(express.json());
+
+// Ensure MongoDB is connected before serving any API routes
 app.use(async (req, res, next) => {
-  await connectDB();
+  if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+    try {
+      await connectDB();
+    } catch (err) {
+      return res.status(500).json({ message: 'Database connection error: ' + err.message });
+    }
+  }
   next();
 });
 
@@ -102,6 +84,8 @@ app.use((err, req, res, next) => {
     stack: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
 });
+
+connectDB().catch((err) => console.error('MongoDB initial connection error:', err));
 
 const PORT = process.env.PORT || 5000;
 

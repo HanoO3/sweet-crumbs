@@ -1,9 +1,11 @@
+const path = require('path');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const Category = require('./models/Category');
 const Product = require('./models/Product');
+const User = require('./models/User');
 
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 const categoriesData = [
   { name: 'Glazed Donuts', slug: 'glazed-donuts', image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=150&auto=format&fit=crop' },
@@ -173,6 +175,16 @@ const seed = async () => {
 
     await Product.insertMany(productsData);
     console.log('Seeded products.');
+
+    // Seed admin user
+    await User.deleteMany({ email: 'hana@test.com' });
+    await User.create({
+      name: 'Hana Admin',
+      email: 'hana@test.com',
+      password: '123456',
+      role: 'admin',
+    });
+    console.log('Seeded admin user hana@test.com (password: 123456).');
 
     console.log('Seeding completed successfully!');
     process.exit(0);

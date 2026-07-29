@@ -1,10 +1,9 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'sweetcrumbs_super_secret_key_2026';
-
 const generateToken = (id) => {
-  return jwt.sign({ id }, JWT_SECRET, { expiresIn: '30d' });
+  const secret = process.env.JWT_SECRET || 'sweetcrumbs_super_secret_key_2026';
+  return jwt.sign({ id }, secret, { expiresIn: '30d' });
 };
 
 const registerUser = async (req, res) => {
