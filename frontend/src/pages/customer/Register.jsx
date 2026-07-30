@@ -17,22 +17,20 @@ export default function Register() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    API.post('/users/register', form)
-      .then((res) => {
-        login(res.data);
-        navigate('/');
-      })
-      .catch((err) => {
-        setError(err.response?.data?.message || 'Failed to create account. Email might be registered already.');
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      const res = await API.post('/users/register', form);
+      login(res.data);
+      navigate('/');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to create account. Email might be registered already.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

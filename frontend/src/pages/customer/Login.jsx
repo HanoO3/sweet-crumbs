@@ -18,33 +18,31 @@ export default function Login() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    API.post('/users/login', form)
-      .then((res) => {
-        login(res.data);
-        const redirect = searchParams.get('redirect');
-        navigate(redirect || '/');
-      })
-      .catch((err) => {
-        if (err.response?.data?.message) {
-          setError(err.response.data.message);
-        } else if (err.response?.status === 401) {
-          setError('Invalid email or password. Please try again.');
-        } else if (err.response?.status >= 500) {
-          setError('Server error occurred. Please try again in a few moments.');
-        } else if (!err.response) {
-          setError('Network error. Unable to connect to server.');
-        } else {
-          setError('Invalid email or password. Please try again.');
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      const res = await API.post('/users/login', form);
+      login(res.data);
+      const redirect = searchParams.get('redirect');
+      navigate(redirect || '/');
+    } catch (err) {
+      if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else if (err.response?.status === 401) {
+        setError('Invalid email or password. Please try again.');
+      } else if (err.response?.status >= 500) {
+        setError('Server error occurred. Please try again in a few moments.');
+      } else if (!err.response) {
+        setError('Network error. Unable to connect to server.');
+      } else {
+        setError('Invalid email or password. Please try again.');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

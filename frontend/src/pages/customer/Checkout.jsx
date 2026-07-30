@@ -29,7 +29,7 @@ export default function Checkout() {
     setForm({ ...form, [name]: value });
   };
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
     setError('');
     setPlacing(true);
@@ -41,22 +41,20 @@ export default function Checkout() {
       quantity: item.quantity,
     }));
 
-    API.post('/orders', {
-      items,
-      shippingAddress: { ...form, phone: `+92${form.phone}` },
-      totalPrice: cartTotal,
-      paymentMethod: 'Cash on Delivery',
-    })
-      .then(() => {
-        clearCart();
-        navigate('/order-success');
-      })
-      .catch((err) => {
-        setError(err.response?.data?.message || 'Could not place order');
-      })
-      .finally(() => {
-        setPlacing(false);
+    try {
+      await API.post('/orders', {
+        items,
+        shippingAddress: { ...form, phone: `+92${form.phone}` },
+        totalPrice: cartTotal,
+        paymentMethod: 'Cash on Delivery',
       });
+      clearCart();
+      navigate('/order-success');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Could not place order');
+    } finally {
+      setPlacing(false);
+    }
   };
 
   if (cartItems.length === 0) {

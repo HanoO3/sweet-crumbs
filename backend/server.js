@@ -4,11 +4,11 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 dotenv.config();
 
 const app = express();
-
 
 const MONGODB_URI =
   process.env.MONGODB_URI ||
@@ -63,7 +63,7 @@ if (fs.existsSync(frontendDistPath)) {
   app.use(express.static(frontendDistPath));
 }
 
-app.use((req, res) => {
+app.use((req, res, next) => {
   if (/\.(js|css|png|jpg|jpeg|gif|ico|svg|json|woff2?|map)$/i.test(req.path)) {
     return res.status(404).send('Asset not found');
   }
@@ -73,18 +73,16 @@ app.use((req, res) => {
     return res.sendFile(indexPath);
   }
 
-  return res.sendFile(path.join(frontendRootPath, 'index.html'));
+  if (fs.existsSync(path.join(frontendRootPath, 'index.html'))) {
+    return res.sendFile(path.join(frontendRootPath, 'index.html'));
+  }
+
+  next();
 });
 
-// Global Error Handler
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-  res.status(statusCode).json({
-    message: err.message,
-    stack: process.env.NODE_ENV === 'production' ? null : err.stack,
-  });
-});
+// Centralized Error Handling Middleware
+app.use(notFound);
+app.use(errorHandler);
 
 if (!process.env.VERCEL) {
   const PORT = process.env.PORT || 5000;

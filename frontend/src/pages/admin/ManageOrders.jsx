@@ -11,26 +11,29 @@ export default function ManageOrders() {
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('All');
 
-  const fetchOrders = () => {
-    API.get('/orders').then((res) => {
+  const fetchOrders = async () => {
+    try {
+      const res = await API.get('/orders');
       setOrders(res.data || []);
+    } catch (err) {
+      showToast('Failed to load orders', 'error');
+    } finally {
       setLoading(false);
-    }).catch(() => setLoading(false));
+    }
   };
 
   useEffect(() => {
     fetchOrders();
   }, []);
 
-  const handleStatusChange = (id, status) => {
-    API.put(`/orders/${id}/status`, { status })
-      .then(() => {
-        showToast(`Order status updated to "${status}"! 📦`, 'success');
-        fetchOrders();
-      })
-      .catch((err) => {
-        showToast(err.response?.data?.message || 'Could not update status', 'error');
-      });
+  const handleStatusChange = async (id, status) => {
+    try {
+      await API.put(`/orders/${id}/status`, { status });
+      showToast(`Order status updated to "${status}"! 📦`, 'success');
+      fetchOrders();
+    } catch (err) {
+      showToast(err.response?.data?.message || 'Could not update status', 'error');
+    }
   };
 
   const filteredOrders = orders.filter((o) => {

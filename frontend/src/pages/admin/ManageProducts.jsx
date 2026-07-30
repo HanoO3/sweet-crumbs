@@ -25,13 +25,27 @@ export default function ManageProducts() {
   const [saving, setSaving] = useState(false);
   const [searchFilter, setSearchFilter] = useState('');
 
-  const fetchProducts = () => {
-    API.get('/products').then((res) => setProducts(res.data));
+  const fetchProducts = async () => {
+    try {
+      const res = await API.get('/products');
+      setProducts(res.data);
+    } catch (err) {
+      showToast('Failed to load products', 'error');
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const res = await API.get('/categories');
+      setCategories(res.data);
+    } catch (err) {
+      showToast('Failed to load categories', 'error');
+    }
   };
 
   useEffect(() => {
     fetchProducts();
-    API.get('/categories').then((res) => setCategories(res.data));
+    fetchCategories();
   }, []);
 
   const handleChange = (e) => {
@@ -47,36 +61,41 @@ export default function ManageProducts() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSaving(true);
 
     const isEdit = !!editingId;
+    if (!isEdit && !imageFile) {
+      const msg = 'Please select a product image';
+      setError(msg);
+      showToast(msg, 'error');
+      setSaving(false);
+      return;
+    }
+
     const data = new FormData();
     Object.entries(form).forEach(([key, value]) => data.append(key, value));
     if (imageFile) data.append('image', imageFile);
 
-    const req = isEdit
-      ? API.put(`/products/${editingId}`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
-      : !imageFile
-        ? Promise.reject(new Error('Please select a product image'))
-        : API.post('/products', data, { headers: { 'Content-Type': 'multipart/form-data' } });
-
-    req
-      .then(() => {
-        showToast(isEdit ? 'Product updated successfully! ✏️' : 'Product added successfully! 🧁', 'success');
-        resetForm();
-        fetchProducts();
-      })
-      .catch((err) => {
-        const msg = err.response?.data?.message || err.message || 'Something went wrong';
-        setError(msg);
-        showToast(msg, 'error');
-      })
-      .finally(() => {
-        setSaving(false);
-      });
+    try {
+      if (isEdit) {
+        await API.put(`/products/${editingId}`, data, { headers: { 'Content-Type': 'multipart/form-data' } });
+        showToast('Product updated successfully! ✏️', 'success');
+      } else {
+        await API.post('/products', data, { headers: { 'Content-Type': 'multipart/form-data' } });
+        showToast('Product added successfully! 🧁', 'success');
+      }
+      resetForm();
+      fetchProducts();
+    } catch (err) {
+      const msg = err.response?.data?.message || err.message || 'Something went wrong';
+      setError(msg);
+      showToast(msg, 'error');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const resetForm = () => {
@@ -101,17 +120,16 @@ export default function ManageProducts() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this delicacy?')) return;
-    API.delete(`/products/${id}`)
-      .then(() => {
-        showToast('Product deleted successfully! 🗑️', 'info');
-        fetchProducts();
-      })
-      .catch((err) => {
-        const msg = err.response?.data?.message || 'Could not delete product';
-        showToast(msg, 'error');
-      });
+    try {
+      await API.delete(`/products/${id}`);
+      showToast('Product deleted successfully! 🗑️', 'info');
+      fetchProducts();
+    } catch (err) {
+      const msg = err.response?.data?.message || 'Could not delete product';
+      showToast(msg, 'error');
+    }
   };
 
   const filteredProducts = products.filter((p) => {

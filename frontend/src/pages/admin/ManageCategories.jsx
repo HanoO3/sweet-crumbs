@@ -10,35 +10,41 @@ export default function ManageCategories() {
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState('');
 
-  const fetchCategories = () => {
-    API.get('/categories').then((res) => setCategories(res.data));
+  const fetchCategories = async () => {
+    try {
+      const res = await API.get('/categories');
+      setCategories(res.data);
+    } catch (err) {
+      showToast('Failed to load categories', 'error');
+    }
   };
 
   useEffect(() => {
     fetchCategories();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
     const isEdit = !!editingId;
-    const req = isEdit
-      ? API.put(`/categories/${editingId}`, { name })
-      : API.post('/categories', { name });
 
-    req
-      .then(() => {
-        showToast(isEdit ? 'Category updated successfully! 🏷️' : 'Category created successfully! 🏷️', 'success');
-        setName('');
-        setEditingId(null);
-        fetchCategories();
-      })
-      .catch((err) => {
-        const msg = err.response?.data?.message || 'Something went wrong';
-        setError(msg);
-        showToast(msg, 'error');
-      });
+    try {
+      if (isEdit) {
+        await API.put(`/categories/${editingId}`, { name });
+        showToast('Category updated successfully! 🏷️', 'success');
+      } else {
+        await API.post('/categories', { name });
+        showToast('Category created successfully! 🏷️', 'success');
+      }
+      setName('');
+      setEditingId(null);
+      fetchCategories();
+    } catch (err) {
+      const msg = err.response?.data?.message || 'Something went wrong';
+      setError(msg);
+      showToast(msg, 'error');
+    }
   };
 
   const handleEdit = (cat) => {
@@ -51,17 +57,16 @@ export default function ManageCategories() {
     setName('');
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (!window.confirm('Delete this category? Products in this category will be uncategorized.')) return;
-    API.delete(`/categories/${id}`)
-      .then(() => {
-        showToast('Category deleted successfully! 🗑️', 'info');
-        fetchCategories();
-      })
-      .catch((err) => {
-        const msg = err.response?.data?.message || 'Could not delete category';
-        showToast(msg, 'error');
-      });
+    try {
+      await API.delete(`/categories/${id}`);
+      showToast('Category deleted successfully! 🗑️', 'info');
+      fetchCategories();
+    } catch (err) {
+      const msg = err.response?.data?.message || 'Could not delete category';
+      showToast(msg, 'error');
+    }
   };
 
   return (

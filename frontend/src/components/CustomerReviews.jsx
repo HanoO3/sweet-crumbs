@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import API from '../api/axios';
 import styles from './CustomerReviews.module.css';
 
-// ===== FAKE REVIEWS (yeh hamesha rahenge) =====
+// ===== FAKE REVIEWS =====
 const initialReviews = [
   {
     id: '1',
@@ -66,7 +66,7 @@ function timeAgo(dateString) {
 }
 
 export default function CustomerReviews() {
-  const [reviews, setReviews] = useState(initialReviews); // fake reviews start se hi
+  const [reviews, setReviews] = useState(initialReviews);
   const [loading, setLoading] = useState(true);
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -79,26 +79,26 @@ export default function CustomerReviews() {
   const [submitted, setSubmitted] = useState(false);
   const [formError, setFormError] = useState('');
 
-  // API se real reviews lao, lekin fake reviews remove mat karo
-  useEffect(() => {
-    API.get('/reviews')
-      .then((res) => {
-        const apiReviews = res.data || [];
-
-        // API reviews ko upar add karo, fake reviews neeche reh jayenge
-        setReviews((prev) => {
-          // duplicate avoid karne ke liye (agar same id aaye)
-          const existingIds = new Set(prev.map((r) => r.id || r._id));
-          const uniqueApi = apiReviews.filter(
-            (r) => !existingIds.has(r._id) && !existingIds.has(r.id)
-          );
-          return [...uniqueApi, ...prev];
-        });
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false); // error aaye to bhi fake reviews dikhte rahenge
+  const fetchReviews = async () => {
+    try {
+      const res = await API.get('/reviews');
+      const apiReviews = res.data || [];
+      setReviews((prev) => {
+        const existingIds = new Set(prev.map((r) => r.id || r._id));
+        const uniqueApi = apiReviews.filter(
+          (r) => !existingIds.has(r._id) && !existingIds.has(r.id)
+        );
+        return [...uniqueApi, ...prev];
       });
+    } catch (err) {
+      // Keep static fallback reviews on network glitch
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReviews();
   }, []);
 
   const filteredReviews = reviews.filter((r) => {
@@ -117,7 +117,7 @@ export default function CustomerReviews() {
     return { label: `${star} Star${star > 1 ? 's' : ''}`, pct, count };
   });
 
-  const handleReviewSubmit = (e) => {
+  const handleReviewSubmit = async (e) => {
     e.preventDefault();
     setFormError('');
 
@@ -125,31 +125,29 @@ export default function CustomerReviews() {
 
     setSubmitting(true);
 
-    API.post('/reviews', {
-      name: newName,
-      product: newProduct || 'Specialty Dessert',
-      rating: newRating,
-      comment: newComment,
-    })
-      .then((res) => {
-        // API se aaya hua review upar add kar do
-        setReviews((prev) => [res.data, ...prev]);
-        setSubmitted(true);
-        setTimeout(() => {
-          setSubmitted(false);
-          setIsModalOpen(false);
-          setNewName('');
-          setNewComment('');
-          setNewProduct('');
-          setNewRating(5);
-        }, 1800);
-      })
-      .catch((err) => {
-        setFormError(err.response?.data?.message || 'Could not submit review');
-      })
-      .finally(() => {
-        setSubmitting(false);
+    try {
+      const res = await API.post('/reviews', {
+        name: newName,
+        product: newProduct || 'Specialty Dessert',
+        rating: newRating,
+        comment: newComment,
       });
+
+      setReviews((prev) => [res.data, ...prev]);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setIsModalOpen(false);
+        setNewName('');
+        setNewComment('');
+        setNewProduct('');
+        setNewRating(5);
+      }, 1800);
+    } catch (err) {
+      setFormError(err.response?.data?.message || 'Could not submit review');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
