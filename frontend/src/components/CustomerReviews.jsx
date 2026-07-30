@@ -1,61 +1,47 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import API from '../api/axios';
 import styles from './CustomerReviews.module.css';
 
-const initialReviews = [
-  {
-    id: '1',
-    name: 'Ayesha Khan',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop',
-    rating: 5,
-    date: '2 days ago',
-    product: 'Belgian Chocolate Fudge Cake',
-    verified: true,
-    comment: 'The Belgian Chocolate Fudge Cake was absolutely out of this world! Rich, moist, and not overly sweet. Delivered right on time for my birthday party. Everyone asked where I bought it from!'
-  },
-  {
-    id: '2',
-    name: 'Hamza Malik',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop',
-    rating: 5,
-    date: '1 week ago',
-    product: 'Pink Glazed Donut & Croissants',
-    verified: true,
-    comment: 'Sweet Crumbs is my go-to morning spot now. Their croissants are so flaky and buttered to perfection. The pink glazed donuts bring back sweet childhood memories!'
-  },
-  {
-    id: '3',
-    name: 'Sara Ahmed',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop',
-    rating: 5,
-    date: '2 weeks ago',
-    product: 'Vanilla Confetti Cupcake',
-    verified: true,
-    comment: 'Lightest cupcake batter I have ever tasted! The buttercream frosting is velvety soft. Packaging was pristine and super cute.'
-  },
-  {
-    id: '4',
-    name: 'Zainab Fatima',
-    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=150&auto=format&fit=crop',
-    rating: 4,
-    date: '3 weeks ago',
-    product: 'Classic Strawberry Sundae',
-    verified: true,
-    comment: 'Very tasty ice cream sundae with real strawberry slices. Loved the fresh compote. Will definitely reorder soon.'
+function timeAgo(dateString) {
+  const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
+  const intervals = [
+    { label: 'year', secs: 31536000 },
+    { label: 'month', secs: 2592000 },
+    { label: 'week', secs: 604800 },
+    { label: 'day', secs: 86400 },
+    { label: 'hour', secs: 3600 },
+    { label: 'minute', secs: 60 },
+  ];
+  for (const i of intervals) {
+    const count = Math.floor(seconds / i.secs);
+    if (count >= 1) return `${count} ${i.label}${count > 1 ? 's' : ''} ago`;
   }
-];
+  return 'Just now';
+}
 
 export default function CustomerReviews() {
-  const [reviews, setReviews] = useState(initialReviews);
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // New Review Form State
   const [newRating, setNewRating] = useState(5);
   const [newName, setNewName] = useState('');
   const [newComment, setNewComment] = useState('');
-  const [newProduct, setNewProduct] = useState('Specialty Dessert');
+  const [newProduct, setNewProduct] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState('');
+
+  useEffect(() => {
+    API.get('/reviews')
+      .then((res) => {
+        setReviews(res.data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
   const filteredReviews = reviews.filter((r) => {
     if (selectedFilter === '5star') return r.rating === 5;
@@ -63,30 +49,48 @@ export default function CustomerReviews() {
     return true;
   });
 
+  const avgRating = reviews.length
+    ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+    : '0.0';
+
+  const starBreakdown = [5, 4, 3, 2, 1].map((star) => {
+    const count = reviews.filter((r) => r.rating === star).length;
+    const pct = reviews.length ? Math.round((count / reviews.length) * 100) : 0;
+    return { label: `${star} Star${star > 1 ? 's' : ''}`, pct, count };
+  });
+
   const handleReviewSubmit = (e) => {
     e.preventDefault();
+    setFormError('');
+
     if (!newName.trim() || !newComment.trim()) return;
 
-    const newRev = {
-      id: Date.now().toString(),
-      name: newName,
-      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(newName)}&background=FF7FB4&color=fff`,
-      rating: newRating,
-      date: 'Just now',
-      product: newProduct,
-      verified: true,
-      comment: newComment
-    };
+    setSubmitting(true);
 
-    setReviews([newRev, ...reviews]);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setIsModalOpen(false);
-      setNewName('');
-      setNewComment('');
-      setNewRating(5);
-    }, 1800);
+    API.post('/reviews', {
+      name: newName,
+      product: newProduct || 'Specialty Dessert',
+      rating: newRating,
+      comment: newComment,
+    })
+      .then((res) => {
+        setReviews((prev) => [res.data, ...prev]);
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          setIsModalOpen(false);
+          setNewName('');
+          setNewComment('');
+          setNewProduct('');
+          setNewRating(5);
+        }, 1800);
+      })
+      .catch((err) => {
+        setFormError(err.response?.data?.message || 'Could not submit review');
+      })
+      .finally(() => {
+        setSubmitting(false);
+      });
   };
 
   return (
@@ -102,19 +106,13 @@ export default function CustomerReviews() {
 
         <div className={styles.ratingSummaryCard}>
           <div className={styles.summaryLeft}>
-            <div className={styles.bigScore}>4.9</div>
+            <div className={styles.bigScore}>{avgRating}</div>
             <div className={styles.stars}>★★★★★</div>
-            <p className={styles.totalText}>Based on 340+ Verified Reviews</p>
+            <p className={styles.totalText}>Based on {reviews.length} Review{reviews.length !== 1 ? 's' : ''}</p>
           </div>
 
           <div className={styles.barsContainer}>
-            {[
-              { label: '5 Stars', pct: 92, count: 312 },
-              { label: '4 Stars', pct: 6, count: 20 },
-              { label: '3 Stars', pct: 2, count: 6 },
-              { label: '2 Stars', pct: 0, count: 0 },
-              { label: '1 Star', pct: 0, count: 0 }
-            ].map((b, i) => (
+            {starBreakdown.map((b, i) => (
               <div key={i} className={styles.barRow}>
                 <span className={styles.barLabel}>{b.label}</span>
                 <div className={styles.barTrack}>
@@ -132,7 +130,6 @@ export default function CustomerReviews() {
           </div>
         </div>
 
-        {/* Filter Pills */}
         <div className={styles.filterBar}>
           <button
             className={`${styles.filterBtn} ${selectedFilter === 'all' ? styles.active : ''}`}
@@ -154,12 +151,16 @@ export default function CustomerReviews() {
           </button>
         </div>
 
-        {/* Reviews Grid */}
+        {loading && <p className={styles.statusText}>Loading reviews...</p>}
+        {!loading && reviews.length === 0 && (
+          <p className={styles.statusText}>No reviews yet — be the first to share your experience!</p>
+        )}
+
         <div className={styles.grid}>
           <AnimatePresence mode="popLayout">
             {filteredReviews.map((r) => (
               <motion.div
-                key={r.id}
+                key={r._id}
                 layout
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -168,13 +169,17 @@ export default function CustomerReviews() {
                 className={styles.card}
               >
                 <div className={styles.cardHeader}>
-                  <img src={r.avatar} alt={r.name} className={styles.avatar} />
+                  <img
+                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(r.name)}&background=FF7FB4&color=fff`}
+                    alt={r.name}
+                    className={styles.avatar}
+                  />
                   <div className={styles.userMeta}>
                     <div className={styles.userNameRow}>
                       <span className={styles.userName}>{r.name}</span>
                       {r.verified && <span className={styles.verifiedBadge}>✓ Verified Buyer</span>}
                     </div>
-                    <span className={styles.date}>{r.date}</span>
+                    <span className={styles.date}>{timeAgo(r.createdAt)}</span>
                   </div>
                 </div>
 
@@ -193,7 +198,6 @@ export default function CustomerReviews() {
         </div>
       </div>
 
-      {/* Review Modal */}
       {isModalOpen && (
         <div className={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
           <motion.div
@@ -215,6 +219,8 @@ export default function CustomerReviews() {
               <form onSubmit={handleReviewSubmit} className={styles.form}>
                 <h3>Write Your Review</h3>
                 <p className={styles.formSubtitle}>Share your Sweet Crumbs experience with fellow bakery lovers!</p>
+
+                {formError && <p className={styles.formError}>{formError}</p>}
 
                 <div className={styles.formGroup}>
                   <label>Overall Rating</label>
@@ -264,8 +270,8 @@ export default function CustomerReviews() {
                   ></textarea>
                 </div>
 
-                <button type="submit" className={styles.submitBtn}>
-                  Submit My Review
+                <button type="submit" className={styles.submitBtn} disabled={submitting}>
+                  {submitting ? 'Submitting...' : 'Submit My Review'}
                 </button>
               </form>
             )}

@@ -49,6 +49,7 @@ app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
+app.use('/api/reviews', require('./routes/reviewRoutes'));
 
 // Catch unmatched /api and /uploads requests with a proper 404 JSON response
 app.all(['/api/{*path}', '/uploads/{*path}'], (req, res) => {
