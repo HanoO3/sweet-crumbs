@@ -1,9 +1,21 @@
 const Category = require('../models/Category');
+const Product = require('../models/Product');
 const asyncHandler = require('../middleware/asyncHandler');
 
 const getCategories = asyncHandler(async (req, res) => {
-  const categories = await Category.find({});
-  res.json(categories);
+  const categories = await Category.find({}).lean();
+
+  const categoriesWithImages = await Promise.all(
+    categories.map(async (cat) => {
+      const latestProduct = await Product.findOne({ category: cat._id }).sort({ createdAt: -1 });
+      return {
+        ...cat,
+        image: latestProduct?.image || cat.image || '',
+      };
+    })
+  );
+
+  res.json(categoriesWithImages);
 });
 
 const createCategory = asyncHandler(async (req, res) => {
