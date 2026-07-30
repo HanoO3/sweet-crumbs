@@ -27,8 +27,8 @@
 }
 
 .logoSvg {
-  transition: var(--transition);
-  filter: drop-shadow(0 2px 4px rgba(255, 127, 180, 0.2));
+  transition: var(--transition-bounce);
+  filter: drop-shadow(0 2px 6px rgba(255, 127, 180, 0.25));
 }
 
 .brand:hover .logoSvg {
@@ -147,7 +147,7 @@
   color: var(--cyan);
   text-decoration: none;
   font-weight: 700;
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 12px;
   background: var(--cyan-light);
   transition: var(--transition-fast);
@@ -183,7 +183,7 @@
   font-size: 14px;
   font-weight: 700;
   text-decoration: none;
-  box-shadow: 0 4px 12px rgba(255, 127, 180, 0.25);
+  box-shadow: 0 4px 14px var(--accent-glow);
   transition: var(--transition);
 }
 
@@ -192,19 +192,25 @@
   transform: translateY(-1px);
 }
 
-/* Hamburger Button */
+/* Mobile Hamburger Button */
 .hamburgerBtn {
   display: none;
   flex-direction: column;
   justify-content: space-around;
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 9px;
+  border-radius: 12px;
+  padding: 10px;
   cursor: pointer;
   z-index: 1010;
+  transition: var(--transition-fast);
+}
+
+.hamburgerBtn:hover {
+  background: var(--accent-light);
+  border-color: var(--accent);
 }
 
 .hamburgerLine {
@@ -227,38 +233,31 @@
   transform: rotate(-45deg) translate(4px, -4px);
 }
 
-/* Mobile Drawer Overlay */
+/* Mobile Backdrop Overlay */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(44, 24, 16, 0.4);
-  backdrop-filter: blur(4px);
+  background: rgba(44, 24, 16, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 1001;
 }
 
-.hideHamburger {
-  display: none !important;
-}
-
-/* Mobile Drawer Window */
+/* Mobile Navigation Drawer Window */
 .drawer {
   position: fixed;
   top: 0;
-  right: -320px;
-  width: 300px;
+  right: 0;
+  width: 320px;
+  max-width: 85vw;
   height: 100vh;
   background: #FFFDFE;
   z-index: 1002;
-  box-shadow: -10px 0 30px rgba(44, 24, 16, 0.15);
+  box-shadow: -10px 0 40px rgba(44, 24, 16, 0.2);
   display: flex;
   flex-direction: column;
-  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 1.5rem;
   overflow-y: auto;
-}
-
-.drawerOpen {
-  right: 0;
 }
 
 .drawerHeader {
@@ -282,13 +281,22 @@
 
 .closeDrawerBtn {
   background: var(--bg-secondary);
-  border: none;
-  width: 34px;
-  height: 34px;
+  border: 1px solid var(--border);
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   font-size: 16px;
   cursor: pointer;
   color: var(--text-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.closeDrawerBtn:hover {
+  background: var(--accent);
+  color: white;
 }
 
 .drawerLinks {
@@ -302,20 +310,40 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
-  border-radius: 14px;
+  padding: 13px 18px;
+  border-radius: 16px;
   text-decoration: none;
   color: var(--text-h);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   background: var(--bg-secondary);
+  border: 1px solid transparent;
   transition: var(--transition-fast);
+  position: relative;
 }
 
 .drawerLinks a:hover {
   background: var(--accent-light);
   color: var(--accent-hover);
+  border-color: var(--accent);
   transform: translateX(4px);
+}
+
+.drawerActiveLink {
+  background: var(--accent-light) !important;
+  color: var(--accent-hover) !important;
+  border-color: var(--accent) !important;
+  box-shadow: var(--shadow-sm);
+}
+
+.drawerBadge {
+  margin-left: auto;
+  background: var(--accent);
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: 12px;
 }
 
 .drawerAdminLink {
@@ -323,70 +351,61 @@
   color: var(--cyan-hover) !important;
 }
 
-.drawerLogoutNavLink {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-radius: 14px;
-  width: 100%;
-  border: 1px solid #FFD6E5;
-  color: #D93874;
-  font-size: 16px;
-  font-weight: 700;
-  background: #FFF0F5;
-  cursor: pointer;
-  transition: var(--transition-fast);
-  text-align: left;
-}
-
-.drawerLogoutNavLink:hover {
-  background: var(--accent);
-  color: white;
-}
-
 .drawerIcon {
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .drawerFooter {
   padding-top: 1.5rem;
   border-top: 1.5px dashed var(--border);
+  margin-top: auto;
 }
 
 .drawerUserBox {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
-.drawerUserGreeting {
-  font-size: 14px;
-  color: var(--text);
-  margin-bottom: 4px;
+.drawerUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  border: 1px solid var(--border);
 }
 
-.drawerAdminBtn {
-  display: block;
-  text-align: center;
-  background: var(--cyan-light);
-  color: var(--cyan-hover);
-  padding: 10px;
-  border-radius: 14px;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 14px;
+.drawerUserAvatar {
+  font-size: 22px;
+}
+
+.drawerUserRole {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--cyan);
+  margin: 0;
+  letter-spacing: 0.5px;
 }
 
 .drawerLogoutBtn {
   width: 100%;
-  padding: 10px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 16px;
+  border: 1.5px solid var(--border);
   background: white;
   color: var(--error);
   font-weight: 700;
+  font-size: 14px;
   cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.drawerLogoutBtn:hover {
+  background: var(--error);
+  color: white;
+  border-color: var(--error);
 }
 
 .drawerAuthBtns {
@@ -400,10 +419,12 @@
   text-align: center;
   background: var(--accent);
   color: white;
-  padding: 12px;
-  border-radius: 20px;
+  padding: 13px;
+  border-radius: 24px;
   text-decoration: none;
   font-weight: 700;
+  font-size: 15px;
+  box-shadow: 0 4px 14px var(--accent-glow);
 }
 
 .drawerRegisterBtn {
@@ -411,13 +432,15 @@
   text-align: center;
   background: var(--cyan);
   color: white;
-  padding: 12px;
-  border-radius: 20px;
+  padding: 13px;
+  border-radius: 24px;
   text-decoration: none;
   font-weight: 700;
+  font-size: 15px;
+  box-shadow: 0 4px 14px var(--cyan-glow);
 }
 
-/* Breakpoints */
+/* Responsive Media Queries */
 @media (max-width: 868px) {
   .desktopLinks,
   .userMenuDesktop,

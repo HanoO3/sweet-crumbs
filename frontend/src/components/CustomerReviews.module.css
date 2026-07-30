@@ -1,5 +1,5 @@
 .section {
-  padding: 5rem 0;
+  padding: 5.5rem 0;
   background: linear-gradient(180deg, #FFFDFE 0%, #FFF2F6 100%);
   border-top: 1.5px dashed var(--border);
   border-bottom: 1.5px dashed var(--border);
@@ -14,14 +14,14 @@
 .header {
   text-align: center;
   max-width: 680px;
-  margin: 0 auto 3rem auto;
+  margin: 0 auto 3.5rem auto;
 }
 
 .eyebrow {
   display: inline-block;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--accent);
   background: var(--accent-light);
@@ -31,7 +31,7 @@
 }
 
 .title {
-  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-size: clamp(2rem, 4vw, 2.9rem);
   color: var(--text-h);
   margin-bottom: 12px;
 }
@@ -44,15 +44,15 @@
 
 .ratingSummaryCard {
   background: white;
-  border-radius: 24px;
-  padding: 2rem 2.5rem;
+  border-radius: 28px;
+  padding: 2.25rem 2.5rem;
   box-shadow: var(--shadow-md);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
 }
 
 .summaryLeft {
@@ -62,7 +62,7 @@
 
 .bigScore {
   font-family: var(--heading);
-  font-size: 4rem;
+  font-size: 4.2rem;
   font-weight: 800;
   color: var(--text-h);
   line-height: 1;
@@ -77,8 +77,8 @@
 
 .totalText {
   font-size: 13px;
-  color: #8C7063;
-  font-weight: 600;
+  color: var(--text-muted);
+  font-weight: 700;
   margin: 0;
 }
 
@@ -87,7 +87,7 @@
   max-width: 440px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .barRow {
@@ -95,7 +95,7 @@
   align-items: center;
   gap: 12px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text);
 }
 
@@ -120,7 +120,7 @@
 .barCount {
   width: 32px;
   text-align: right;
-  color: #8C7063;
+  color: var(--text-muted);
 }
 
 .summaryRight {
@@ -131,35 +131,35 @@
 .writeBtn {
   background: var(--accent);
   color: white;
-  padding: 14px 28px;
+  padding: 14px 30px;
   border-radius: 30px;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 15px;
   border: none;
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(255, 127, 180, 0.3);
-  transition: var(--transition);
+  box-shadow: 0 6px 20px var(--accent-glow);
+  transition: var(--transition-bounce);
 }
 
 .writeBtn:hover {
   background: var(--accent-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 127, 180, 0.4);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 28px var(--accent-glow);
 }
 
 .filterBar {
   display: flex;
   gap: 12px;
-  margin-bottom: 2rem;
+  margin-bottom: 2.25rem;
   overflow-x: auto;
   padding-bottom: 8px;
 }
 
 .filterBtn {
   background: white;
-  border: 1px solid var(--border);
-  padding: 10px 20px;
-  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  padding: 10px 22px;
+  border-radius: 22px;
   font-size: 14px;
   font-weight: 700;
   color: var(--text);
@@ -172,20 +172,20 @@
   background: var(--cyan);
   color: white;
   border-color: var(--cyan);
-  box-shadow: 0 4px 12px rgba(0, 200, 215, 0.25);
+  box-shadow: 0 4px 14px var(--cyan-glow);
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  gap: 1.75rem;
 }
 
 .card {
   background: white;
-  border-radius: 20px;
-  padding: 1.5rem;
-  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 1.75rem;
+  border: 1.5px solid var(--border);
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
@@ -195,7 +195,7 @@
 .card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
-  border-color: var(--accent-light);
+  border-color: var(--accent);
 }
 
 .cardHeader {
@@ -206,8 +206,8 @@
 }
 
 .avatar {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--border);
@@ -222,6 +222,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .userName {
@@ -234,14 +235,14 @@
   font-size: 11px;
   background: #E3FBE9;
   color: #2D7A46;
-  font-weight: 700;
+  font-weight: 800;
   padding: 2px 8px;
   border-radius: 10px;
 }
 
 .date {
   font-size: 12px;
-  color: #9E857B;
+  color: var(--text-muted);
 }
 
 .cardRating {
@@ -254,18 +255,18 @@
 .comment {
   font-size: 14px;
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.65;
   margin-bottom: 1.25rem;
   flex: 1;
 }
 
 .productBadge {
   font-size: 12px;
-  color: #7A5F54;
+  color: var(--text);
   background: var(--bg-secondary);
-  padding: 6px 12px;
-  border-radius: 12px;
-  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 14px;
+  font-weight: 700;
 }
 
 .productBadge span {
@@ -288,7 +289,7 @@
 
 .modal {
   background: white;
-  border-radius: 24px;
+  border-radius: 28px;
   max-width: 500px;
   width: 100%;
   padding: 2.5rem;
@@ -301,19 +302,22 @@
   top: 20px;
   right: 20px;
   background: var(--bg-secondary);
-  border: none;
+  border: 1px solid var(--border);
   width: 36px;
   height: 36px;
   border-radius: 50%;
   font-size: 16px;
   cursor: pointer;
   color: var(--text-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: var(--transition-fast);
 }
 
 .closeBtn:hover {
-  background: var(--accent-light);
-  color: var(--accent);
+  background: var(--accent);
+  color: white;
 }
 
 .form h3 {
@@ -323,7 +327,7 @@
 
 .formSubtitle {
   font-size: 14px;
-  color: var(--text);
+  color: var(--text-muted);
   margin-bottom: 1.5rem;
 }
 
@@ -355,12 +359,12 @@
   background: var(--accent);
   color: white;
   padding: 14px;
-  border-radius: 25px;
+  border-radius: 28px;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 800;
   border: none;
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(255, 127, 180, 0.3);
+  box-shadow: 0 6px 20px var(--accent-glow);
   transition: var(--transition);
 }
 
@@ -382,12 +386,15 @@
   .ratingSummaryCard {
     flex-direction: column;
     text-align: center;
-    padding: 1.5rem;
+    padding: 1.75rem 1.25rem;
   }
   .barsContainer {
     width: 100%;
   }
   .writeBtn {
     width: 100%;
+  }
+  .grid {
+    grid-template-columns: 1fr;
   }
 }

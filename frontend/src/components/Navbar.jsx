@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import styles from './Navbar.module.css';
@@ -63,7 +64,16 @@ export default function Navbar() {
           <Link to="/cart" className={styles.cartLink} aria-label="Shopping Cart">
             <span className={styles.cartIcon}>🛒</span>
             <span className={styles.cartText}>Cart</span>
-            {cartCount > 0 && <span className={styles.badge}>{cartCount}</span>}
+            {cartCount > 0 && (
+              <motion.span
+                key={cartCount}
+                initial={{ scale: 0.6 }}
+                animate={{ scale: 1 }}
+                className={styles.badge}
+              >
+                {cartCount}
+              </motion.span>
+            )}
           </Link>
 
           {user ? (
@@ -80,7 +90,7 @@ export default function Navbar() {
 
           {/* Mobile Hamburger Button */}
           <button
-            className={`${styles.hamburgerBtn} ${mobileOpen ? styles.hideHamburger : ''}`}
+            className={`${styles.hamburgerBtn} ${mobileOpen ? styles.hamburgerActive : ''}`}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle navigation menu"
           >
@@ -91,74 +101,95 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Drawer Overlay */}
-      {mobileOpen && (
-        <div className={styles.overlay} onClick={() => setMobileOpen(false)}></div>
-      )}
+      {/* Mobile Animated Drawer & Backdrop Overlay */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              className={styles.overlay}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileOpen(false)}
+            />
+            <motion.div
+              className={styles.drawer}
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+            >
+              <div className={styles.drawerHeader}>
+                <div className={styles.drawerBrand}>
+                  <svg viewBox="0 0 54 54" width="34" height="34" fill="none">
+                    <circle cx="27" cy="27" r="22" fill="var(--accent)" />
+                    <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
+                  </svg>
+                  <span>SweetCrumbs</span>
+                </div>
+                <button
+                  className={styles.closeDrawerBtn}
+                  onClick={() => setMobileOpen(false)}
+                  aria-label="Close menu"
+                >
+                  ✕
+                </button>
+              </div>
 
-      {/* Mobile Navigation Drawer */}
-      <div className={`${styles.drawer} ${mobileOpen ? styles.drawerOpen : ''}`}>
-        <div className={styles.drawerHeader}>
-          <div className={styles.drawerBrand}>
-            <svg viewBox="0 0 54 54" width="34" height="34" fill="none">
-              <circle cx="27" cy="27" r="22" fill="var(--accent)" />
-              <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
-            </svg>
-            <span>SweetCrumbs</span>
-          </div>
-          <button className={styles.closeDrawerBtn} onClick={() => setMobileOpen(false)}>✕</button>
-        </div>
+              <div className={styles.drawerLinks}>
+                <Link to="/" className={location.pathname === '/' ? styles.drawerActiveLink : ''}>
+                  <span className={styles.drawerIcon}>🏠</span> Home
+                </Link>
+                <Link to="/products" className={location.pathname === '/products' ? styles.drawerActiveLink : ''}>
+                  <span className={styles.drawerIcon}>🧁</span> Delicacies Menu
+                </Link>
+                <Link to="/about" className={location.pathname === '/about' ? styles.drawerActiveLink : ''}>
+                  <span className={styles.drawerIcon}>📖</span> Our Bakery Story
+                </Link>
+                <Link to="/contact" className={location.pathname === '/contact' ? styles.drawerActiveLink : ''}>
+                  <span className={styles.drawerIcon}>📞</span> Contact Us
+                </Link>
+                <Link to="/cart" className={location.pathname === '/cart' ? styles.drawerActiveLink : ''}>
+                  <span className={styles.drawerIcon}>🛒</span> Shopping Cart
+                  {cartCount > 0 && <span className={styles.drawerBadge}>{cartCount}</span>}
+                </Link>
 
-        <div className={styles.drawerLinks}>
-          <Link to="/" onClick={() => setMobileOpen(false)}>
-            <span className={styles.drawerIcon}>🏠</span> Home
-          </Link>
-          <Link to="/products" onClick={() => setMobileOpen(false)}>
-            <span className={styles.drawerIcon}>🧁</span> Delicacies Menu
-          </Link>
-          <Link to="/about" onClick={() => setMobileOpen(false)}>
-            <span className={styles.drawerIcon}>📖</span> Our Bakery Story
-          </Link>
-          <Link to="/contact" onClick={() => setMobileOpen(false)}>
-            <span className={styles.drawerIcon}>📞</span> Contact Us
-          </Link>
-          <Link to="/cart" onClick={() => setMobileOpen(false)}>
-            <span className={styles.drawerIcon}>🛒</span> Shopping Cart ({cartCount})
-          </Link>
+                {user && user.role === 'admin' && (
+                  <Link to="/admin" className={styles.drawerAdminLink}>
+                    <span className={styles.drawerIcon}>⚙️</span> Admin Dashboard
+                  </Link>
+                )}
+              </div>
 
-          {user && user.role === 'admin' && (
-            <Link to="/admin" onClick={() => setMobileOpen(false)} className={styles.drawerAdminLink}>
-              <span className={styles.drawerIcon}>⚙️</span> Admin Dashboard
-            </Link>
-          )}
-
-          {user && (
-            <button onClick={handleLogout} className={styles.drawerLogoutNavLink}>
-              <span className={styles.drawerIcon}>🚪</span> Logout ({user.name.split(' ')[0]})
-            </button>
-          )}
-        </div>
-
-        <div className={styles.drawerFooter}>
-          {user ? (
-            <div className={styles.drawerUserBox}>
-              <p className={styles.drawerUserGreeting}>Signed in as <strong>{user.name}</strong> ({user.role})</p>
-              <button onClick={handleLogout} className={styles.drawerLogoutBtn}>
-                🚪 Account Logout
-              </button>
-            </div>
-          ) : (
-            <div className={styles.drawerAuthBtns}>
-              <Link to="/login" className={styles.drawerLoginBtn} onClick={() => setMobileOpen(false)}>
-                Login
-              </Link>
-              <Link to="/register" className={styles.drawerRegisterBtn} onClick={() => setMobileOpen(false)}>
-                Create Account
-              </Link>
-            </div>
-          )}
-        </div>
-      </div>
+              <div className={styles.drawerFooter}>
+                {user ? (
+                  <div className={styles.drawerUserBox}>
+                    <div className={styles.drawerUserInfo}>
+                      <span className={styles.drawerUserAvatar}>👤</span>
+                      <div>
+                        <strong>{user.name}</strong>
+                        <p className={styles.drawerUserRole}>{user.role.toUpperCase()}</p>
+                      </div>
+                    </div>
+                    <button onClick={handleLogout} className={styles.drawerLogoutBtn}>
+                      🚪 Account Logout
+                    </button>
+                  </div>
+                ) : (
+                  <div className={styles.drawerAuthBtns}>
+                    <Link to="/login" className={styles.drawerLoginBtn}>
+                      Sign In
+                    </Link>
+                    <Link to="/register" className={styles.drawerRegisterBtn}>
+                      Create Account
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

@@ -22,14 +22,15 @@
   font-weight: 800;
   color: var(--accent);
   background: white;
-  padding: 4px 14px;
+  padding: 6px 16px;
   border-radius: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   letter-spacing: 0.5px;
+  box-shadow: var(--shadow-sm);
 }
 
 .title {
-  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
   color: var(--text-h);
   margin-bottom: 10px;
 }
@@ -43,7 +44,7 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 1.5rem;
 }
 
 .filterBar {
@@ -55,10 +56,11 @@
   top: 76px;
   z-index: 90;
   background: rgba(255, 253, 254, 0.95);
-  backdrop-filter: blur(12px);
-  padding: 1rem;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 1.25rem;
   border-radius: 24px;
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   box-shadow: var(--shadow-sm);
 }
 
@@ -69,17 +71,17 @@
 
 .searchIcon {
   position: absolute;
-  left: 16px;
+  left: 18px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 16px;
 }
 
 .search {
-  padding-left: 46px !important;
-  padding-right: 40px !important;
+  padding-left: 48px !important;
+  padding-right: 42px !important;
   background: white !important;
-  border-radius: 20px !important;
+  border-radius: 24px !important;
   font-size: 15px !important;
 }
 
@@ -90,12 +92,15 @@
   transform: translateY(-50%);
   background: var(--bg-secondary);
   border: none;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   font-size: 12px;
   cursor: pointer;
   color: var(--text-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .categoryBar {
@@ -120,12 +125,12 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 18px;
-  border-radius: 20px;
+  padding: 9px 20px;
+  border-radius: 22px;
   font-size: 14px;
   font-weight: 700;
   color: var(--text-h);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   cursor: pointer;
   white-space: nowrap;
   transition: var(--transition-fast);
@@ -140,7 +145,7 @@
 .catActive {
   color: white !important;
   border-color: var(--cyan) !important;
-  box-shadow: 0 4px 12px rgba(0, 200, 215, 0.3) !important;
+  box-shadow: 0 4px 14px var(--cyan-glow) !important;
 }
 
 .catThumb {
@@ -152,15 +157,15 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 2rem;
 }
 
 .card {
   background: white;
-  border-radius: 24px;
+  border-radius: 26px;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
@@ -173,7 +178,7 @@
 }
 
 .cardImgContainer {
-  height: 210px;
+  height: 220px;
   position: relative;
   overflow: hidden;
   background: #FFF5F8;
@@ -187,7 +192,7 @@
 }
 
 .card:hover .cardImg {
-  transform: scale(1.06);
+  transform: scale(1.07);
 }
 
 .badge {
@@ -196,7 +201,7 @@
   right: 12px;
   font-size: 11px;
   font-weight: 800;
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: 12px;
 }
 
@@ -213,10 +218,11 @@
 .featuredBadge {
   background: var(--accent);
   color: white;
+  box-shadow: 0 4px 10px var(--accent-glow);
 }
 
 .cardBody {
-  padding: 1.25rem;
+  padding: 1.35rem;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -232,7 +238,7 @@
 
 .cardName {
   font-family: var(--heading);
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 700;
   color: var(--text-h);
   text-decoration: none;
@@ -259,7 +265,7 @@
 .ratingScore {
   font-size: 12px;
   font-weight: 700;
-  color: #8C7063;
+  color: var(--text-muted);
 }
 
 .cardFooter {
@@ -267,13 +273,13 @@
   align-items: center;
   justify-content: space-between;
   margin-top: auto;
-  padding-top: 10px;
-  border-top: 1px dashed var(--border);
+  padding-top: 12px;
+  border-top: 1.5px dashed var(--border);
 }
 
 .cardPrice {
   font-family: var(--heading);
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 800;
   color: var(--text-h);
 }
@@ -281,18 +287,19 @@
 .addBtn {
   background: var(--accent);
   color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: 9px 18px;
+  border-radius: 22px;
   font-weight: 700;
   font-size: 13px;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(255, 127, 180, 0.25);
+  box-shadow: 0 4px 14px var(--accent-glow);
   transition: var(--transition-fast);
 }
 
 .addBtn:hover {
   background: var(--accent-hover);
+  transform: scale(1.03);
 }
 
 .addBtn.added {
@@ -302,8 +309,8 @@
 .soldOutBtn {
   background: #EAE2E0;
   color: #9C8983;
-  padding: 8px 14px;
-  border-radius: 20px;
+  padding: 9px 16px;
+  border-radius: 22px;
   font-size: 12px;
   font-weight: 700;
   border: none;
@@ -312,10 +319,10 @@
 /* No Results & Loading */
 .noResults {
   text-align: center;
-  padding: 4rem 1rem;
+  padding: 4rem 1.5rem;
   background: white;
-  border-radius: 24px;
-  border: 1px dashed var(--border);
+  border-radius: 28px;
+  border: 1.5px dashed var(--border);
 }
 
 .noResultsIcon {
@@ -329,9 +336,9 @@
   background: var(--cyan);
   color: white;
   border: none;
-  padding: 10px 24px;
-  border-radius: 20px;
-  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 24px;
+  font-weight: 800;
   cursor: pointer;
 }
 
@@ -341,8 +348,8 @@
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: 4px solid var(--border);
   border-top-color: var(--accent);
   border-radius: 50%;
@@ -354,9 +361,16 @@
   to { transform: rotate(360deg); }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+  .filterBar {
+    padding: 1rem;
+    top: 70px;
+  }
   .grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }
