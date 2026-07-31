@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import API from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';
 import Button from '../../components/Button';
+import Logo from '../../components/Logo';
 import styles from './Auth.module.css';
 
 export default function Login() {
@@ -57,31 +58,7 @@ export default function Login() {
         {/* Left Side: Brand Visual */}
         <div className={styles.brandSide}>
           <div className={styles.brandBadge}>
-            <svg viewBox="0 0 54 54" width="46" height="46" fill="none">
-              <circle cx="27" cy="27" r="22" fill="var(--accent)" />
-              <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
-              <rect
-                x="18"
-                y="15"
-                width="5"
-                height="2"
-                rx="1"
-                transform="rotate(30 18 15)"
-                fill="var(--cyan)"
-              />
-              <rect
-                x="32"
-                y="13"
-                width="5"
-                height="2"
-                rx="1"
-                transform="rotate(-45 32 13)"
-                fill="var(--yellow)"
-              />
-            </svg>
-            <h2>
-              Sweet<span className={styles.logoAccent}>Crumbs</span>
-            </h2>
+            <Logo size={46} textSize={26} variant="light" to="/" />
           </div>
 
           <h2 className={styles.brandHeadline}>

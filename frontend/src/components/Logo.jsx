@@ -10,6 +10,7 @@ export default function Logo({
   subtitle = null,
   className = '',
   to = '/',
+  onClick = null,
 }) {
   const content = (
     <div className={`${styles.logoWrapper} ${className}`}>
@@ -51,11 +52,15 @@ export default function Logo({
 
   if (to) {
     return (
-      <Link to={to} className={styles.logoLink}>
+      <Link to={to} className={styles.logoLink} onClick={onClick}>
         {content}
       </Link>
     );
   }
 
-  return content;
+  return (
+    <div onClick={onClick} className={styles.logoClickable} style={{ cursor: onClick ? 'pointer' : 'default' }}>
+      {content}
+    </div>
+  );
 }

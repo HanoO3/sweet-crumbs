@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { NavLink, Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Logo from './Logo';
 import styles from './AdminLayout.module.css';
 
 export default function AdminLayout() {
@@ -56,36 +57,7 @@ export default function AdminLayout() {
         }`}
       >
         <div className={styles.sidebarHeader}>
-          <Link to="/" className={styles.brand}>
-            <svg viewBox="0 0 54 54" width="36" height="36" fill="none">
-              <circle cx="27" cy="27" r="22" fill="var(--accent)" />
-              <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
-              <rect
-                x="18"
-                y="15"
-                width="5"
-                height="2"
-                rx="1"
-                transform="rotate(30 18 15)"
-                fill="var(--cyan)"
-              />
-              <rect
-                x="32"
-                y="13"
-                width="5"
-                height="2"
-                rx="1"
-                transform="rotate(-45 32 13)"
-                fill="var(--yellow)"
-              />
-            </svg>
-            <div className={styles.brandTitle}>
-              <span className={styles.brandName}>
-                Sweet<span className={styles.accent}>Crumbs</span>
-              </span>
-              <span className={styles.adminTag}>Control Center</span>
-            </div>
-          </Link>
+          <Logo size={36} textSize={20} variant="light" subtitle="Control Center" to="/" />
           <button
             className={styles.closeSidebarBtn}
             onClick={() => setMobileSidebarOpen(false)}

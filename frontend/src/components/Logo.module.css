@@ -4,6 +4,11 @@
   align-items: center;
 }
 
+.logoClickable {
+  display: inline-flex;
+  align-items: center;
+}
+
 .logoWrapper {
   display: inline-flex;
   align-items: center;
@@ -13,10 +18,12 @@
 .logoSvg {
   flex-shrink: 0;
   transition: transform 0.3s ease;
+  filter: drop-shadow(0 2px 6px rgba(255, 127, 180, 0.25));
 }
 
-.logoLink:hover .logoSvg {
-  transform: rotate(15deg) scale(1.06);
+.logoLink:hover .logoSvg,
+.logoClickable:hover .logoSvg {
+  transform: rotate(12deg) scale(1.06);
 }
 
 .textGroup {
@@ -29,11 +36,12 @@
   font-weight: 700;
   color: var(--text-h);
   line-height: 1;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.4px;
+  white-space: nowrap;
 }
 
 .lightText {
-  color: white !important;
+  color: #ffffff !important;
 }
 
 .logoAccent {

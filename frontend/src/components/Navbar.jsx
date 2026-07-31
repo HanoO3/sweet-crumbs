@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import Logo from './Logo';
 import styles from './Navbar.module.css';
 
 const drawerItemVariants = {
@@ -52,32 +53,7 @@ export default function Navbar() {
     <header className={styles.header}>
       <nav className={styles.nav}>
         {/* Brand Logo */}
-        <Link to="/" className={styles.brand}>
-          <svg
-            className={styles.logoSvg}
-            viewBox="0 0 54 54"
-            width="40"
-            height="40"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="27" cy="27" r="22" fill="var(--accent)" />
-            <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
-            <path
-              d="M12 25C13 32 18 37 27 37C36 37 41 32 42 25"
-              stroke="var(--accent-hover)"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <rect x="18" y="15" width="5" height="2" rx="1" transform="rotate(30 18 15)" fill="var(--cyan)" />
-            <rect x="32" y="13" width="5" height="2" rx="1" transform="rotate(-45 32 13)" fill="var(--yellow)" />
-            <rect x="38" y="22" width="5" height="2" rx="1" transform="rotate(15 38 22)" fill="var(--cyan)" />
-            <rect x="22" y="36" width="5" height="2" rx="1" transform="rotate(-60 22 36)" fill="var(--yellow)" />
-          </svg>
-          <span className={styles.brandName}>
-            Sweet<span className={styles.logoAccent}>Crumbs</span>
-          </span>
-        </Link>
+        <Logo size={40} textSize={22} />
 
         {/* Desktop Links */}
         <div className={styles.desktopLinks}>
@@ -166,32 +142,7 @@ export default function Navbar() {
               transition={{ type: 'spring', damping: 26, stiffness: 240 }}
             >
               <div className={styles.drawerHeader}>
-                <div className={styles.drawerBrand}>
-                  <svg
-                    className={styles.logoSvg}
-                    viewBox="0 0 54 54"
-                    width="34"
-                    height="34"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle cx="27" cy="27" r="22" fill="var(--accent)" />
-                    <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
-                    <path
-                      d="M12 25C13 32 18 37 27 37C36 37 41 32 42 25"
-                      stroke="var(--accent-hover)"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <rect x="18" y="15" width="5" height="2" rx="1" transform="rotate(30 18 15)" fill="var(--cyan)" />
-                    <rect x="32" y="13" width="5" height="2" rx="1" transform="rotate(-45 32 13)" fill="var(--yellow)" />
-                    <rect x="38" y="22" width="5" height="2" rx="1" transform="rotate(15 38 22)" fill="var(--cyan)" />
-                    <rect x="22" y="36" width="5" height="2" rx="1" transform="rotate(-60 22 36)" fill="var(--yellow)" />
-                  </svg>
-                  <span className={styles.brandName} style={{ fontSize: '19px' }}>
-                    Sweet<span className={styles.logoAccent}>Crumbs</span>
-                  </span>
-                </div>
+                <Logo size={34} textSize={19} onClick={() => setMobileOpen(false)} />
                 <button
                   className={styles.closeDrawerBtn}
                   onClick={() => setMobileOpen(false)}

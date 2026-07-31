@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Logo from './Logo';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -20,17 +21,9 @@ export default function Footer() {
         <div className={styles.grid}>
           {/* Col 1: Brand Info */}
           <div className={styles.colBrand}>
-            <Link to="/" className={styles.brand}>
-              <svg viewBox="0 0 54 54" width="40" height="40" fill="none">
-                <circle cx="27" cy="27" r="22" fill="var(--accent)" />
-                <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
-                <rect x="18" y="15" width="5" height="2" rx="1" transform="rotate(30 18 15)" fill="var(--cyan)" />
-                <rect x="32" y="13" width="5" height="2" rx="1" transform="rotate(-45 32 13)" fill="var(--yellow)" />
-              </svg>
-              <span className={styles.brandName}>
-                Sweet<span className={styles.brandAccent}>Crumbs</span>
-              </span>
-            </Link>
+            <div className={styles.footerLogoWrapper}>
+              <Logo size={42} textSize={26} variant="light" />
+            </div>
             <p className={styles.brandDesc}>
               Handcrafting artisanal donuts, fluffy cupcakes, specialty cakes, and chilled sundaes daily. Pure joy in every single bite!
             </p>

@@ -18,11 +18,7 @@
   margin-bottom: 3.5rem;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
+.footerLogoWrapper {
   margin-bottom: 1rem;
 }
 
