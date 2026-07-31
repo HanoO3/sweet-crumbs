@@ -105,45 +105,50 @@
   padding-top: 4px;
 }
 
-/* Quantity Controls - Foodpanda Style */
+/* Quantity Controls - Professional Compact Square Style */
 .qtyControls {
   display: flex;
   align-items: center;
   background: #FFF5F8;
-  border: 1.5px solid #FFD6E0;
-  border-radius: 50px;
+  border: 1px solid #FFD6E0;
+  border-radius: 10px;
   padding: 3px;
-  gap: 0;
+  gap: 2px;
 }
 
 .qtyControls button {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 127, 180, 0.2);
   background: white;
   color: var(--text-h);
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 5px rgba(255, 127, 180, 0.12);
-  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(44, 24, 16, 0.06);
+  transition: all 0.15s ease;
 }
 
 .qtyControls button:hover {
   background: var(--accent);
   color: white;
+  border-color: var(--accent);
+}
+
+.qtyControls button:active {
+  transform: scale(0.95);
 }
 
 .qtyControls span {
   font-family: var(--heading);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
   color: var(--text-h);
-  min-width: 28px;
+  min-width: 26px;
   text-align: center;
 }
 
@@ -151,12 +156,14 @@
 .qtyDeleteBtn {
   background: #FFF0F3 !important;
   color: var(--accent) !important;
-  font-size: 15px !important;
+  font-size: 14px !important;
+  border-color: #FFE0E6 !important;
 }
 
 .qtyDeleteBtn:hover {
   background: var(--accent) !important;
   color: white !important;
+  border-color: var(--accent) !important;
 }
 
 /* Subtotal */
