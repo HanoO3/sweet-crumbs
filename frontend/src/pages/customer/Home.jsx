@@ -110,11 +110,11 @@ export default function Home() {
 
             <img
               src="/hero-dessert.png"
-              alt="Artisanal Belgian Chocolate & Glazed Strawberry Dessert Cake"
+              alt="Handcrafted Strawberry Glazed Celebration Cake"
               className={styles.heroMainImg}
               onError={(e) => {
                 e.target.onerror = null;
-                e.target.src = "https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1200&auto=format&fit=crop";
+                e.target.src = "https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1200&auto=format&fit=crop";
               }}
             />
 
