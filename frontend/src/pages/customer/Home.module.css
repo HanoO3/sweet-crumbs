@@ -663,4 +663,13 @@
   .grid {
     grid-template-columns: 1fr;
   }
+  .donutsRow {
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .bannerDonut svg {
+    width: 40px !important;
+    height: 40px !important;
+  }
 }
