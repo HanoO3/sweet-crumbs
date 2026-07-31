@@ -107,3 +107,28 @@
 .closeBtn:hover {
   color: var(--text-h);
 }
+
+@media (max-width: 480px) {
+  .toastContainer {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    width: auto;
+    max-width: none;
+  }
+
+  .toastCard {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .toastImg {
+    width: 44px;
+    height: 44px;
+  }
+
+  .viewCartBtn {
+    padding: 7px 10px;
+    font-size: 11px;
+  }
+}
