@@ -100,8 +100,8 @@
 }
 
 .removeBtn {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  background: #FFF0F5;
+  border: 1px solid #FFC2D9;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -113,6 +113,7 @@
   justify-content: center;
   flex-shrink: 0;
   transition: var(--transition-fast);
+  box-shadow: 0 2px 6px rgba(44, 24, 16, 0.04);
 }
 
 .removeBtn:hover {
@@ -131,27 +132,36 @@
 }
 
 .qtyControls {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--bg-secondary);
+  background: #FFF2F6;
   padding: 4px 10px;
   border-radius: 20px;
-  border: 1.5px solid var(--border);
+  border: 1.5px solid #FFE2EF;
 }
 
 .qtyControls button {
   background: white;
-  border: 1px solid var(--border);
-  width: 28px;
-  height: 28px;
+  border: 1px solid #FFC2D9;
+  color: var(--text-h);
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   font-weight: 800;
-  font-size: 14px;
+  font-size: 15px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: var(--transition-fast);
+  box-shadow: 0 2px 6px rgba(44, 24, 16, 0.05);
+}
+
+.qtyControls button:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
 }
 
 .qtyControls span {
@@ -159,7 +169,7 @@
   font-size: 15px;
   font-weight: 800;
   color: var(--text-h);
-  min-width: 20px;
+  min-width: 22px;
   text-align: center;
 }
 

@@ -7,15 +7,6 @@ export function CartProvider({ children }) {
   const { user } = useAuth();
 
   const [cartItems, setCartItems] = useState(() => {
-    // Admin users do not have shopping carts
-    const savedUser = localStorage.getItem('userInfo');
-    if (savedUser) {
-      try {
-        const parsed = JSON.parse(savedUser);
-        if (parsed?.role === 'admin') return [];
-      } catch (e) {}
-    }
-
     try {
       const saved = localStorage.getItem('cartItems');
       return saved ? JSON.parse(saved) : [];
@@ -26,22 +17,23 @@ export function CartProvider({ children }) {
     }
   });
 
-  // Automatically reset cart if logged out or if user is an admin
+  // Save cart items to localStorage on change
   useEffect(() => {
-    if (!user || user.role === 'admin') {
-      setCartItems([]);
-      localStorage.removeItem('cartItems');
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  // Clear cart when user explicitly logs out (user is null)
+  useEffect(() => {
+    if (user === null) {
+      const savedUser = localStorage.getItem('userInfo');
+      if (!savedUser) {
+        setCartItems([]);
+        localStorage.removeItem('cartItems');
+      }
     }
   }, [user]);
 
-  useEffect(() => {
-    if (user?.role !== 'admin') {
-      localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    }
-  }, [cartItems, user]);
-
   const addToCart = (product, quantity = 1) => {
-    if (user?.role === 'admin') return;
     setCartItems((prev) => {
       const existing = prev.find((item) => item._id === product._id);
       if (existing) {
