@@ -56,3 +56,29 @@
   font-weight: 800;
   margin-top: 2px;
 }
+
+@media (max-width: 600px) {
+  .logoWrapper {
+    gap: 6px;
+  }
+  .logoSvg {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .brandName {
+    font-size: 18px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .logoWrapper {
+    gap: 5px;
+  }
+  .logoSvg {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  .brandName {
+    font-size: 16px !important;
+  }
+}
