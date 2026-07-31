@@ -5,6 +5,19 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import styles from './Navbar.module.css';
 
+const drawerItemVariants = {
+  hidden: { opacity: 0, x: 20 },
+  visible: (i) => ({
+    opacity: 1,
+    x: 0,
+    transition: {
+      delay: i * 0.05 + 0.1,
+      duration: 0.3,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  }),
+};
+
 export default function Navbar() {
   const { user, logout } = useAuth();
   const { cartCount } = useCart();
@@ -90,13 +103,13 @@ export default function Navbar() {
 
           {/* Mobile Hamburger Button */}
           <button
-            className={`${styles.hamburgerBtn} ${mobileOpen ? styles.hamburgerActive : ''}`}
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle navigation menu"
+            className={`${styles.hamburgerBtn} ${mobileOpen ? styles.hamburgerHidden : ''}`}
+            onClick={() => setMobileOpen(true)}
+            aria-label="Open navigation menu"
           >
-            <span className={`${styles.hamburgerLine} ${mobileOpen ? styles.openLine1 : ''}`}></span>
-            <span className={`${styles.hamburgerLine} ${mobileOpen ? styles.openLine2 : ''}`}></span>
-            <span className={`${styles.hamburgerLine} ${mobileOpen ? styles.openLine3 : ''}`}></span>
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
           </button>
         </div>
       </nav>
@@ -110,6 +123,7 @@ export default function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
               onClick={() => setMobileOpen(false)}
             />
             <motion.div
@@ -117,7 +131,7 @@ export default function Navbar() {
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+              transition={{ type: 'spring', damping: 26, stiffness: 240 }}
             >
               <div className={styles.drawerHeader}>
                 <div className={styles.drawerBrand}>
@@ -137,31 +151,52 @@ export default function Navbar() {
               </div>
 
               <div className={styles.drawerLinks}>
-                <Link to="/" className={location.pathname === '/' ? styles.drawerActiveLink : ''}>
-                  <span className={styles.drawerIcon}>🏠</span> Home
-                </Link>
-                <Link to="/products" className={location.pathname === '/products' ? styles.drawerActiveLink : ''}>
-                  <span className={styles.drawerIcon}>🧁</span> Delicacies Menu
-                </Link>
-                <Link to="/about" className={location.pathname === '/about' ? styles.drawerActiveLink : ''}>
-                  <span className={styles.drawerIcon}>📖</span> Our Bakery Story
-                </Link>
-                <Link to="/contact" className={location.pathname === '/contact' ? styles.drawerActiveLink : ''}>
-                  <span className={styles.drawerIcon}>📞</span> Contact Us
-                </Link>
-                <Link to="/cart" className={location.pathname === '/cart' ? styles.drawerActiveLink : ''}>
-                  <span className={styles.drawerIcon}>🛒</span> Shopping Cart
-                  {cartCount > 0 && <span className={styles.drawerBadge}>{cartCount}</span>}
-                </Link>
+                <motion.div custom={0} variants={drawerItemVariants} initial="hidden" animate="visible">
+                  <Link to="/" className={location.pathname === '/' ? styles.drawerActiveLink : ''}>
+                    <span className={styles.drawerIcon}>🏠</span> Home
+                  </Link>
+                </motion.div>
+
+                <motion.div custom={1} variants={drawerItemVariants} initial="hidden" animate="visible">
+                  <Link to="/products" className={location.pathname === '/products' ? styles.drawerActiveLink : ''}>
+                    <span className={styles.drawerIcon}>🧁</span> Delicacies Menu
+                  </Link>
+                </motion.div>
+
+                <motion.div custom={2} variants={drawerItemVariants} initial="hidden" animate="visible">
+                  <Link to="/about" className={location.pathname === '/about' ? styles.drawerActiveLink : ''}>
+                    <span className={styles.drawerIcon}>📖</span> Our Bakery Story
+                  </Link>
+                </motion.div>
+
+                <motion.div custom={3} variants={drawerItemVariants} initial="hidden" animate="visible">
+                  <Link to="/contact" className={location.pathname === '/contact' ? styles.drawerActiveLink : ''}>
+                    <span className={styles.drawerIcon}>📞</span> Contact Us
+                  </Link>
+                </motion.div>
+
+                <motion.div custom={4} variants={drawerItemVariants} initial="hidden" animate="visible">
+                  <Link to="/cart" className={location.pathname === '/cart' ? styles.drawerActiveLink : ''}>
+                    <span className={styles.drawerIcon}>🛒</span> Shopping Cart
+                    {cartCount > 0 && <span className={styles.drawerBadge}>{cartCount}</span>}
+                  </Link>
+                </motion.div>
 
                 {user && user.role === 'admin' && (
-                  <Link to="/admin" className={styles.drawerAdminLink}>
-                    <span className={styles.drawerIcon}>⚙️</span> Admin Dashboard
-                  </Link>
+                  <motion.div custom={5} variants={drawerItemVariants} initial="hidden" animate="visible">
+                    <Link to="/admin" className={styles.drawerAdminLink}>
+                      <span className={styles.drawerIcon}>⚙️</span> Admin Dashboard
+                    </Link>
+                  </motion.div>
                 )}
               </div>
 
-              <div className={styles.drawerFooter}>
+              <motion.div
+                className={styles.drawerFooter}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.3 }}
+              >
                 {user ? (
                   <div className={styles.drawerUserBox}>
                     <div className={styles.drawerUserInfo}>
@@ -185,7 +220,7 @@ export default function Navbar() {
                     </Link>
                   </div>
                 )}
-              </div>
+              </motion.div>
             </motion.div>
           </>
         )}

@@ -221,16 +221,10 @@
   transition: var(--transition-fast);
 }
 
-.openLine1 {
-  transform: rotate(45deg) translate(4px, 4px);
-}
-
-.openLine2 {
+.hamburgerHidden {
   opacity: 0;
-}
-
-.openLine3 {
-  transform: rotate(-45deg) translate(4px, -4px);
+  pointer-events: none;
+  transform: scale(0.8);
 }
 
 /* Mobile Backdrop Overlay */
