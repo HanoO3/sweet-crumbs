@@ -50,6 +50,10 @@
   margin: 0;
 }
 
+.logoAccent {
+  color: var(--cyan);
+}
+
 .brandHeadline {
   font-size: clamp(2rem, 3.5vw, 2.5rem);
   color: white;
@@ -221,7 +225,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .switchBox {

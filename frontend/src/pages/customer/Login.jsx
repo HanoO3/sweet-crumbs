@@ -60,17 +60,37 @@ export default function Login() {
             <svg viewBox="0 0 54 54" width="46" height="46" fill="none">
               <circle cx="27" cy="27" r="22" fill="var(--accent)" />
               <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
-              <rect x="18" y="15" width="5" height="2" rx="1" transform="rotate(30 18 15)" fill="var(--cyan)" />
-              <rect x="32" y="13" width="5" height="2" rx="1" transform="rotate(-45 32 13)" fill="var(--yellow)" />
+              <rect
+                x="18"
+                y="15"
+                width="5"
+                height="2"
+                rx="1"
+                transform="rotate(30 18 15)"
+                fill="var(--cyan)"
+              />
+              <rect
+                x="32"
+                y="13"
+                width="5"
+                height="2"
+                rx="1"
+                transform="rotate(-45 32 13)"
+                fill="var(--yellow)"
+              />
             </svg>
-            <h2>Sweet Crumbs</h2>
+            <h2>
+              Sweet<span className={styles.logoAccent}>Crumbs</span>
+            </h2>
           </div>
 
           <h2 className={styles.brandHeadline}>
-            Welcome Back to<br /><span>Your Sweet Spot.</span>
+            Welcome Back to<br />
+            <span>Your Sweet Spot.</span>
           </h2>
           <p className={styles.brandSub}>
-            Sign in to check out faster, track your artisan orders, and enjoy exclusive member discounts!
+            Sign in to check out faster, track your artisan orders, and enjoy
+            exclusive member discounts!
           </p>
 
           <div className={styles.perksList}>
@@ -140,7 +160,13 @@ export default function Login() {
             </div>
           </div>
 
-          <Button type="submit" variant="primary" size="lg" fullWidth loading={loading}>
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            fullWidth
+            loading={loading}
+          >
             {loading ? 'Authenticating...' : 'Sign In To My Account →'}
           </Button>
 

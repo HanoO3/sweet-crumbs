@@ -28,7 +28,10 @@ export default function Register() {
       login(res.data);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to create account. Email might be registered already.');
+      setError(
+        err.response?.data?.message ||
+          'Failed to create account. Email might be registered already.'
+      );
     } finally {
       setLoading(false);
     }
@@ -48,17 +51,37 @@ export default function Register() {
             <svg viewBox="0 0 54 54" width="46" height="46" fill="none">
               <circle cx="27" cy="27" r="22" fill="var(--accent)" />
               <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
-              <rect x="18" y="15" width="5" height="2" rx="1" transform="rotate(30 18 15)" fill="var(--cyan)" />
-              <rect x="32" y="13" width="5" height="2" rx="1" transform="rotate(-45 32 13)" fill="var(--yellow)" />
+              <rect
+                x="18"
+                y="15"
+                width="5"
+                height="2"
+                rx="1"
+                transform="rotate(30 18 15)"
+                fill="var(--cyan)"
+              />
+              <rect
+                x="32"
+                y="13"
+                width="5"
+                height="2"
+                rx="1"
+                transform="rotate(-45 32 13)"
+                fill="var(--yellow)"
+              />
             </svg>
-            <h2>Sweet Crumbs</h2>
+            <h2>
+              Sweet<span className={styles.logoAccent}>Crumbs</span>
+            </h2>
           </div>
 
           <h2 className={styles.brandHeadline}>
-            Join Our Bakery<br /><span>Dessert Club!</span>
+            Join Our Bakery<br />
+            <span>Dessert Club!</span>
           </h2>
           <p className={styles.brandSub}>
-            Create your account today to save your favorite treats, get instant order updates, and unlock member rewards!
+            Create your account today to save your favorite treats, get instant
+            order updates, and unlock member rewards!
           </p>
 
           <div className={styles.perksList}>
@@ -144,7 +167,13 @@ export default function Register() {
             </div>
           </div>
 
-          <Button type="submit" variant="primary" size="lg" fullWidth loading={loading}>
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            fullWidth
+            loading={loading}
+          >
             {loading ? 'Creating Account...' : 'Create My Account →'}
           </Button>
 

@@ -48,7 +48,7 @@ export default function Cart() {
           <div className={styles.items}>
             {cartItems.map((item) => (
               <div key={item._id} className={styles.itemCard}>
-                {/* Top Row: Image + Name + Remove */}
+                {/* Top Row: Image + Name */}
                 <div className={styles.itemTop}>
                   <img
                     src={getImageUrl(item.image)}
@@ -66,27 +66,32 @@ export default function Cart() {
                     </Link>
                     <p className={styles.itemPrice}>Rs. {item.price} each</p>
                   </div>
-
-                  <button
-                    className={styles.removeBtn}
-                    onClick={() => removeFromCart(item._id)}
-                    title="Remove item"
-                  >
-                    ✕
-                  </button>
                 </div>
 
                 {/* Bottom Row: Quantity + Subtotal */}
                 <div className={styles.itemBottom}>
                   <div className={styles.qtyControls}>
-                    <button
-                      onClick={() =>
-                        updateQuantity(item._id, item.quantity - 1)
-                      }
-                    >
-                      −
-                    </button>
+                    {/* Qty = 1 → Trash, Qty > 1 → Minus */}
+                    {item.quantity === 1 ? (
+                      <button
+                        className={styles.qtyDeleteBtn}
+                        onClick={() => removeFromCart(item._id)}
+                        title="Remove item"
+                      >
+                        🗑️
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() =>
+                          updateQuantity(item._id, item.quantity - 1)
+                        }
+                      >
+                        −
+                      </button>
+                    )}
+
                     <span>{item.quantity}</span>
+
                     <button
                       onClick={() =>
                         updateQuantity(item._id, item.quantity + 1)
