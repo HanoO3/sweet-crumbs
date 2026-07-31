@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Button from '../../components/Button';
 import styles from './OrderSuccess.module.css';
 
 export default function OrderSuccess() {
@@ -13,9 +14,9 @@ export default function OrderSuccess() {
         <div className={styles.statusBox}>
           <span>🚚 Delivery Status:</span> <strong>Order Confirmed & Baking</strong>
         </div>
-        <Link to="/products" className={styles.btn}>
-          Explore More Delicacies 🍩
-        </Link>
+        <Button to="/products" variant="primary" size="lg" icon="🍩">
+          Explore More Delicacies
+        </Button>
       </div>
     </div>
   );

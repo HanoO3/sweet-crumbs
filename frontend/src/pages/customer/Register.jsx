@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import API from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';
+import Button from '../../components/Button';
 import styles from './Auth.module.css';
 
 export default function Register() {
@@ -143,15 +144,9 @@ export default function Register() {
             </div>
           </div>
 
-          <button className={styles.submitBtn} type="submit" disabled={loading}>
-            {loading ? (
-              <span className={styles.btnLoading}>
-                <span className={styles.miniSpinner}></span> Creating Account...
-              </span>
-            ) : (
-              'Create My Account →'
-            )}
-          </button>
+          <Button type="submit" variant="primary" size="lg" fullWidth loading={loading}>
+            {loading ? 'Creating Account...' : 'Create My Account →'}
+          </Button>
 
           <div className={styles.switchBox}>
             <span>Already have an account?</span>

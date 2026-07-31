@@ -5,6 +5,7 @@ import API from '../../api/axios';
 import { useCart } from '../../context/CartContext';
 import { getImageUrl, handleImageError } from '../../utils/imageUtils';
 import CustomerReviews from '../../components/CustomerReviews';
+import Button from '../../components/Button';
 import styles from './Home.module.css';
 
 export default function Home() {
@@ -69,14 +70,12 @@ export default function Home() {
             </p>
 
             <div className={styles.heroActions}>
-              <Link to="/products" className={styles.heroBtnPrimary}>
-                <span>Explore Full Menu</span>
-                <span className={styles.btnIcon}>🍩</span>
-              </Link>
-              <Link to="/about" className={styles.heroBtnSecondary}>
-                <span>Our Secret Kitchen</span>
-                <span className={styles.btnIcon}>👩‍🍳</span>
-              </Link>
+              <Button to="/products" size="lg" variant="primary" icon="🍩">
+                Explore Full Menu
+              </Button>
+              <Button to="/about" size="lg" variant="secondary" icon="👩‍🍳">
+                Our Secret Kitchen
+              </Button>
             </div>
 
             {/* Glassmorphism Quick Stats Bar */}
@@ -292,9 +291,9 @@ export default function Home() {
         </div>
 
         <div className={styles.viewMoreWrapper}>
-          <Link to="/products" className={styles.viewMoreBtn}>
+          <Button to="/products" size="lg" variant="dark">
             Explore Full Delicacies Menu →
-          </Link>
+          </Button>
         </div>
       </section>
 

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import API from '../../api/axios';
 import { useCart } from '../../context/CartContext';
 import { getImageUrl, handleImageError } from '../../utils/imageUtils';
+import Button from '../../components/Button';
 import styles from './ProductDetails.module.css';
 
 export default function ProductDetails() {
@@ -48,9 +49,9 @@ export default function ProductDetails() {
       <div className={styles.notFound}>
         <span>🧁</span>
         <h2>Treat not found</h2>
-        <button onClick={() => navigate('/products')} className={styles.backLinkBtn}>
+        <Button onClick={() => navigate('/products')} variant="cyan">
           Back to Menu
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -58,9 +59,9 @@ export default function ProductDetails() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <button className={styles.backBtn} onClick={() => navigate(-1)}>
-          <span>←</span> Back to Menu
-        </button>
+        <Button onClick={() => navigate(-1)} variant="secondary" size="sm" icon="←" className={styles.backBtnWrapper}>
+          Back to Menu
+        </Button>
 
         <div className={styles.grid}>
           <div className={styles.imageCard}>
@@ -120,9 +121,14 @@ export default function ProductDetails() {
                   </div>
                 </div>
 
-                <button className={`${styles.addBtn} ${added ? styles.added : ''}`} onClick={handleAddToCart}>
+                <Button
+                  variant={added ? 'secondary' : 'primary'}
+                  size="lg"
+                  fullWidth
+                  onClick={handleAddToCart}
+                >
                   {added ? 'Added to Cart ✓' : `Add ${quantity} to Cart • Rs. ${product.price * quantity}`}
-                </button>
+                </Button>
               </div>
             )}
           </div>

@@ -1,7 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useCart } from '../../context/CartContext';
-import { useAuth } from '../../context/AuthContext';
-import { getImageUrl, handleImageError } from '../../utils/imageUtils';
+import Button from '../../components/Button';
 import styles from './Cart.module.css';
 
 export default function Cart() {
@@ -24,9 +21,9 @@ export default function Cart() {
           <span className={styles.emptyIcon}>🛒</span>
           <h2>Your cart is empty</h2>
           <p>Looks like you haven't picked your favorite sweet delicacies yet.</p>
-          <Link to="/products" className={styles.shopBtn}>
+          <Button to="/products" variant="primary" size="lg">
             Explore Delicacies Menu 🍩
-          </Link>
+          </Button>
         </div>
       </div>
     );
@@ -103,9 +100,9 @@ export default function Cart() {
               <span>Rs. {cartTotal}</span>
             </div>
 
-            <button className={styles.checkoutBtn} onClick={handleCheckout}>
+            <Button variant="primary" size="lg" fullWidth onClick={handleCheckout}>
               Proceed to Checkout →
-            </button>
+            </Button>
 
             <Link to="/products" className={styles.continueLink}>
               ← Continue Shopping

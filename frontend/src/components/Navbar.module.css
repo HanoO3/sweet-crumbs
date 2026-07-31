@@ -199,24 +199,29 @@
   justify-content: space-around;
   width: 42px;
   height: 42px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  background: var(--accent-light);
+  border: 1.5px solid var(--accent);
+  border-radius: 20px;
   padding: 10px;
   cursor: pointer;
   z-index: 1010;
-  transition: var(--transition-fast);
+  box-shadow: 0 4px 12px var(--accent-glow);
+  transition: var(--transition-bounce);
 }
 
 .hamburgerBtn:hover {
-  background: var(--accent-light);
-  border-color: var(--accent);
+  background: var(--accent);
+  transform: scale(1.05);
+}
+
+.hamburgerBtn:hover .hamburgerLine {
+  background: white;
 }
 
 .hamburgerLine {
   width: 100%;
   height: 2.5px;
-  background: var(--text-h);
+  background: var(--accent-hover);
   border-radius: 2px;
   transition: var(--transition-fast);
 }
@@ -266,7 +271,7 @@
 .drawerBrand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-family: var(--heading);
   font-weight: 700;
   font-size: 20px;
@@ -274,18 +279,19 @@
 }
 
 .closeDrawerBtn {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  background: var(--accent-light);
+  border: 1.5px solid var(--accent);
   width: 36px;
   height: 36px;
   border-radius: 50%;
   font-size: 16px;
   cursor: pointer;
-  color: var(--text-h);
+  color: var(--accent-hover);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: var(--transition-fast);
+  box-shadow: 0 4px 12px var(--accent-glow);
 }
 
 .closeDrawerBtn:hover {

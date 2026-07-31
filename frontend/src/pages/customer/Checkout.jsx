@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import API from '../../api/axios';
 import { useCart } from '../../context/CartContext';
+import Button from '../../components/Button';
 import styles from './Checkout.module.css';
 
 export default function Checkout() {
@@ -147,9 +148,9 @@ export default function Checkout() {
               </p>
             </div>
 
-            <button className={styles.placeBtn} type="submit" disabled={placing}>
+            <Button type="submit" variant="primary" size="lg" fullWidth loading={placing}>
               {placing ? 'Baking & Confirming Order...' : `Confirm & Place Order — Rs. ${cartTotal}`}
-            </button>
+            </Button>
           </form>
 
           <div className={styles.summaryCard}>

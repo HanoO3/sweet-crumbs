@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import API from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';
+import Button from '../../components/Button';
 import styles from './Auth.module.css';
 
 export default function Login() {
@@ -139,15 +140,9 @@ export default function Login() {
             </div>
           </div>
 
-          <button className={styles.submitBtn} type="submit" disabled={loading}>
-            {loading ? (
-              <span className={styles.btnLoading}>
-                <span className={styles.miniSpinner}></span> Authenticating...
-              </span>
-            ) : (
-              'Sign In To My Account →'
-            )}
-          </button>
+          <Button type="submit" variant="primary" size="lg" fullWidth loading={loading}>
+            {loading ? 'Authenticating...' : 'Sign In To My Account →'}
+          </Button>
 
           <div className={styles.switchBox}>
             <span>New to Sweet Crumbs?</span>

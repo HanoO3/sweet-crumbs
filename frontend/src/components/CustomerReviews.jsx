@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import API from '../api/axios';
+import Button from './Button';
 import styles from './CustomerReviews.module.css';
 
 // ===== FAKE REVIEWS =====
@@ -183,9 +184,9 @@ export default function CustomerReviews() {
           </div>
 
           <div className={styles.summaryRight}>
-            <button className={styles.writeBtn} onClick={() => setIsModalOpen(true)}>
-              <span>✍️</span> Leave a Review
-            </button>
+            <Button variant="primary" size="md" icon="✍️" onClick={() => setIsModalOpen(true)}>
+              Leave a Review
+            </Button>
           </div>
         </div>
 
@@ -338,9 +339,9 @@ export default function CustomerReviews() {
                   ></textarea>
                 </div>
 
-                <button type="submit" className={styles.submitBtn} disabled={submitting}>
+                <Button type="submit" variant="primary" size="lg" fullWidth loading={submitting}>
                   {submitting ? 'Submitting...' : 'Submit My Review'}
-                </button>
+                </Button>
               </form>
             )}
           </motion.div>
