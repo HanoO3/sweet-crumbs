@@ -268,7 +268,7 @@
 }
 
 .content {
-  padding: 2.5rem;
+  padding: var(--page-padding-top) 2.5rem var(--page-padding-bottom) 2.5rem;
   flex: 1;
 }
 
@@ -295,6 +295,6 @@
     padding: 1rem 1.25rem;
   }
   .content {
-    padding: 1.25rem;
+    padding: var(--page-padding-mobile-top) 1.25rem var(--page-padding-mobile-bottom) 1.25rem;
   }
 }

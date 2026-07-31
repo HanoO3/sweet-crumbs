@@ -31,11 +31,17 @@
   --shadow-lg: 0 20px 48px rgba(44, 24, 16, 0.1);
   --shadow-glow: 0 12px 36px rgba(255, 127, 180, 0.28);
 
+  /* Unified Page & Section Padding Tokens */
+  --page-padding-top: 3.5rem;
+  --page-padding-bottom: 5rem;
+  --page-padding-mobile-top: 2.25rem;
+  --page-padding-mobile-bottom: 3.5rem;
+
   /* Spacing Scale */
   --spacing-xs: 0.5rem;   /* 8px */
   --spacing-sm: 1rem;     /* 16px */
   --spacing-md: 1.75rem;  /* 28px */
-  --spacing-lg: 3rem;     /* 48px */
+  --spacing-lg: 3.5rem;   /* 56px */
   --spacing-xl: 5rem;     /* 80px */
 
   /* Typography */
