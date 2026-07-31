@@ -282,6 +282,24 @@
   }
 }
 
+.trustBadges {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.trustItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
 @media (max-width: 480px) {
   .container {
     padding: 0 1rem;

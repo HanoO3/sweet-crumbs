@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import API from '../../api/axios';
 import { useCart } from '../../context/CartContext';
 import { getImageUrl, handleImageError } from '../../utils/imageUtils';
+import SkeletonCard from '../../components/SkeletonCard';
 import styles from './Products.module.css';
 
 const pastelColors = [
@@ -174,9 +175,10 @@ export default function Products() {
 
         {/* Products Grid */}
         {loading ? (
-          <div className={styles.loadingContainer}>
-            <div className={styles.spinner}></div>
-            <p className={styles.status}>Mixing the cake batter...</p>
+          <div className={styles.grid}>
+            {[...Array(6)].map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
           </div>
         ) : (
           <>

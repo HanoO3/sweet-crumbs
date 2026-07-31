@@ -6,6 +6,7 @@ import { useCart } from '../../context/CartContext';
 import { getImageUrl, handleImageError } from '../../utils/imageUtils';
 import CustomerReviews from '../../components/CustomerReviews';
 import Button from '../../components/Button';
+import SkeletonCard from '../../components/SkeletonCard';
 import styles from './Home.module.css';
 
 export default function Home() {
@@ -267,14 +268,14 @@ export default function Home() {
           <p className={styles.sectionSubtitle}>Hand-picked customer favorites ready for instant delivery.</p>
         </div>
 
-        {loading && (
-          <div className={styles.loadingContainer}>
-            <div className={styles.spinner}></div>
-            <p className={styles.status}>Mixing the frosting...</p>
+        {loading ? (
+          <div className={styles.grid}>
+            {[...Array(6)].map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
           </div>
-        )}
-
-        <div className={styles.grid}>
+        ) : (
+          <div className={styles.grid}>
           {featured.map((p, idx) => (
             <motion.div
               key={p._id}
@@ -328,6 +329,7 @@ export default function Home() {
             </motion.div>
           ))}
         </div>
+        )}
 
         <div className={styles.viewMoreWrapper}>
           <Button to="/products" size="lg" variant="dark">

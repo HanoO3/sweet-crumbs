@@ -1,0 +1,109 @@
+.toastContainer {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  max-width: 380px;
+  width: calc(100% - 48px);
+}
+
+.toastCard {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--accent);
+  border-radius: 20px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 16px 36px rgba(255, 127, 180, 0.28), 0 4px 12px rgba(44, 24, 16, 0.08);
+}
+
+.toastImg {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+
+.toastInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.toastHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.checkBadge {
+  font-size: 11px;
+  font-weight: 800;
+  color: #2E7D32;
+  background: #E8F5E9;
+  padding: 2px 8px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 2px;
+}
+
+.toastName {
+  font-family: var(--heading);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.toastPrice {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--accent);
+  margin: 0;
+}
+
+.toastActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.viewCartBtn {
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 8px 14px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(255, 127, 180, 0.3);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.viewCartBtn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.closeBtn:hover {
+  color: var(--text-h);
+}

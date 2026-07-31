@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
+import CartToast from '../components/CartToast';
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const { user } = useAuth();
+  const [toastItem, setToastItem] = useState(null);
 
   const [cartItems, setCartItems] = useState(() => {
     try {
@@ -45,7 +47,17 @@ export function CartProvider({ children }) {
       }
       return [...prev, { ...product, quantity }];
     });
+
+    // Trigger floating toast notification
+    setToastItem(product);
   };
+
+  useEffect(() => {
+    if (toastItem) {
+      const timer = setTimeout(() => setToastItem(null), 3800);
+      return () => clearTimeout(timer);
+    }
+  }, [toastItem]);
 
   const removeFromCart = (productId) => {
     setCartItems((prev) => prev.filter((item) => item._id !== productId));
@@ -85,6 +97,7 @@ export function CartProvider({ children }) {
       }}
     >
       {children}
+      <CartToast item={toastItem} onClose={() => setToastItem(null)} />
     </CartContext.Provider>
   );
 }

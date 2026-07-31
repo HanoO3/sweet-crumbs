@@ -148,6 +148,21 @@ export default function Cart() {
             <Link to="/products" className={styles.continueLink}>
               ← Continue Shopping
             </Link>
+
+            <div className={styles.trustBadges}>
+              <div className={styles.trustItem}>
+                <span>🔒</span>
+                <span>100% Safe & Secure Checkout</span>
+              </div>
+              <div className={styles.trustItem}>
+                <span>⚡</span>
+                <span>Express 30-Min Bakery Delivery</span>
+              </div>
+              <div className={styles.trustItem}>
+                <span>✨</span>
+                <span>Baked Fresh Daily Guarantee</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
