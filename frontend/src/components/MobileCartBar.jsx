@@ -1,11 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import styles from './MobileCartBar.module.css';
 
 export default function MobileCartBar() {
   const { cartCount, cartTotal } = useCart();
+  const location = useLocation();
 
-  if (cartCount === 0) return null;
+  // Hide mobile cart bar on cart, checkout, and order-success pages
+  const hiddenRoutes = ['/cart', '/checkout', '/order-success'];
+  if (cartCount === 0 || hiddenRoutes.includes(location.pathname)) {
+    return null;
+  }
 
   return (
     <div className={styles.bar}>

@@ -244,8 +244,33 @@
 @media (max-width: 868px) {
   .layout {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
+}
+
+@media (max-width: 600px) {
   .rowTwo {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .formCard, .summaryCard {
+    padding: 1.25rem 1rem;
+    border-radius: 20px;
+  }
+  .paymentBox {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+  .title {
+    font-size: 1.8rem;
+  }
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 1.25rem;
   }
 }
