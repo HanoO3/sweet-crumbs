@@ -109,10 +109,13 @@ export default function Home() {
             <div className={styles.imageBackingCard}></div>
 
             <img
-              src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=800&auto=format&fit=crop"
-              alt="Artisanal Belgian Cake"
+              src="/hero-dessert.png"
+              alt="Artisanal Belgian Chocolate & Glazed Strawberry Dessert Cake"
               className={styles.heroMainImg}
-              onError={(e) => handleImageError(e)}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1200&auto=format&fit=crop";
+              }}
             />
 
             {/* Floating Animated Badges */}
