@@ -205,13 +205,52 @@ export default function Home() {
       {/* 3. Interactive Pastry Banner */}
       <section className={styles.donutsBanner}>
         <div className={styles.donutsRow}>
-          {[...Array(6)].map((_, i) => (
+          {[
+            {
+              fill: 'var(--accent)',
+              mouth: 'var(--accent-hover)',
+              sprinkles: ['var(--cyan)', 'var(--yellow)', 'var(--cyan)', 'var(--yellow)'],
+            },
+            {
+              fill: 'var(--cyan)',
+              mouth: 'var(--cyan-hover)',
+              sprinkles: ['var(--accent)', 'var(--yellow)', 'var(--accent)', 'var(--yellow)'],
+            },
+            {
+              fill: 'var(--yellow)',
+              mouth: '#E5B800',
+              sprinkles: ['var(--accent)', 'var(--cyan)', 'var(--accent)', 'var(--cyan)'],
+            },
+            {
+              fill: '#FF9EAA',
+              mouth: '#E05B91',
+              sprinkles: ['var(--yellow)', 'var(--cyan)', 'var(--yellow)', 'var(--cyan)'],
+            },
+            {
+              fill: '#50D8D7',
+              mouth: '#00ABB8',
+              sprinkles: ['var(--accent)', 'var(--yellow)', 'var(--accent)', 'var(--yellow)'],
+            },
+            {
+              fill: '#FFB84D',
+              mouth: '#D98200',
+              sprinkles: ['var(--cyan)', 'var(--accent)', 'var(--cyan)', 'var(--accent)'],
+            },
+          ].map((item, i) => (
             <div key={i} className={styles.bannerDonut}>
               <svg viewBox="0 0 54 54" width="54" height="54" fill="none">
-                <circle cx="27" cy="27" r="22" fill={i % 3 === 0 ? "var(--accent)" : i % 3 === 1 ? "var(--cyan)" : "var(--yellow)"} />
-                <circle cx="27" cy="27" r="7" fill="#FFE5F0" />
-                <rect x="18" y="15" width="4" height="1.5" rx="0.5" transform="rotate(30 18 15)" fill="white" />
-                <rect x="32" y="13" width="4" height="1.5" rx="0.5" transform="rotate(-45 32 13)" fill="var(--text-h)" />
+                <circle cx="27" cy="27" r="22" fill={item.fill} />
+                <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
+                <path
+                  d="M12 25C13 32 18 37 27 37C36 37 41 32 42 25"
+                  stroke={item.mouth}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <rect x="18" y="15" width="5" height="2" rx="1" transform="rotate(30 18 15)" fill={item.sprinkles[0]} />
+                <rect x="32" y="13" width="5" height="2" rx="1" transform="rotate(-45 32 13)" fill={item.sprinkles[1]} />
+                <rect x="38" y="22" width="5" height="2" rx="1" transform="rotate(15 38 22)" fill={item.sprinkles[2]} />
+                <rect x="22" y="36" width="5" height="2" rx="1" transform="rotate(-60 22 36)" fill={item.sprinkles[3]} />
               </svg>
             </div>
           ))}
