@@ -1,0 +1,50 @@
+.logoLink {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.logoWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoSvg {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.logoLink:hover .logoSvg {
+  transform: rotate(15deg) scale(1.06);
+}
+
+.textGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandName {
+  font-family: var(--heading);
+  font-weight: 700;
+  color: var(--text-h);
+  line-height: 1;
+  letter-spacing: -0.3px;
+}
+
+.lightText {
+  color: white !important;
+}
+
+.logoAccent {
+  color: var(--cyan);
+}
+
+.subtitle {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  font-weight: 800;
+  margin-top: 2px;
+}

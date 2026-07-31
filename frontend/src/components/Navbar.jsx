@@ -25,18 +25,21 @@ export default function Navbar() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Close mobile drawer on route change
+  // Close drawer on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [location]);
 
-  // Prevent background scroll when drawer is open
+  // Prevent background scroll when drawer is open + cleanup
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     }
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [mobileOpen]);
 
   const handleLogout = () => {
@@ -50,10 +53,22 @@ export default function Navbar() {
       <nav className={styles.nav}>
         {/* Brand Logo */}
         <Link to="/" className={styles.brand}>
-          <svg className={styles.logoSvg} viewBox="0 0 54 54" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            className={styles.logoSvg}
+            viewBox="0 0 54 54"
+            width="40"
+            height="40"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <circle cx="27" cy="27" r="22" fill="var(--accent)" />
             <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
-            <path d="M12 25C13 32 18 37 27 37C36 37 41 32 42 25" stroke="var(--accent-hover)" strokeWidth="2" strokeLinecap="round" />
+            <path
+              d="M12 25C13 32 18 37 27 37C36 37 41 32 42 25"
+              stroke="var(--accent-hover)"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
             <rect x="18" y="15" width="5" height="2" rx="1" transform="rotate(30 18 15)" fill="var(--cyan)" />
             <rect x="32" y="13" width="5" height="2" rx="1" transform="rotate(-45 32 13)" fill="var(--yellow)" />
             <rect x="38" y="22" width="5" height="2" rx="1" transform="rotate(15 38 22)" fill="var(--cyan)" />
@@ -66,21 +81,30 @@ export default function Navbar() {
 
         {/* Desktop Links */}
         <div className={styles.desktopLinks}>
-          <Link to="/" className={location.pathname === '/' ? styles.activeLink : ''}>Home</Link>
-          <Link to="/products" className={location.pathname === '/products' ? styles.activeLink : ''}>Menu</Link>
-          <Link to="/about" className={location.pathname === '/about' ? styles.activeLink : ''}>Our Story</Link>
-          <Link to="/contact" className={location.pathname === '/contact' ? styles.activeLink : ''}>Contact</Link>
+          <Link to="/" className={location.pathname === '/' ? styles.activeLink : ''}>
+            Home
+          </Link>
+          <Link to="/products" className={location.pathname === '/products' ? styles.activeLink : ''}>
+            Menu
+          </Link>
+          <Link to="/about" className={location.pathname === '/about' ? styles.activeLink : ''}>
+            Our Story
+          </Link>
+          <Link to="/contact" className={location.pathname === '/contact' ? styles.activeLink : ''}>
+            Contact
+          </Link>
         </div>
 
         {/* Right Actions */}
         <div className={styles.actions}>
+          {/* Cart */}
           <Link to="/cart" className={styles.cartLink} aria-label="Shopping Cart">
             <span className={styles.cartIcon}>🛒</span>
             <span className={styles.cartText}>Cart</span>
             {cartCount > 0 && (
               <motion.span
                 key={cartCount}
-                initial={{ scale: 0.6 }}
+                initial={{ scale: 0.5 }}
                 animate={{ scale: 1 }}
                 className={styles.badge}
               >
@@ -89,19 +113,26 @@ export default function Navbar() {
             )}
           </Link>
 
+          {/* Desktop User / Login */}
           {user ? (
             <div className={styles.userMenuDesktop}>
               <span className={styles.userName}>Hi, {user.name.split(' ')[0]}</span>
               {user.role === 'admin' && (
-                <Link to="/admin" className={styles.adminLink}>Dashboard</Link>
+                <Link to="/admin" className={styles.adminLink}>
+                  Dashboard
+                </Link>
               )}
-              <button onClick={handleLogout} className={styles.logoutBtn}>Logout</button>
+              <button onClick={handleLogout} className={styles.logoutBtn}>
+                Logout
+              </button>
             </div>
           ) : (
-            <Link to="/login" className={styles.loginBtnDesktop}>Login</Link>
+            <Link to="/login" className={styles.loginBtnDesktop}>
+              Login
+            </Link>
           )}
 
-          {/* Mobile Hamburger Button */}
+          {/* Hamburger */}
           <button
             className={`${styles.hamburgerBtn} ${mobileOpen ? styles.hamburgerHidden : ''}`}
             onClick={() => setMobileOpen(true)}
@@ -114,7 +145,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Animated Drawer & Backdrop Overlay */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <>
@@ -126,6 +157,7 @@ export default function Navbar() {
               transition={{ duration: 0.25 }}
               onClick={() => setMobileOpen(false)}
             />
+
             <motion.div
               className={styles.drawer}
               initial={{ x: '100%' }}
@@ -135,16 +167,28 @@ export default function Navbar() {
             >
               <div className={styles.drawerHeader}>
                 <div className={styles.drawerBrand}>
-                  <svg className={styles.logoSvg} viewBox="0 0 54 54" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    className={styles.logoSvg}
+                    viewBox="0 0 54 54"
+                    width="34"
+                    height="34"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <circle cx="27" cy="27" r="22" fill="var(--accent)" />
                     <circle cx="27" cy="27" r="7" fill="#FFFDFE" />
-                    <path d="M12 25C13 32 18 37 27 37C36 37 41 32 42 25" stroke="var(--accent-hover)" strokeWidth="2" strokeLinecap="round" />
+                    <path
+                      d="M12 25C13 32 18 37 27 37C36 37 41 32 42 25"
+                      stroke="var(--accent-hover)"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
                     <rect x="18" y="15" width="5" height="2" rx="1" transform="rotate(30 18 15)" fill="var(--cyan)" />
                     <rect x="32" y="13" width="5" height="2" rx="1" transform="rotate(-45 32 13)" fill="var(--yellow)" />
                     <rect x="38" y="22" width="5" height="2" rx="1" transform="rotate(15 38 22)" fill="var(--cyan)" />
                     <rect x="22" y="36" width="5" height="2" rx="1" transform="rotate(-60 22 36)" fill="var(--yellow)" />
                   </svg>
-                  <span className={styles.brandName} style={{ fontSize: '20px' }}>
+                  <span className={styles.brandName} style={{ fontSize: '19px' }}>
                     Sweet<span className={styles.logoAccent}>Crumbs</span>
                   </span>
                 </div>
@@ -165,7 +209,10 @@ export default function Navbar() {
                 </motion.div>
 
                 <motion.div custom={1} variants={drawerItemVariants} initial="hidden" animate="visible">
-                  <Link to="/products" className={location.pathname === '/products' ? styles.drawerActiveLink : ''}>
+                  <Link
+                    to="/products"
+                    className={location.pathname === '/products' ? styles.drawerActiveLink : ''}
+                  >
                     <span className={styles.drawerIcon}>🧁</span> Delicacies Menu
                   </Link>
                 </motion.div>
@@ -177,7 +224,10 @@ export default function Navbar() {
                 </motion.div>
 
                 <motion.div custom={3} variants={drawerItemVariants} initial="hidden" animate="visible">
-                  <Link to="/contact" className={location.pathname === '/contact' ? styles.drawerActiveLink : ''}>
+                  <Link
+                    to="/contact"
+                    className={location.pathname === '/contact' ? styles.drawerActiveLink : ''}
+                  >
                     <span className={styles.drawerIcon}>📞</span> Contact Us
                   </Link>
                 </motion.div>

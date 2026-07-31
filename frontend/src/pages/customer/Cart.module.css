@@ -1,12 +1,12 @@
 .page {
-  padding: var(--page-padding-top) 0 var(--page-padding-bottom) 0;
+  padding: var(--page-padding-top) 0 var(--page-padding-bottom);
   min-height: 80vh;
   background: var(--bg);
 }
 
 @media (max-width: 768px) {
   .page {
-    padding: var(--page-padding-mobile-top) 0 var(--page-padding-mobile-bottom) 0;
+    padding: var(--page-padding-mobile-top) 0 var(--page-padding-mobile-bottom);
   }
 }
 
@@ -45,7 +45,7 @@
 }
 
 .itemCard {
-  background: white;
+  background: #fff;
   border-radius: 20px;
   padding: 1.25rem;
   border: 1px solid var(--border);
@@ -59,7 +59,6 @@
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  width: 100%;
 }
 
 .itemImg {
@@ -67,8 +66,8 @@
   height: 72px;
   border-radius: 16px;
   object-fit: cover;
-  flex-shrink: 0;
   border: 1px solid var(--border);
+  flex-shrink: 0;
 }
 
 .itemInfo {
@@ -77,13 +76,13 @@
 }
 
 .itemName {
+  display: block;
   font-family: var(--heading);
   font-size: 16px;
   font-weight: 700;
   color: var(--text-h);
   text-decoration: none;
-  display: block;
-  margin-bottom: 3px;
+  margin-bottom: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -94,84 +93,84 @@
 }
 
 .itemPrice {
+  margin: 0;
   font-size: 13px;
   color: var(--text);
-  margin: 0;
 }
 
+/* ---------- Remove Button ---------- */
+
 .removeBtn {
-  background: #FFF0F5;
-  border: 1px solid #FFC2D9;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  color: var(--error);
-  cursor: pointer;
-  font-size: 13px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  color: #6b7280;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: all .25s ease;
   flex-shrink: 0;
-  transition: var(--transition-fast);
-  box-shadow: 0 2px 6px rgba(44, 24, 16, 0.04);
 }
 
 .removeBtn:hover {
-  background: var(--error);
-  color: white;
-  border-color: var(--error);
+  background: #ef4444;
+  color: #fff;
+  border-color: #ef4444;
 }
+
+/* ---------- Bottom Row ---------- */
 
 .itemBottomRow {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding-top: 0.75rem;
-  border-top: 1.5px dashed var(--border);
+  align-items: center;
+  padding-top: .9rem;
+  border-top: 1px dashed var(--border);
   gap: 1rem;
 }
 
+/* ---------- Quantity ---------- */
+
 .qtyControls {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  background: #FFF2F6;
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1.5px solid #FFE2EF;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
 }
 
-.qtyControls button {
-  background: white;
-  border: 1px solid #FFC2D9;
-  color: var(--text-h);
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  font-weight: 800;
-  font-size: 15px;
-  cursor: pointer;
+.qtyBtn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: #fff;
+  color: #374151;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: var(--transition-fast);
-  box-shadow: 0 2px 6px rgba(44, 24, 16, 0.05);
+  cursor: pointer;
+  transition: all .25s ease;
 }
 
-.qtyControls button:hover {
-  background: var(--accent);
-  color: white;
-  border-color: var(--accent);
+.qtyBtn:hover {
+  background: #f3f4f6;
+  color: var(--accent);
 }
 
-.qtyControls span {
-  font-family: var(--heading);
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--text-h);
-  min-width: 22px;
+.qtyValue {
+  width: 48px;
   text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
 }
+
+/* ---------- Subtotal ---------- */
 
 .subtotalBox {
   display: flex;
@@ -187,23 +186,20 @@
 .itemSubtotal {
   font-family: var(--heading);
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--accent-hover);
 }
 
-.removeBtn:hover {
-  background: var(--error);
-  color: white;
-}
+/* ---------- Summary ---------- */
 
 .summaryCard {
-  background: white;
-  border-radius: 24px;
+  position: sticky;
+  top: 100px;
+  background: #fff;
+  border-radius: 22px;
   padding: 1.75rem;
   border: 1px solid var(--border);
   box-shadow: var(--shadow-md);
-  position: sticky;
-  top: 100px;
 }
 
 .summaryTitle {
@@ -214,98 +210,84 @@
 .summaryRow {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 12px;
   font-size: 14px;
   color: var(--text);
-  margin-bottom: 12px;
 }
 
 .freeBadge {
-  color: #2D7A46;
-  font-weight: 800;
+  color: #16a34a;
+  font-weight: 700;
 }
 
 .summaryTotal {
   display: flex;
   justify-content: space-between;
-  font-family: var(--heading);
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--text-h);
   padding-top: 1rem;
-  border-top: 1.5px dashed var(--border);
-  margin: 1rem 0 1.5rem 0;
-}
-
-.checkoutBtn {
-  width: 100%;
-  background: var(--accent);
-  color: white;
-  padding: 14px;
-  border-radius: 24px;
-  font-size: 16px;
+  margin: 1rem 0 1.5rem;
+  border-top: 1px dashed var(--border);
+  font-size: 20px;
   font-weight: 700;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(255, 127, 180, 0.3);
-  transition: var(--transition);
-  margin-bottom: 12px;
-}
-
-.checkoutBtn:hover {
-  background: var(--accent-hover);
+  color: var(--text-h);
 }
 
 .continueLink {
   display: block;
   text-align: center;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-h);
+  margin-top: 1rem;
   text-decoration: none;
+  font-weight: 600;
+  color: var(--text-h);
 }
 
-/* Empty State */
+.continueLink:hover {
+  color: var(--accent);
+}
+
+/* ---------- Empty ---------- */
+
 .emptyPage {
   min-height: 70vh;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   padding: 2rem;
 }
 
 .emptyCard {
+  max-width: 460px;
   text-align: center;
-  background: white;
+  background: #fff;
   border-radius: 28px;
   padding: 3.5rem 2.5rem;
-  box-shadow: var(--shadow-md);
   border: 1px solid var(--border);
-  max-width: 460px;
+  box-shadow: var(--shadow-md);
 }
 
 .emptyIcon {
-  font-size: 4rem;
   display: block;
+  font-size: 4rem;
   margin-bottom: 1rem;
 }
 
-.shopBtn {
-  display: inline-block;
-  background: var(--accent);
-  color: white;
-  padding: 12px 28px;
-  border-radius: 24px;
-  font-weight: 700;
-  text-decoration: none;
-  margin-top: 1rem;
-  box-shadow: 0 6px 18px rgba(255, 127, 180, 0.3);
-}
+/* ---------- Responsive ---------- */
 
 @media (max-width: 868px) {
   .layout {
     grid-template-columns: 1fr;
   }
-  .itemCard {
-    flex-wrap: wrap;
+
+  .summaryCard {
+    position: static;
+  }
+
+  .itemBottomRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .subtotalBox {
+    width: 100%;
+    justify-content: space-between;
   }
 }
