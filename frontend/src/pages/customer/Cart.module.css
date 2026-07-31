@@ -105,31 +105,31 @@
   padding-top: 2px;
 }
 
-/* Quantity Controls - Compact */
+/* Quantity Controls - Balanced Professional */
 .qtyControls {
   display: flex;
   align-items: center;
   background: #FFF5F8;
   border: 1.5px solid #FFD6E0;
   border-radius: 50px;
-  padding: 2px;
+  padding: 3px;
   gap: 0;
 }
 
 .qtyControls button {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: none;
   background: white;
   color: var(--text-h);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 4px rgba(255, 127, 180, 0.15);
+  box-shadow: 0 2px 5px rgba(255, 127, 180, 0.12);
   transition: all 0.2s ease;
 }
 
@@ -140,10 +140,10 @@
 
 .qtyControls span {
   font-family: var(--heading);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
   color: var(--text-h);
-  min-width: 20px;
+  min-width: 24px;
   text-align: center;
 }
 
@@ -151,7 +151,7 @@
 .qtyDeleteBtn {
   background: #FFF0F3 !important;
   color: var(--accent) !important;
-  font-size: 12px !important;
+  font-size: 14px !important;
 }
 
 .qtyDeleteBtn:hover {
