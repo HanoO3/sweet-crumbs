@@ -45,41 +45,45 @@ export default function Cart() {
           <div className={styles.items}>
             {cartItems.map((item) => (
               <div key={item._id} className={styles.itemCard}>
-                <img
-                  src={getImageUrl(item.image)}
-                  alt={item.name}
-                  className={styles.itemImg}
-                  onError={(e) => handleImageError(e)}
-                />
-                <div className={styles.itemInfo}>
-                  <Link to={`/products/${item._id}`} className={styles.itemName}>
-                    {item.name}
-                  </Link>
-                  <p className={styles.itemPrice}>Rs. {item.price} each</p>
-                </div>
-
-                <div className={styles.qtyControls}>
-                  <button onClick={() => updateQuantity(item._id, item.quantity - 1)}>
-                    −
+                <div className={styles.itemMain}>
+                  <img
+                    src={getImageUrl(item.image)}
+                    alt={item.name}
+                    className={styles.itemImg}
+                    onError={(e) => handleImageError(e)}
+                  />
+                  <div className={styles.itemInfo}>
+                    <Link to={`/products/${item._id}`} className={styles.itemName}>
+                      {item.name}
+                    </Link>
+                    <p className={styles.itemPrice}>Rs. {item.price} each</p>
+                  </div>
+                  <button
+                    className={styles.removeBtn}
+                    onClick={() => removeFromCart(item._id)}
+                    title="Remove item"
+                    aria-label="Remove item"
+                  >
+                    ✕
                   </button>
-                  <span>{item.quantity}</span>
-                  <button onClick={() => updateQuantity(item._id, item.quantity + 1)}>
-                    +
-                  </button>
                 </div>
 
-                <div className={styles.subtotalBox}>
-                  <span className={styles.subtotalLabel}>Subtotal:</span>
-                  <span className={styles.itemSubtotal}>Rs. {item.price * item.quantity}</span>
-                </div>
+                <div className={styles.itemBottomRow}>
+                  <div className={styles.qtyControls}>
+                    <button onClick={() => updateQuantity(item._id, item.quantity - 1)}>
+                      −
+                    </button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => updateQuantity(item._id, item.quantity + 1)}>
+                      +
+                    </button>
+                  </div>
 
-                <button
-                  className={styles.removeBtn}
-                  onClick={() => removeFromCart(item._id)}
-                  title="Remove item"
-                >
-                  ✕
-                </button>
+                  <div className={styles.subtotalBox}>
+                    <span className={styles.subtotalLabel}>Subtotal:</span>
+                    <span className={styles.itemSubtotal}>Rs. {item.price * item.quantity}</span>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

@@ -51,13 +51,20 @@
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.itemMain {
+  display: flex;
   align-items: center;
   gap: 1.25rem;
+  width: 100%;
 }
 
 .itemImg {
-  width: 80px;
-  height: 80px;
+  width: 72px;
+  height: 72px;
   border-radius: 16px;
   object-fit: cover;
   flex-shrink: 0;
@@ -66,16 +73,20 @@
 
 .itemInfo {
   flex: 1;
+  min-width: 0;
 }
 
 .itemName {
   font-family: var(--heading);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--text-h);
   text-decoration: none;
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .itemName:hover {
@@ -88,14 +99,45 @@
   margin: 0;
 }
 
+.removeBtn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--error);
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition-fast);
+}
+
+.removeBtn:hover {
+  background: var(--error);
+  color: white;
+  border-color: var(--error);
+}
+
+.itemBottomRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.75rem;
+  border-top: 1.5px dashed var(--border);
+  gap: 1rem;
+}
+
 .qtyControls {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   background: var(--bg-secondary);
   padding: 4px 10px;
-  border-radius: 16px;
-  border: 1px solid var(--border);
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
 }
 
 .qtyControls button {
@@ -107,45 +149,36 @@
   font-weight: 800;
   font-size: 14px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .qtyControls span {
   font-family: var(--heading);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
   color: var(--text-h);
-  min-width: 16px;
+  min-width: 20px;
   text-align: center;
 }
 
 .subtotalBox {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  gap: 6px;
 }
 
 .subtotalLabel {
-  font-size: 11px;
-  color: #8C7063;
+  font-size: 12px;
+  color: var(--text-muted);
 }
 
 .itemSubtotal {
   font-family: var(--heading);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 800;
-  color: var(--text-h);
-}
-
-.removeBtn {
-  background: var(--bg-secondary);
-  border: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  color: #8C7063;
-  cursor: pointer;
-  font-size: 14px;
-  transition: var(--transition-fast);
+  color: var(--accent-hover);
 }
 
 .removeBtn:hover {

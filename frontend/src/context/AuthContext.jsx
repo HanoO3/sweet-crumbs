@@ -15,12 +15,17 @@ export function AuthProvider({ children }) {
   });
 
   const login = (userData) => {
+    // If logging in as Admin, clear any leftover customer cart items
+    if (userData?.role === 'admin') {
+      localStorage.removeItem('cartItems');
+    }
     localStorage.setItem('userInfo', JSON.stringify(userData));
     setUser(userData);
   };
 
   const logout = () => {
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('cartItems');
     setUser(null);
   };
 
