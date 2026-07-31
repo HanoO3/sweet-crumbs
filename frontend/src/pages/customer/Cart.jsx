@@ -1,5 +1,4 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Trash2, Minus, Plus } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import { getImageUrl, handleImageError } from '../../utils/imageUtils';
@@ -26,7 +25,6 @@ export default function Cart() {
           <span className={styles.emptyIcon}>🛒</span>
           <h2>Your cart is empty</h2>
           <p>Looks like you haven't picked your favorite sweet delicacies yet.</p>
-
           <Button to="/products" variant="primary" size="lg">
             Explore Delicacies Menu 🍩
           </Button>
@@ -38,125 +36,66 @@ export default function Cart() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-
         <div className={styles.header}>
           <h1 className={styles.title}>Your Bakery Cart</h1>
-          <p className={styles.subtitle}>
-            Review your items before proceeding to checkout.
-          </p>
+          <p className={styles.subtitle}>Review your items before proceeding to checkout.</p>
         </div>
 
         <div className={styles.layout}>
-
           <div className={styles.items}>
             {cartItems.map((item) => (
               <div key={item._id} className={styles.itemCard}>
+                <img
+                  src={getImageUrl(item.image)}
+                  alt={item.name}
+                  className={styles.itemImg}
+                  onError={(e) => handleImageError(e)}
+                />
+                <div className={styles.itemInfo}>
+                  <Link to={`/products/${item._id}`} className={styles.itemName}>
+                    {item.name}
+                  </Link>
+                  <p className={styles.itemPrice}>Rs. {item.price} each</p>
+                </div>
 
-                <div className={styles.itemMain}>
-
-                  <img
-                    src={getImageUrl(item.image)}
-                    alt={item.name}
-                    className={styles.itemImg}
-                    onError={handleImageError}
-                  />
-
-                  <div className={styles.itemInfo}>
-
-                    <Link
-                      to={`/products/${item._id}`}
-                      className={styles.itemName}
-                    >
-                      {item.name}
-                    </Link>
-
-                    <p className={styles.itemPrice}>
-                      Rs. {item.price} each
-                    </p>
-
-                  </div>
-
-                  <button
-                    className={styles.removeBtn}
-                    onClick={() => removeFromCart(item._id)}
-                    title="Remove item"
-                    aria-label="Remove item"
-                  >
-                    <Trash2 size={18} strokeWidth={2} />
+                <div className={styles.qtyControls}>
+                  <button onClick={() => updateQuantity(item._id, item.quantity - 1)}>
+                    −
                   </button>
-
+                  <span>{item.quantity}</span>
+                  <button onClick={() => updateQuantity(item._id, item.quantity + 1)}>
+                    +
+                  </button>
                 </div>
 
-                <div className={styles.itemBottomRow}>
-
-                  <div className={styles.qtyControls}>
-
-                    <button
-                      className={styles.qtyBtn}
-                      onClick={() =>
-                        updateQuantity(item._id, item.quantity - 1)
-                      }
-                    >
-                      <Minus size={16} strokeWidth={2.5} />
-                    </button>
-
-                    <span className={styles.qtyValue}>
-                      {item.quantity}
-                    </span>
-
-                    <button
-                      className={styles.qtyBtn}
-                      onClick={() =>
-                        updateQuantity(item._id, item.quantity + 1)
-                      }
-                    >
-                      <Plus size={16} strokeWidth={2.5} />
-                    </button>
-
-                  </div>
-
-                  <div className={styles.subtotalBox}>
-
-                    <span className={styles.subtotalLabel}>
-                      Subtotal:
-                    </span>
-
-                    <span className={styles.itemSubtotal}>
-                      Rs. {item.price * item.quantity}
-                    </span>
-
-                  </div>
-
+                <div className={styles.subtotalBox}>
+                  <span className={styles.subtotalLabel}>Subtotal:</span>
+                  <span className={styles.itemSubtotal}>
+                    Rs. {item.price * item.quantity}
+                  </span>
                 </div>
 
+                <button
+                  className={styles.removeBtn}
+                  onClick={() => removeFromCart(item._id)}
+                  title="Remove item"
+                >
+                  ✕
+                </button>
               </div>
             ))}
           </div>
 
           <div className={styles.summaryCard}>
-
-            <h2 className={styles.summaryTitle}>
-              Order Summary
-            </h2>
-
+            <h2 className={styles.summaryTitle}>Order Summary</h2>
             <div className={styles.summaryRow}>
-              <span>
-                Subtotal ({cartItems.length} items)
-              </span>
-
-              <span>
-                Rs. {cartTotal}
-              </span>
+              <span>Subtotal ({cartItems.length} items)</span>
+              <span>Rs. {cartTotal}</span>
             </div>
-
             <div className={styles.summaryRow}>
               <span>Fresh Packing & Box</span>
-
-              <span className={styles.freeBadge}>
-                FREE
-              </span>
+              <span className={styles.freeBadge}>FREE</span>
             </div>
-
             <div className={styles.summaryRow}>
               <span>Estimated Delivery</span>
               <span>Calculated at checkout</span>
@@ -167,26 +106,15 @@ export default function Cart() {
               <span>Rs. {cartTotal}</span>
             </div>
 
-            <Button
-              variant="primary"
-              size="lg"
-              fullWidth
-              onClick={handleCheckout}
-            >
+            <Button variant="primary" size="lg" fullWidth onClick={handleCheckout}>
               Proceed to Checkout →
             </Button>
 
-            <Link
-              to="/products"
-              className={styles.continueLink}
-            >
+            <Link to="/products" className={styles.continueLink}>
               ← Continue Shopping
             </Link>
-
           </div>
-
         </div>
-
       </div>
     </div>
   );
