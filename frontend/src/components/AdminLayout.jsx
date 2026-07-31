@@ -122,7 +122,8 @@ export default function AdminLayout() {
 
           <div className={styles.topbarRight}>
             <div className={styles.statusPill}>
-              <span className={styles.statusDot}></span> Live Kitchen Server Active
+              <span className={styles.statusDot}></span>
+              <span className={styles.statusText}>Live Kitchen Server Active</span>
             </div>
             <button onClick={handleLogout} className={styles.topbarLogoutBtn}>
               🚪 Logout
