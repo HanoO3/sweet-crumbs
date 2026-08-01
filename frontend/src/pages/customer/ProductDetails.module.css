@@ -285,3 +285,28 @@
     height: 320px;
   }
 }
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+  .image {
+    height: 240px;
+  }
+  .price {
+    font-size: 1.8rem;
+  }
+  .name {
+    font-size: 1.8rem;
+  }
+  .actionsBox {
+    padding: 1.25rem;
+  }
+  .featuresList {
+    gap: 8px;
+  }
+  .backBtn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}

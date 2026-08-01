@@ -308,3 +308,22 @@
     align-items: flex-start;
   }
 }
+
+@media (max-width: 480px) {
+  .filterCard {
+    padding: 1.25rem;
+  }
+  .orderCard {
+    padding: 1.25rem;
+    border-radius: 18px;
+  }
+  .cardFooter {
+    gap: 0.75rem;
+  }
+  .totalAmount {
+    font-size: 18px;
+  }
+  .itemsBox {
+    padding: 1rem;
+  }
+}
