@@ -288,3 +288,33 @@
     justify-content: center;
   }
 }
+
+@media (max-width: 600px) {
+  .welcomeBanner {
+    padding: 1.5rem;
+  }
+  .bannerText h2 {
+    font-size: 20px;
+  }
+  .quickActionsRow {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .actionBtnPrimary, .actionBtnSec {
+    flex: 1;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  .tableSection {
+    padding: 1.25rem;
+  }
+  .tableHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .metricValue {
+    font-size: 22px;
+  }
+}

@@ -246,6 +246,9 @@
     grid-template-columns: 1fr;
     gap: 2rem;
   }
+  .summaryCard {
+    position: static;
+  }
 }
 
 @media (max-width: 600px) {

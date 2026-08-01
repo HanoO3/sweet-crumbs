@@ -673,3 +673,56 @@
     height: 40px !important;
   }
 }
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 2.5rem 1rem 3.5rem 1rem;
+  }
+  .heroMainImg {
+    height: 240px;
+  }
+  /* Pin badges fully inside the image wrapper so they never overflow viewport */
+  .badgeTopLeft {
+    top: 8px;
+    left: 8px;
+  }
+  .badgeBottomRight {
+    bottom: 8px;
+    right: 8px;
+  }
+  .floatingBadge {
+    padding: 8px 12px;
+    gap: 8px;
+    border-radius: 14px;
+  }
+  .badgeEmoji {
+    font-size: 18px;
+  }
+  .floatingBadge strong {
+    font-size: 11px;
+  }
+  .floatingBadge p {
+    font-size: 10px;
+  }
+  /* Stats glass — ensure it never causes horizontal scroll */
+  .heroStatsGlass {
+    padding: 12px 16px;
+    border-radius: 18px;
+  }
+  .statNumber {
+    font-size: 18px;
+  }
+  .statLabel {
+    font-size: 11px;
+  }
+  /* Section spacing */
+  .featured {
+    padding: 3.5rem 1rem;
+  }
+  .featuresSection {
+    padding: 2.5rem 1rem;
+  }
+  .donutsBanner {
+    padding: 2.5rem 1rem;
+  }
+}

@@ -259,6 +259,37 @@
     grid-template-columns: 1fr;
   }
   .statsRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .storyImgWrapper {
+    height: 220px;
+  }
+}
+
+@media (max-width: 600px) {
+  .statsRow {
     grid-template-columns: 1fr;
+  }
+  .ctaBox {
+    padding: 2rem 1.25rem;
+  }
+  .ctaBox h2 {
+    font-size: 1.6rem;
+  }
+  .storyCard, .storyCardAlt {
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+  .storyImgWrapper {
+    height: 180px;
+  }
+  .storyContent h3 {
+    font-size: 20px;
+  }
+  .formCard {
+    padding: 1.5rem;
+  }
+  .infoCard {
+    padding: 1.5rem;
   }
 }
